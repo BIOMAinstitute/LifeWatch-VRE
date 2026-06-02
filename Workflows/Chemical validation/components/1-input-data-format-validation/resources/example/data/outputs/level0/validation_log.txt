@@ -1,4 +1,4 @@
-TABLE VALIDATION — 2026-05-27 07:49:01.585369
+TABLE VALIDATION — 2026-06-02 14:44:01.687866
 ============================================================
 
 File: /mnt/outputs/templates/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx
