@@ -1,4 +1,4 @@
-# *
+*
 !.gitignore
-!.zip
-!.txt
+!*.zip
+!*.txt
