@@ -35,7 +35,7 @@ Thumbs.db
 *.Rhistory
 
 # bin
-bin/
+# bin/
 
 # data
-data/
+# data/
