@@ -1,0 +1,102 @@
+{
+  "name": "DataFormatValidation",
+  "label": "Data format validation",
+  "description": "Validates multiple Excel files contained in a ZIP against a JSON configuration file that defines required/optional columns, data types, allowed ranges and regex formats. Produces a plain-text validation log.",
+  "type": "DataAnalysing",
+  "dockerImage": "lw-data-format-validation",
+  "parameters": [
+    {
+      "name": "stopOnErrors",
+      "label": "The WorkFlow stops on critical errors within data templates",
+      "description": "When TRUE the wrapper exits with code 1 if any critical validation error is found, allowing the Tesseract workflow to halt. Set to FALSE to always continue and only inspect the log.",
+      "defaultValue": "TRUE",
+      "type": "Boolean"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Excel data ZIP",
+      "path": "/mnt/inputs/allData.zip",
+      "description": "ZIP archive containing one or more Excel workbooks (.xlsx) to be validated. Each workbook must contain a sheet named 'data'. See data example templates to know how to fill these files"
+    },
+    {
+      "type": "Text",
+      "name": "input-config",
+      "label": "Table configuration",
+      "path": "/mnt/inputs/tables_config.txt",
+      "description": "JSON file that defines the validation rules for each table type: schema, critical/optional columns, no-negatives, expected ranges and regex formats."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Text",
+      "name": "output-log",
+      "label": "Validation log",
+      "path": "/mnt/outputs/validation_log.txt",
+      "description": "Plain-text report listing critical errors and warnings per file, or a success message when no issues are found."
+    },
+    {
+      "type": "Zip",
+      "name": "output-data",
+      "label": "Validated data ZIP",
+      "path": "/mnt/outputs/allData_validated.zip",
+      "description": "ZIP archive containing the same Excel files as the input, renamed with a 'validated_' prefix to confirm they have passed (or been inspected by) the validation step."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 1024,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 5
+  },
+  "tags": [
+    "validation",
+    "excel",
+    "data quality",
+    "lifewatch"
+  ],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "Eric Gazoni, Charlie Clark",
+      "citation": null
+    }
+  ],
+  "publicationDate": "Tue, 27 May 2025 00:00:00 GMT",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "validationUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}
