@@ -1,0 +1,75 @@
+{
+  "name": "Data2FinalReport",
+  "label": "Data to final report",
+  "description": "Selects the best available measurement per sample per month for ICP reporting and database ingestion. For each base SampleID / year / month group the selection logic is: (1) if the original sample (NOREP) passed validation, keep it; (2) if NOREP failed but its replicate (REP) passed, keep the REP; (3) if both NOREP and REP failed, keep NOREP (the replicate was attempted and both must be reported); (4) if NOREP failed and no REP exists, discard the sample. The output contains one row per sample per month with the final set of chemistry columns.",
+  "type": "DataProcessing",
+  "dockerImage": "lw-data2final-report",
+  "parameters": [],
+  "inputs": [
+    {
+      "type": "Text",
+      "name": "input-data",
+      "label": "All final data (Excel)",
+      "path": "/mnt/inputs/allFinalData.xlsx",
+      "description": "Excel file containing all validated water chemistry samples, produced by the WaterChemistryValidationReport wrapper. Must include a VAL column (SI/NO) and a SampleID column."
+    },
+    {
+      "type": "Text",
+      "name": "input-samples",
+      "label": "Samples typology file",
+      "path": "/mnt/inputs/samplesInfo.xlsx",
+      "description": "Excel file mapping each SampleID to its ICP programme metadata: ICP_Program, SamplingTypology, Instrument and ID_PostgreSQL. Required columns: SampleID. Optional: ICP_Program, SamplingTypology, Instrument, ID_PostgreSQL."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Text",
+      "name": "output-data",
+      "label": "Final report data (Excel)",
+      "path": "/mnt/outputs/data2report.xlsx",
+      "description": "Excel file containing the selected rows (one per sample per month) with the final chemistry columns ready for ICP reporting and database ingestion."
+    }
+  ],
+  "resources": {
+    "cores": 1,
+    "memory": 512,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 3
+  },
+  "tags": ["final report", "ICP", "water chemistry", "lifewatch"],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "Eric Gazoni, Charlie Clark",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2025-05-27",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "data2FinalReportUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

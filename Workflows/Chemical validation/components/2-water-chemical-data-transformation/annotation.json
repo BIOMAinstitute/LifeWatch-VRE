@@ -1,0 +1,75 @@
+{
+  "name": "WaterChemicalDataTransformation",
+  "label": "Water Chemical Data transformation",
+  "description": "Transforms validated Excel templates into analysis-ready CSV files. Computes weighted pH and conductivity for pH_COND files, calculates alkalinity via linear regression for ALKALINITY files, and consolidates AMMONIUM, ANIONS, CATIONS and DOC_TN files. Outputs one CSV per SiteCode per ICP subprogram.",
+  "type": "DataProcessing",
+  "dockerImage": "lw-data-transformation",
+  "parameters": [],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Validated data ZIP",
+      "path": "/mnt/inputs/allData_templates_format_validated.zip",
+      "description": "ZIP archive produced by the DataFormatValidation wrapper, containing validated Excel workbooks (.xlsx) with a 'data' sheet each."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Zip",
+      "name": "output-data",
+      "label": "Transformed data ZIP",
+      "path": "/mnt/outputs/level1.zip",
+      "description": "ZIP archive containing one tab-separated CSV per SiteCode per subprogram if have been analysed (ALKALINITY, pH_COND_WEIGHTED_RAW, AMMONIUM, ANIONS, CATIONS, DOC_TN)."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 1024,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 10
+  },
+  "tags": ["transformation", "excel", "alkalinity", "pH", "lifewatch"],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "Eric Gazoni, Charlie Clark",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2025-05-27",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "transformationUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}
