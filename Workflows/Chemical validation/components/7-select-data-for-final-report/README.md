@@ -113,14 +113,14 @@ None. The selection logic is fixed and deterministic.
 ## Local execution (Windows PowerShell)
 
 ```powershell
-cd "C:\path\to\7-data2final-report"
+cd "C:\path\to\7-select-data-for-final-report"
 
-docker build -t data2final-report:0.0.1 .
+docker build -t select-data-for-final-report:0.0.1 .
 
 docker run --rm `
   -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
   -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  data2final-report:0.0.1
+  select-data-for-final-report:0.0.1
 ```
 
 ## resources/example/data/execution-parameters.json
