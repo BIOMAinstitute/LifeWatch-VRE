@@ -1,5 +1,5 @@
 # Tesseract Wrapper Creation Guide
-## Internal reference — LifeWatch ERIC ICP-Forest workflow
+## Internal reference — LifeWatch ERIC ICP workflow
 
 This document captures everything needed to create new Tesseract wrappers
 for the LifeWatch ERIC platform, based on the ICP water chemistry workflow.
@@ -409,7 +409,25 @@ See `ICP_Workflow_Lifewatch.docx` for the full scientific description of each st
 
 ## 9. Key chemistry — what each validation checks and why
 
-### 9.1 Ionic balance (components 5 & 6)
+### 9.1 LOQ substitution (component 3)
+
+The Limit of Quantification (LOQ) is the minimum concentration a laboratory
+instrument can reliably measure. Values below the LOQ are not zero — they are
+simply below the detection threshold. The standard method in environmental
+chemistry is to replace them with LOQ/2, which preserves the information that
+the value is low without treating it as absent. Every substitution is logged
+for traceability.
+
+### 9.2 Unit conventions (component 4)
+
+Three unit representations are generated for every analyte:
+- **mg/l** — mass concentration (most common in templates)
+- **µg/l** — mass concentration at micro scale (trace metals)
+- **µeq/l** — equivalent concentration, charge-based (required for ion balance)
+
+Conversion from µeq/l to mg/l: `mg/l = µeq/l × (atomic or molecular weight / valence) / 1000`
+
+### 9.3 Ionic balance (components 5)
 
 In a chemically consistent water sample, the sum of positive ions (cations)
 should equal the sum of negative ions (anions). The IonsDiff% measures this:
@@ -425,7 +443,7 @@ Acceptable limits depend on conductivity (a proxy for ion concentration):
 A second version includes the estimated organic anion (Org-) in the anion sum,
 which is important for samples with high dissolved organic carbon (DOC).
 
-### 9.2 Organic anion estimation (Org-)
+### 9.4 Organic anion estimation (Org-) (components 5)
 
 Dissolved organic matter carries a negative charge that contributes to the
 anion balance but is not directly measured. It is estimated from DOC using
@@ -438,7 +456,7 @@ empirical relationships calibrated by sampling typology (ICP-Forest protocol):
 | THR (other throughfall) | Org- = 4.17 × DOC - 5.01 |
 | SW (soil water) | Org- = 9.80 × DOC |
 
-### 9.3 Conductivity check (component 5)
+### 9.5 Conductivity check (component 5)
 
 A theoretical conductivity is calculated from the measured ion concentrations
 using their equivalent conductances (Kohlrausch's law), then corrected for
@@ -451,7 +469,7 @@ theoretical value and the measured WeightedConductivity should be small:
 
 A large discrepancy indicates a missing or incorrectly measured ion.
 
-### 9.4 Na/Cl ratio (component 5)
+### 9.6 Na/Cl ratio (component 5)
 
 The ratio of sodium to chloride (in µeq/l) reflects the marine origin of
 these ions. In most European forest monitoring contexts, Na/Cl should be
@@ -459,30 +477,12 @@ close to the seawater ratio (~1.0). Acceptable range: [0.5, 1.5].
 Values outside this range suggest sea-salt influence, Na contamination,
 or analytical errors. Only checked for BOF, WET, THR and STF samples.
 
-### 9.5 OrgN check (component 5)
+### 9.7 OrgN check (component 5)
 
 Total Nitrogen (TN) must always be greater than or equal to the sum of its
 inorganic fractions: TN ≥ NO3-N + NH4-N. If this is violated it means TN
 was measured lower than the sum of its known components, which is chemically
 impossible and indicates a measurement error.
-
-### 9.6 LOQ substitution (component 3)
-
-The Limit of Quantification (LOQ) is the minimum concentration a laboratory
-instrument can reliably measure. Values below the LOQ are not zero — they are
-simply below the detection threshold. The standard method in environmental
-chemistry is to replace them with LOQ/2, which preserves the information that
-the value is low without treating it as absent. Every substitution is logged
-for traceability.
-
-### 9.7 Unit conventions
-
-Three unit representations are generated for every analyte:
-- **mg/l** — mass concentration (most common in templates)
-- **µg/l** — mass concentration at micro scale (trace metals)
-- **µeq/l** — equivalent concentration, charge-based (required for ion balance)
-
-Conversion from µeq/l to mg/l: `mg/l = µeq/l × (atomic or molecular weight / valence) / 1000`
 
 ---
 
