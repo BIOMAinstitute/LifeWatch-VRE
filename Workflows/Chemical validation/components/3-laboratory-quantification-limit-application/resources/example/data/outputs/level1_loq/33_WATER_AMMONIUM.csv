@@ -1,0 +1,37 @@
+SampleID	SiteCode	SiteName	StartDate	EndDate	year	month	NH4N(mg/l)	Comments
+33QPE INT	33	Cervera de Pisuerga		2025-01-28	2025	1	0.077	
+33QPE INT NIEVE	33	Cervera de Pisuerga		2025-01-28	2025	1	0.049	
+33QPE INT LIX 20	33	Cervera de Pisuerga		2025-01-28	2025	1		
+33QPE INT LIX 60	33	Cervera de Pisuerga		2025-01-28	2025	1		
+33QPE EXT	33	Cervera de Pisuerga		2025-01-28	2025	1	0.144	
+33QPE EXT NIEVE	33	Cervera de Pisuerga		2025-01-28	2025	1	0.02	
+33QPE INT	33	Cervera de Pisuerga		2025-02-27	2025	2	0.162	
+33QPE INT NIEVE	33	Cervera de Pisuerga		2025-02-27	2025	2	0.129	
+33QPE INT LIX 20	33	Cervera de Pisuerga		2025-02-27	2025	2		
+33QPE INT LIX 60	33	Cervera de Pisuerga		2025-02-27	2025	2		
+33QPE EXT	33	Cervera de Pisuerga		2025-02-27	2025	2	0.159	
+33QPE EXT NIEVE	33	Cervera de Pisuerga		2025-02-27	2025	2	0.198	
+33QPE INT	33	Cervera de Pisuerga		2025-03-24	2025	3	0.255	
+33QPE INT NIEVE	33	Cervera de Pisuerga		2025-03-24	2025	3	0.256	
+33QPE INT LIX 20	33	Cervera de Pisuerga		2025-03-24	2025	3		
+33QPE INT LIX 60	33	Cervera de Pisuerga		2025-03-24	2025	3		
+33QPE EXT	33	Cervera de Pisuerga		2025-03-24	2025	3	0.267	
+33QPE EXT NIEVE	33	Cervera de Pisuerga		2025-03-24	2025	3	0.228	
+33QPE INT	33	Cervera de Pisuerga		2025-04-24	2025	4	0.272	
+33QPE INT NIEVE	33	Cervera de Pisuerga		2025-04-24	2025	4	0.804	
+33QPE INT LIX 20	33	Cervera de Pisuerga		2025-04-24	2025	4		
+33QPE INT LIX 60	33	Cervera de Pisuerga		2025-04-24	2025	4		
+33QPE EXT	33	Cervera de Pisuerga		2025-04-24	2025	4	0.282	
+33QPE EXT NIEVE	33	Cervera de Pisuerga		2025-04-24	2025	4	0.227	
+33QPE INT	33	Cervera de Pisuerga		2025-05-23	2025	5	0.237	
+33QPE INT NIEVE	33	Cervera de Pisuerga		2025-05-23	2025	5	0.728	
+33QPE INT LIX 20	33	Cervera de Pisuerga		2025-05-23	2025	5		
+33QPE INT LIX 60	33	Cervera de Pisuerga		2025-05-23	2025	5		
+33QPE EXT	33	Cervera de Pisuerga		2025-05-23	2025	5	0.256	
+33QPE EXT NIEVE	33	Cervera de Pisuerga		2025-05-23	2025	5	0.14	
+33QPE INT	33	Cervera de Pisuerga		2025-06-16	2025	6	3.59304517	
+33QPE INT NIEVE	33	Cervera de Pisuerga		2025-06-16	2025	6		
+33QPE INT LIX 20	33	Cervera de Pisuerga		2025-06-16	2025	6		
+33QPE INT LIX 60	33	Cervera de Pisuerga		2025-06-16	2025	6		
+33QPE EXT	33	Cervera de Pisuerga		2025-06-16	2025	6	0.143	
+33QPE EXT NIEVE	33	Cervera de Pisuerga		2025-06-16	2025	6		

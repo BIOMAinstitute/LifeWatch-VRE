@@ -1,6 +1,5 @@
 *
 !.gitignore
-!level0/
-!level0/**
-!templates/
-!templates/**
+!level1/
+!level1/**
+!*.zip

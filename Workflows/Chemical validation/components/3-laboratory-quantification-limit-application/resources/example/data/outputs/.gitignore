@@ -1,6 +1,4 @@
 *
 !.gitignore
-!level0/
-!level0/**
-!templates/
-!templates/**
+!level1_loq/
+!level1_loq/**
