@@ -1,4 +1,4 @@
-## 1. Scientific context — ICP water chemistry workflow
+## 1. Scientific context ICP — water chemistry validation workflow
 
 ### 1.1 Background
 
