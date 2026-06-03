@@ -2,4 +2,4 @@
 !.gitignore
 !inputs
 !outputs
-!.json
+!*.json

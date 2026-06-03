@@ -1,0 +1,9 @@
+{
+  "parameters": [
+    {
+      "name": "stopOnErrors",
+      "defaultValue": "TRUE",
+      "value": "TRUE"
+    }
+  ]
+}
