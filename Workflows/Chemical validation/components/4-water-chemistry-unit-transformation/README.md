@@ -46,14 +46,14 @@ the built-in chemical constants (atomic weights, molecular weights, valences).
 ## Local execution (Windows PowerShell)
 
 ```powershell
-cd "C:\path\to\4-unit-transformation"
+cd "C:\path\to\4-water-chemistry-unit-transformation"
 
-docker build -t unit-transformation:0.0.1 .
+docker build -t water-chemistry-unit-transformation:0.0.1 .
 
 docker run --rm `
   -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
   -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  unit-transformation:0.0.1
+  water-chemistry-unit-transformation:0.0.1
 ```
 
 ## resources/example/data/execution-parameters.json
