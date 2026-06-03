@@ -1,0 +1,5 @@
+*
+!.gitignore
+!inputs
+!outputs
+!.json
