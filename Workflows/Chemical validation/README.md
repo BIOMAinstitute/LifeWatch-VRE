@@ -1,4 +1,4 @@
-## 1. Scientific context — ICP-Forest water chemistry workflow
+## 1. Scientific context — ICP water chemistry workflow
 
 ### 1.1 Background
 
@@ -146,7 +146,7 @@ See `ICP_Workflow_Lifewatch.docx` for the full scientific description of each st
             ▼
  ┌─────────────────────────────────────┐
  │  4. UnitTransformation              │  Level 1 → Level 1 (all units)
- │  Generates mg/l, µg/l, µeq/l       │
+ │  Generates mg/l, µg/l, µeq/l        │
  │  for every analyte                  │
  └─────────────────────────────────────┘
             │ water_chemical_data_level1_units.zip
@@ -207,7 +207,7 @@ Three unit representations are generated for every analyte:
 
 Conversion from µeq/l to mg/l: `mg/l = µeq/l × (atomic or molecular weight / valence) / 1000`
 
-### 3.3 Ionic balance (components 5)
+### 3.3 Ionic balance (component 5)
 
 In a chemically consistent water sample, the sum of positive ions (cations)
 should equal the sum of negative ions (anions). The IonsDiff% measures this:
@@ -223,7 +223,7 @@ Acceptable limits depend on conductivity (a proxy for ion concentration):
 A second version includes the estimated organic anion (Org-) in the anion sum,
 which is important for samples with high dissolved organic carbon (DOC).
 
-### 3.4 Organic anion estimation (Org-) (components 5)
+### 3.4 Organic anion estimation (Org-) (component 5)
 
 Dissolved organic matter carries a negative charge that contributes to the
 anion balance but is not directly measured. It is estimated from DOC using
