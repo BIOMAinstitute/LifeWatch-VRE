@@ -97,7 +97,7 @@ appended: `2025_02_ANIONS_REP.xlsx`.
 ### 1.6 SamplingTypology codes
 
 The `SamplingTypology` column in `samplesInfo.xlsx` drives several
-typology-specific calculations in the chemical validation step:
+typology-specific calculations in the chemical validation step. Depending on both the sample type and the forest type from which the sample was collected, certain validation limits, parameters, or constraints may vary slightly.:
 
 | Code | Meaning | Used for |
 |------|---------|---------|
@@ -111,9 +111,14 @@ typology-specific calculations in the chemical validation step:
 ### 1.7 SiteCode
 
 SiteCode identifies a monitoring plot. It is stored as a **column inside each
-Excel file**, not in the filename. Always group data by SiteCode from file
-content — never parse it from the filename. Each file may contain rows for
+Excel file**, not in the filename. Each file may contain rows for
 multiple SiteCodes.
+
+### 1.8 SampleID
+
+Each SampleID represents a unique laboratory sample corresponding to the final mixture defined during sample processing. Depending on the sampling methodology, collectors may be combined into a single mixture, grouped into several mixtures, or processed individually when only one collector is available. Therefore, the resulting mixture uniquely defines the SampleID.
+
+A given methodology may contain more than one sample. In methodologies such as pH/Conductivity, when a mixture includes more than one collector, the distinction between individual collectors is maintained through the Collector column in order to calculate the weighted mean, since all collectors belonging to the same mixture share the same SampleID. Collectors belonging to the same mixture also share the same value in the Group column.
 
 ---
 
