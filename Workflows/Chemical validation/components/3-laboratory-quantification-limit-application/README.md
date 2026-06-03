@@ -34,7 +34,7 @@ WaterChemicalDataTransformation  →  LoqApplication  →  UnitTransformation
 ## Parameters
 
 All 24 parameters are the LOQ values for each measurable element or compound.
-The defaults correspond to the detection limits of the ICP-Forest laboratory
+The defaults correspond to the detection limits of the ICP laboratory
 equipment at BIOMA – University of Navarra. **They can be changed if your
 laboratory uses different instruments with different detection limits.**
 
@@ -74,15 +74,14 @@ in the output files.
 ## Local execution (Windows PowerShell)
 
 ```powershell
-cd "C:\path\to\3-loq-application"
+cd "C:\path\to\3-laboratory-quantification-limit-application"
 
-docker build -t loq-application:0.0.1 .
+docker build -t laboratory-quantification-limit-application:0.0.1 .
 
 docker run --rm `
   -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
   -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  loq-application:0.0.1 `
-  --param_NH4N=0.04 --param_CA=0.15
+  laboratory-quantification-limit-application:0.0.1 `
 ```
 
 ## resources/example/data/execution-parameters.json
