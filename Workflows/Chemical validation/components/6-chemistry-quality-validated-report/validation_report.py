@@ -18,9 +18,13 @@
 # Charts included in the PDF:
 #   1. Failed validations by month (NOREP original vs REP replacement)
 #   2. Failed validation type breakdown
-#   3. Monthly failure rate (%)
-#   4. Validation outcome by non-repeated sample
-#   5. Validation outcome by repeated sample
+#   3. Failure rate heatmap by sampling typology and month
+#   4. Failure rate heatmap by sampling typology and validation criterion
+#   5. Validation outcome by sampling typology
+#   6. Failure rate by SiteCode and SiteName
+#   7. REP improvement rate by typology
+#   8. Failure rate by non-repeated sample
+#   9. Failure rate by repeated sample
 #
 # Input:  ZIP of validated CSVs  +  samplesInfo.xlsx
 # Output: PDF report  +  two Excel files
@@ -41,6 +45,7 @@ import matplotlib
 matplotlib.use("Agg")   # non-interactive backend - required inside Docker
 import matplotlib.pyplot as plt
 from fpdf import FPDF, XPos, YPos
+from PIL import Image
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill
 
@@ -257,19 +262,16 @@ def build_key_indicators(data):
         .replace({"NAN": pd.NA, "NONE": pd.NA, "": pd.NA})
     )
 
-    total   = len(df)
-    unique_samples  = df.get("SampleID_base", df["SampleID"]).nunique(dropna=True)
-    unique_sites    = df["SiteCode"].nunique(dropna=True) if "SiteCode" in df.columns else 0
-    periods         = df[["year", "month"]].drop_duplicates().shape[0] if {"year", "month"} <= set(df.columns) else 0
-    failed          = int((df["VAL"] == "NO").sum())
-    passed          = int((df["VAL"] == "SI").sum())
-    unknown         = int(df["VAL"].isna().sum())
-    failure_rate    = failed / total * 100 if total > 0 else 0
-    unique_failed   = df.loc[df["VAL"] == "NO"].get("SampleID_base", df.loc[df["VAL"] == "NO", "SampleID"]).nunique(dropna=True)
+    total        = len(df)
+    unique_sites = df["SiteCode"].nunique(dropna=True) if "SiteCode" in df.columns else 0
+    periods      = df[["year", "month"]].drop_duplicates().shape[0] if {"year", "month"} <= set(df.columns) else 0
+    failed       = int((df["VAL"] == "NO").sum())
+    passed       = int((df["VAL"] == "SI").sum())
+    unknown      = int(df["VAL"].isna().sum())
+    failure_rate = failed / total * 100 if total > 0 else 0
 
     return [
         ("Total records",     total),
-        ("Unique samples",    unique_samples),
         ("Sites",             unique_sites),
         ("Validated periods", periods),
         ("Failed records",    failed),
@@ -462,7 +464,71 @@ def create_validation_charts(data, charts_dir):
     chart_paths.append(path3)
 
     # ----------------------------------------------------------
-    # Chart 4 - Failures by SamplingTypology (only when typology info exists)
+    # Chart 4 - Heatmap: failure rate by typology x validation criterion
+    # Rows = sampling typology; columns = validation criteria.
+    # This complements the month heatmap by showing which validation
+    # rule is driving failures within each type of water sample.
+    # ----------------------------------------------------------
+    path4 = os.path.join(charts_dir, "chart_heatmap_typology_validation.png")
+
+    if has_typo_pre:
+        hv_df = actual_df[actual_df[type_col_pre].notna()].copy()
+        hv_df[type_col_pre] = hv_df[type_col_pre].astype(str).str.strip()
+
+        validation_rules_hm = {
+            "Ions balance Org": ("Ions balance Org", "NO"),
+            "Ratio Na/Cl":      ("Ratio Na/Cl",      "NO"),
+            "Conductivity":     ("Conductivity",     "NO"),
+            "OrgN":             ("OrgN",             "NO TN"),
+        }
+
+        rows = []
+        for typology, g in hv_df.groupby(type_col_pre):
+            total = len(g)
+            row = {type_col_pre: typology}
+            for label, (col, fail_value) in validation_rules_hm.items():
+                if col in g.columns and total > 0:
+                    failures = (g[col].astype(str).str.upper().str.strip() == fail_value).sum()
+                    row[label] = failures / total * 100
+                else:
+                    row[label] = np.nan
+            rows.append(row)
+
+        hv_rate = pd.DataFrame(rows).set_index(type_col_pre)
+        hv_rate = hv_rate[validation_rules_hm.keys()]
+        hv_rate = hv_rate.fillna(0)
+        hv_rate = hv_rate.loc[hv_rate.mean(axis=1).sort_values(ascending=False).index]
+
+        if not hv_rate.empty:
+            fig, ax = plt.subplots(figsize=(8, max(4, len(hv_rate.index) * 0.55)))
+            im = ax.imshow(hv_rate.values, aspect="auto", cmap="RdYlGn_r", vmin=0, vmax=100)
+
+            ax.set_xticks(range(len(hv_rate.columns)))
+            ax.set_xticklabels(hv_rate.columns, rotation=25, ha="right", fontsize=8)
+            ax.set_yticks(range(len(hv_rate.index)))
+            ax.set_yticklabels(hv_rate.index, fontsize=7)
+            ax.set_title("Failure rate (%) by typology and validation criterion")
+            ax.set_xlabel("Validation criterion")
+            ax.set_ylabel("Sampling typology")
+
+            for i in range(len(hv_rate.index)):
+                for j in range(len(hv_rate.columns)):
+                    val = hv_rate.values[i, j]
+                    ax.text(j, i, f"{val:.0f}%", ha="center", va="center",
+                            fontsize=7, color="black" if val < 60 else "white")
+
+            plt.colorbar(im, ax=ax, label="Failure rate (%)", fraction=0.04)
+            plt.tight_layout()
+            plt.savefig(path4, dpi=200, bbox_inches="tight")
+            plt.close()
+        else:
+            create_empty_chart(path4, "Failure rate by typology and validation criterion")
+    else:
+        create_empty_chart(path4, "Failure rate by typology and validation criterion (no typology data)")
+    chart_paths.append(path4)
+
+    # ----------------------------------------------------------
+    # Chart 5 - Failures by SamplingTypology (only when typology info exists)
     # ----------------------------------------------------------
     path4 = os.path.join(charts_dir, "chart_fail_by_typology.png")
 
@@ -543,7 +609,7 @@ def create_validation_charts(data, charts_dir):
     chart_paths.append(path4)
 
     # ----------------------------------------------------------
-    # Chart 5 - Top SiteCodes by failure rate (NOREP vs REP)
+    # Chart 6 - Top SiteCodes by failure rate (NOREP vs REP)
     # Shows which sites fail most. With 14 sites a horizontal bar
     # sorted by NOREP failure rate is readable. REP bar shown when
     # REP samples exist, allowing direct site-level comparison.
@@ -563,10 +629,28 @@ def create_validation_charts(data, charts_dir):
             g["FailRate"] = g["Failures"] / g["Total"].replace(0, np.nan) * 100
             return g
 
+        def _site_label_map(df):
+            if "SiteName" not in df.columns:
+                return {}
+            site_meta = (
+                df[["SiteCode", "SiteName"]]
+                .dropna(subset=["SiteCode"])
+                .drop_duplicates(subset=["SiteCode"], keep="first")
+            )
+            labels = {}
+            for _, r in site_meta.iterrows():
+                code = str(r["SiteCode"]).strip()
+                name = "" if pd.isna(r["SiteName"]) else str(r["SiteName"]).strip()
+                labels[r["SiteCode"]] = f"{code} - {name}" if name else code
+            return labels
+
+        site_labels = _site_label_map(actual_df)
+
         norep_site_g = _site_fail_rate(norep_site).sort_values("FailRate", ascending=True)
         site_order   = norep_site_g["SiteCode"].tolist()
+        y_labels     = [site_labels.get(code, str(code)) for code in site_order]
 
-        fig, ax = plt.subplots(figsize=(8, max(4.8, len(site_order) * 0.35)))
+        fig, ax = plt.subplots(figsize=(9.5, max(4.8, len(site_order) * 0.38)))
         y       = np.arange(len(site_order))
         height  = 0.35 if has_rep else 0.6
 
@@ -585,9 +669,9 @@ def create_validation_charts(data, charts_dir):
                     label="REP", color="#FFD6A5")
 
         ax.set_yticks(y)
-        ax.set_yticklabels(site_order, fontsize=8)
+        ax.set_yticklabels(y_labels, fontsize=7)
         ax.set_xlabel("Failure rate (%)")
-        ax.set_title("Failure rate by SiteCode" + (" (NOREP vs REP)" if has_rep else ""))
+        ax.set_title("Failure rate by SiteCode and SiteName" + (" (NOREP vs REP)" if has_rep else ""))
         ax.set_xlim(0, 105)
         ax.legend(fontsize=8)
         plt.tight_layout()
@@ -598,7 +682,7 @@ def create_validation_charts(data, charts_dir):
     chart_paths.append(path5)
 
     # ----------------------------------------------------------
-    # Chart 6 - REP improvement rate by typology
+    # Chart 7 - REP improvement rate by typology
     # Of the samples that FAILED as NOREP, shows per typology:
     #   - % where REP improved (NO -> SI)
     #   - % where REP did not improve (NO -> NO)
@@ -693,7 +777,7 @@ def create_validation_charts(data, charts_dir):
 
     # ----------------------------------------------------------
     # ----------------------------------------------------------
-    # Charts 7 & 8 - Failure rate ranking by SampleID
+    # Charts 8 & 9 - Failure rate ranking by SampleID
     # One bar per sample, sorted by failure rate % descending.
     # Bar colour is a red-green gradient based on failure rate.
     # Total records shown as annotation at end of each bar.
@@ -782,26 +866,105 @@ def create_validation_charts(data, charts_dir):
 # ============================================================
 
 def _draw_key_indicators_table(pdf, indicators, title):
-    """Renders a compact two-column key-indicators table."""
-    pdf.set_font("Helvetica", style="B", size=11)
-    pdf.cell(0, 7, title, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
+    """Renders a standard two-column key-indicators table."""
+    pdf.set_font("Helvetica", style="B", size=10)
+    pdf.cell(0, 6, title, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
     pdf.ln(1)
 
-    col_widths = [60, 30, 60, 30]
+    col_widths = [125, 35]
     pdf.set_font("Helvetica", style="B", size=8)
     pdf.set_fill_color(200, 220, 255)
-    for header, w in zip(["Metric", "Value", "Metric", "Value"], col_widths):
+    for header, w in zip(["Metric", "Value"], col_widths):
         pdf.cell(w, 5, header, border=1, align="C", fill=True)
     pdf.ln(5)
 
     pdf.set_font("Helvetica", size=8)
-    for i in range(0, len(indicators), 2):
-        left  = indicators[i]
-        right = indicators[i + 1] if i + 1 < len(indicators) else ("", "")
-        for text, w in zip([left[0], str(left[1]), right[0], str(right[1])], col_widths):
-            pdf.cell(w, 5, text, border=1)
+    for metric, value in indicators:
+        pdf.cell(col_widths[0], 5, str(metric), border=1)
+        pdf.cell(col_widths[1], 5, str(value), border=1, align="C")
         pdf.ln(5)
+    pdf.ln(2)
+
+
+def _draw_quality_notes(pdf):
+    """Adds interpretation notes for the quality criteria."""
+    pdf.set_x(pdf.l_margin)
+    pdf.set_font("Helvetica", style="B", size=10)
+    pdf.cell(0, 6, "Notes on the interpretation of quality criteria for ion balance and conductivity",
+             new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
+    pdf.ln(1)
+
+    notes = [
+        "a) Quality criteria for conductivity must always be satisfied (OK) for each type of sample: wet only, bulk open field, throughfall, stemflow, soil water and runoff.",
+        "b) Quality criteria for ion balance should be satisfied (OK) for open field samples (wet only and bulk) and runoff with low organic carbon concentrations. The ion balance criterion is not considered for throughfall and stemflow samples because of the presence of organic anions.",
+        "c) Quality criteria for ON must always be satisfied (OK) for each type of sample: open field, throughfall, stemflow, soil water and runoff.",
+        "d) Quality criteria for Na/Cl ratio (marine ratio = 0.86, accepted range 0.5-1.5) should be satisfied for each type of sample, excluding soil water and runoff samples.",
+    ]
+
+    pdf.set_font("Helvetica", size=7.5)
+    for note in notes:
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(0, 4.2, note, align="L", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.set_x(pdf.l_margin)
+    pdf.ln(2)
+
+
+def _draw_subprogrammes_table(pdf):
+    """Adds the ICP Forests water subprogrammes table."""
+    pdf.set_x(pdf.l_margin)
+    pdf.set_font("Helvetica", style="B", size=10)
+    pdf.cell(0, 6, "1.2 Water subprogrammes", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
+    pdf.ln(1)
+
+    headers = ["Subprogram", "Code", "Description"]
+    col_widths = [48, 18, 124]
+    rows = [
+        ("Precipitation Chemistry", "PC", "Bulk deposition in open areas - quantifies wet deposition inputs"),
+        ("Throughfall", "TF", "Water passing through the forest canopy - reflects canopy interactions"),
+        ("Stemflow", "SF", "Water flowing down tree stems - localised flux insights"),
+        ("Soil Water", "SW", "Soil solution chemistry - acidification and nitrogen dynamics"),
+        ("Runoff Water", "RW", "Catchment outflows - estimates element export via hydrology"),
+    ]
+
+    pdf.set_font("Helvetica", style="B", size=7.5)
+    pdf.set_fill_color(200, 220, 255)
+    for header, w in zip(headers, col_widths):
+        pdf.cell(w, 5, header, border=1, align="C", fill=True)
+    pdf.ln(5)
+
+    pdf.set_font("Helvetica", size=7.2)
+    for row in rows:
+        for value, w in zip(row, col_widths):
+            pdf.cell(w, 6, value, border=1)
+        pdf.ln(6)
     pdf.ln(3)
+
+def _place_image_fit(pdf, image_path, x, y, box_w, box_h, align="center"):
+    """Places an image inside a bounding box without distorting it."""
+    try:
+        with Image.open(image_path) as img:
+            img_w, img_h = img.size
+    except Exception:
+        pdf.image(image_path, x=x, y=y, w=box_w, h=box_h)
+        return
+
+    if img_w <= 0 or img_h <= 0:
+        pdf.image(image_path, x=x, y=y, w=box_w, h=box_h)
+        return
+
+    scale = min(box_w / img_w, box_h / img_h)
+    draw_w = img_w * scale
+    draw_h = img_h * scale
+
+    if align == "left":
+        draw_x = x
+    elif align == "right":
+        draw_x = x + (box_w - draw_w)
+    else:
+        draw_x = x + (box_w - draw_w) / 2
+
+    draw_y = y + (box_h - draw_h) / 2
+    pdf.image(image_path, x=draw_x, y=draw_y, w=draw_w, h=draw_h)
 
 
 def _draw_table_header(pdf, columns, col_widths):
@@ -828,9 +991,11 @@ def _draw_table_header(pdf, columns, col_widths):
 def generate_pdf_report(df_final, sampling_ty, chart_paths, output_path):
     """
     Assembles the multi-page PDF report:
-      Page 1: title, intro, key indicators, 3 summary charts
-      Page 2: chart 4 - validation by non-repeated sample
-      Page 3: chart 5 - validation by repeated sample (if REP exist)
+      Page 1: title, interpretation notes, water subprogrammes and key indicators
+      Page 2: graphical summary heatmaps and overview charts
+      Page 3: additional graphical summary charts
+      Page 4: validation by non-repeated sample
+      Page 5: validation by repeated sample (if REP exist)
       Page N: colour-coded detailed validation table
     """
     data = prepare_report_data(df_final)
@@ -890,77 +1055,80 @@ def generate_pdf_report(df_final, sampling_ty, chart_paths, output_path):
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
 
-    # ---- Page 1 ----
+    # ---- Page 1 - introduction, interpretation notes and key indicators ----
     pdf.add_page()
     pdf.set_font("Helvetica", style="B", size=16)
     pdf.cell(200, 10, "WATER CHEMICAL VALIDATION REPORT FOR ICP SAMPLES", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
-    pdf.ln(8)
+    pdf.ln(4)
 
-    pdf.set_font("Helvetica", size=11)
-    pdf.multi_cell(0, 8,
+    pdf.set_font("Helvetica", size=9)
+    pdf.multi_cell(0, 5,
         "This report summarises the validation results of water sample data. "
         "It compares the original non-repeated sample validation results against "
         "a scenario where the validation results are replaced by their replicate (REP) "
         "counterparts when a REP exists. The comparison keeps the same number of samples "
         "in both scenarios. Separate charts are also provided for all samples and "
         "replicate-only samples.",
-        align="J"
+        align="J",
+        new_x=XPos.LMARGIN,
+        new_y=YPos.NEXT
     )
-    pdf.ln(4)
+    pdf.set_x(pdf.l_margin)
+    pdf.ln(2)
+
+    _draw_quality_notes(pdf)
+    _draw_subprogrammes_table(pdf)
 
     _draw_key_indicators_table(pdf, ind_norep, "Key Indicators - NOREP Original")
     if has_rep:
-        _draw_key_indicators_table(pdf, ind_rep,   "Key Indicators - NOREP Replaced by REP")
+        _draw_key_indicators_table(pdf, ind_rep, "Key Indicators - NOREP Replaced by REP")
 
+    # ---- Page 2 - graphical summary: overview and heatmaps ----
+    pdf.add_page()
     pdf.set_font("Helvetica", style="B", size=14)
-    pdf.cell(0, 10, "Graphical Summary", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
+    pdf.cell(0, 10, "Graphical Summary - Overview and Heatmaps", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
     pdf.ln(2)
 
-    # 3x2 grid layout on page 1 (w=88, h=42 each to fit 3 rows):
-    #   Row 1: [chart 1 - fails by month     ]  [chart 2 - failure type          ]
-    #   Row 2: [chart 4 - typology stacked   ]  [chart 3 - heatmap typo x month  ]
-    #   Row 3: [chart 5 - fail rate sitecode ]  [chart 6 - REP improvement       ]
-    type_col_check = "Type" if "Type" in data.columns else None
-    has_typology_pdf = (
-        type_col_check is not None and
-        data[type_col_check].notna().any() and
-        (data[type_col_check].astype(str).str.strip() != "").any()
-    )
-
-    W = 88   # chart width
-    H = 42   # chart height — slightly reduced to fit 3 rows
-    G = 6    # vertical gap between rows
-
+    W = 88
+    H = 76
+    G = 10
     y0 = pdf.get_y()
     y1 = y0 + H + G
-    y2 = y1 + H + G
 
-    # Row 1 — always shown
-    pdf.image(chart_paths[0], x=10,  y=y0, w=W, h=H)
-    pdf.image(chart_paths[1], x=110, y=y0, w=W, h=H)
+    _place_image_fit(pdf, chart_paths[0], x=10,  y=y0, box_w=W, box_h=H)   # failed validations by month
+    _place_image_fit(pdf, chart_paths[1], x=110, y=y0, box_w=W, box_h=H)   # failure type breakdown
+    _place_image_fit(pdf, chart_paths[2], x=10,  y=y1, box_w=W, box_h=H)   # heatmap typology x month
+    _place_image_fit(pdf, chart_paths[3], x=110, y=y1, box_w=W, box_h=H)   # heatmap typology x validation criterion
 
-    # Row 2 — typology charts (shown when typology data exists, else empty slots)
-    pdf.image(chart_paths[3], x=10,  y=y1, w=W, h=H)  # stacked typology
-    pdf.image(chart_paths[2], x=110, y=y1, w=W, h=H)  # heatmap
+    # ---- Page 3 - graphical summary: typology, SiteCode/SiteName and REP improvement ----
+    pdf.add_page()
+    pdf.set_font("Helvetica", style="B", size=14)
+    pdf.cell(0, 10, "Graphical Summary - Typology, Site and REP Effects", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
+    pdf.ln(2)
 
-    # Row 3 — sitecode + improvement
-    pdf.image(chart_paths[4], x=10,  y=y2, w=W, h=H)  # sitecode failure rate
-    pdf.image(chart_paths[5], x=110, y=y2, w=W, h=H)  # REP improvement
+    W2 = 88
+    H2 = 72
+    y0 = pdf.get_y()
+    y1 = y0 + H2 + 12
 
-    # ---- Page 2 - outcome by non-repeated sample ----
+    _place_image_fit(pdf, chart_paths[4], x=10,  y=y0, box_w=W2, box_h=H2)   # validation outcome by typology
+    _place_image_fit(pdf, chart_paths[5], x=110, y=y0, box_w=W2, box_h=H2)   # failure rate by SiteCode + SiteName
+    _place_image_fit(pdf, chart_paths[6], x=10,  y=y1, box_w=188, box_h=H2)  # REP improvement by typology
+
+    # ---- Page 4 - outcome by non-repeated sample ----
     pdf.add_page()
     pdf.set_font("Helvetica", style="B", size=14)
     pdf.cell(0, 10, "Validation Outcome by Non-Repeated Samples", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
     pdf.ln(3)
-    pdf.image(chart_paths[6], x=10, y=pdf.get_y(), w=190)
+    _place_image_fit(pdf, chart_paths[7], x=10, y=pdf.get_y(), box_w=190, box_h=240)
 
-    # ---- Page 3 - outcome by repeated sample (only if REP exist) ----
+    # ---- Page 5 - outcome by repeated sample (only if REP exist) ----
     if has_rep:
         pdf.add_page()
         pdf.set_font("Helvetica", style="B", size=14)
         pdf.cell(0, 10, "Validation Outcome by Repeated Samples", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="L")
         pdf.ln(3)
-        pdf.image(chart_paths[7], x=10, y=pdf.get_y(), w=190)
+        _place_image_fit(pdf, chart_paths[8], x=10, y=pdf.get_y(), box_w=190, box_h=240)
 
     # ---- Detailed table ----
     pdf.add_page()
