@@ -174,41 +174,38 @@ correctly identified as REP samples of the same base.
 
 ## Monthly composite samples
 
-After the NOREP/REP selection step, the script checks whether more than one
-sample exists for the same `(SampleID, year, month)` combination.
+After the NOREP/REP selection step, the script checks whether more than one selected sample exists for the same `SiteCode`, `SiteName`, `year` and `month` combination.
 
-When multiple samples are available within the same month, they are merged
-into a single monthly composite sample using **volume-weighted averaging**.
-This situation may occur when a monthly sample is represented by more than
-one collection bottle or analytical record.
+When multiple selected samples are available for the same site and month, they are merged into a single monthly composite sample using **volume-weighted averaging**. This situation may occur when a monthly sample is represented by more than one collection bottle or analytical record.
+
+The resulting output contains one representative row per `SiteCode`, `SiteName`, `year` and `month`.
 
 ---
 
 ### Weighting principle
 
-For all concentration-based variables (e.g. mg/L, µeq/L, µS/cm), the final
-monthly value is calculated as:
+For all concentration-based variables, including values expressed as `mg/L`, `µeq/L` or `µS/cm`, the final monthly value is calculated as:
 
-[
-C_{final}=\frac{\sum(C_i \times V_i)}{\sum V_i}
-]
+$$
+C_{final} = \frac{\sum_i C_i \times V_i}{\sum_i V_i}
+$$
 
 where:
 
-* (C_i) = measured concentration in sample *i*
-* (V_i) = collected sample volume (`Volume(ml)`) for sample *i*
+* $C_i$ = measured concentration in sample `i`
+* $V_i$ = collected sample volume, using `Volume(ml)`, for sample `i`
 
-The final volume is:
+The final volume is calculated as:
 
-[
-V_{final}=\sum V_i
-]
+$$
+V_{final} = \sum_i V_i
+$$
 
 ---
 
 ### Variables combined by volume-weighted averaging
 
-The following variables are combined using the formula above:
+The following variables are combined using volume-weighted averaging:
 
 * `CL(mg/l)`
 * `SO4S(mg/l)`
@@ -241,34 +238,64 @@ The following variables are combined using the formula above:
 
 ---
 
+### Variables summed directly
+
+The following variables are summed directly:
+
+* `Volume(ml)`
+* `Precip(l/m2)`
+
+---
+
 ### pH calculation
 
 Because pH is a logarithmic variable, it is **not averaged directly**.
 
-The script uses the hydrogen ion concentration (`H(µeq/l)`) to calculate the
-final pH. First, a volume-weighted average of `H(µeq/l)` is calculated:
+The script first converts each `WeightedpH` value into hydrogen ion concentration:
 
-[
-H_{final}
-=========
+$$
+[H^+]_i = 10^{-pH_i}
+$$
 
-\frac{\sum(H_i \times V_i)}
-{\sum V_i}
-]
+Then it calculates the volume-weighted hydrogen ion concentration:
 
-The resulting weighted hydrogen concentration is then converted back to pH:
+$$
+[H^+]_{final} = \frac{\sum_i [H^+]_i \times V_i}{\sum_i V_i}
+$$
 
-[
-pH_{final}
-==========
+Finally, the weighted hydrogen ion concentration is converted back to pH:
 
--\log_{10}(H_{final} \times 10^{-6})
-]
+$$
+pH_{final} = -\log_{10}([H^+]_{final})
+$$
 
-where (H_{final}) is expressed in µeq/L.
+This approach ensures that the resulting pH is chemically consistent with the mixed sample.
 
-This approach ensures that the resulting pH is chemically consistent with the
-mixed sample.
+---
+
+### Final SampleID
+
+After the monthly composite step, the final `SampleID` is regenerated using information from `samplesInfo.xlsx`.
+
+The format is:
+
+```text
+SiteCode_SamplingTypology_Instrument
+```
+
+Spaces are removed from `SamplingTypology`. The `Instrument` part is only added when it is not empty.
+
+Example with instrument:
+
+```text
+ES01_BulkDeposition_ICP
+```
+
+Example without instrument:
+
+```text
+ES01_BulkDeposition
+```
 
 ---
 
@@ -279,27 +306,25 @@ mixed sample.
 | A      | 7380        | 0.4461    |
 | B      | 8915        | 0.4277    |
 
-The combined concentration is:
+The combined chloride concentration is:
 
-[
-Cl_{final}
-==========
-
+$$
+Cl_{final} =
 \frac{0.4461 \times 7380 + 0.4277 \times 8915}
 {7380 + 8915}
-=============
+$$
 
-0.4360 \text{ mg/L}
-]
+$$
+Cl_{final} = 0.4360 \text{ mg/L}
+$$
 
-and the final volume is:
+The final volume is:
 
-[
-16295 \text{ mL}
-]
+$$
+V_{final} = 7380 + 8915 = 16295 \text{ mL}
+$$
 
-The resulting output contains a single row for the month, representing the
-volume-weighted composite sample.
+The resulting output contains a single row for that site and month, representing the volume-weighted monthly composite sample.
 
 
 ## Notes
