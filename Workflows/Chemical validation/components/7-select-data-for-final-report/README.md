@@ -172,6 +172,136 @@ correctly identified as REP samples of the same base.
 
 ---
 
+## Monthly composite samples
+
+After the NOREP/REP selection step, the script checks whether more than one
+sample exists for the same `(SampleID, year, month)` combination.
+
+When multiple samples are available within the same month, they are merged
+into a single monthly composite sample using **volume-weighted averaging**.
+This situation may occur when a monthly sample is represented by more than
+one collection bottle or analytical record.
+
+---
+
+### Weighting principle
+
+For all concentration-based variables (e.g. mg/L, µeq/L, µS/cm), the final
+monthly value is calculated as:
+
+[
+C_{final}=\frac{\sum(C_i \times V_i)}{\sum V_i}
+]
+
+where:
+
+* (C_i) = measured concentration in sample *i*
+* (V_i) = collected sample volume (`Volume(ml)`) for sample *i*
+
+The final volume is:
+
+[
+V_{final}=\sum V_i
+]
+
+---
+
+### Variables combined by volume-weighted averaging
+
+The following variables are combined using the formula above:
+
+* `CL(mg/l)`
+* `SO4S(mg/l)`
+* `NO3N(mg/l)`
+* `PO4P(mg/l)`
+* `CA(mg/l)`
+* `MG(mg/l)`
+* `NA(mg/l)`
+* `K(mg/l)`
+* `AL(mg/l)`
+* `FE(mg/l)`
+* `MN(mg/l)`
+* `AS(mg/l)`
+* `CD(mg/l)`
+* `CR(mg/l)`
+* `CU(mg/l)`
+* `CO(mg/l)`
+* `MO(mg/l)`
+* `NI(mg/l)`
+* `PB(mg/l)`
+* `ZN(mg/l)`
+* `P(mg/l)`
+* `S(mg/l)`
+* `NH4N(mg/l)`
+* `TN(mg/l)`
+* `DOC(mg/l)`
+* `H(µeq/l)`
+* `WeightedConductivity(µS/cm)`
+* `AlkalinityICPForests(µeq/l)`
+
+---
+
+### pH calculation
+
+Because pH is a logarithmic variable, it is **not averaged directly**.
+
+The script uses the hydrogen ion concentration (`H(µeq/l)`) to calculate the
+final pH. First, a volume-weighted average of `H(µeq/l)` is calculated:
+
+[
+H_{final}
+=========
+
+\frac{\sum(H_i \times V_i)}
+{\sum V_i}
+]
+
+The resulting weighted hydrogen concentration is then converted back to pH:
+
+[
+pH_{final}
+==========
+
+-\log_{10}(H_{final} \times 10^{-6})
+]
+
+where (H_{final}) is expressed in µeq/L.
+
+This approach ensures that the resulting pH is chemically consistent with the
+mixed sample.
+
+---
+
+### Example
+
+| Sample | Volume (mL) | Cl (mg/L) |
+| ------ | ----------- | --------- |
+| A      | 7380        | 0.4461    |
+| B      | 8915        | 0.4277    |
+
+The combined concentration is:
+
+[
+Cl_{final}
+==========
+
+\frac{0.4461 \times 7380 + 0.4277 \times 8915}
+{7380 + 8915}
+=============
+
+0.4360 \text{ mg/L}
+]
+
+and the final volume is:
+
+[
+16295 \text{ mL}
+]
+
+The resulting output contains a single row for the month, representing the
+volume-weighted composite sample.
+
+
 ## Notes
 
 - The output always contains the full fixed set of 36 chemistry columns

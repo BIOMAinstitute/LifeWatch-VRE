@@ -170,7 +170,7 @@ See `ICP_Workflow_Lifewatch.docx` for the full scientific description of each st
  │  PDF report, Samples2Repeat.xlsx,   │
  │  allFinalData.xlsx                  │
  └─────────────────────────────────────┘
-            │ allFinalData.xlsx
+            │ All_Validated_Data.xlsx
             │ Samples2Repeat.xlsx
             │ validation_report.pdf
             ▼
@@ -179,7 +179,7 @@ See `ICP_Workflow_Lifewatch.docx` for the full scientific description of each st
  │  NOREP/REP selection logic,         │
  │  one row per sample per month       │
  └─────────────────────────────────────┘
-            │ data2report.xlsx (Level 3)
+            │ Final_Data.xlsx (Level 3)
 ```
 
 **External inputs shared across multiple components:**

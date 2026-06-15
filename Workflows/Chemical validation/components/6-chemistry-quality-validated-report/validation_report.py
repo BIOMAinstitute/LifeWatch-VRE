@@ -58,7 +58,7 @@ input_zip_path     = "/mnt/inputs/water_chemical_data_level2_validated.zip"
 input_samples_path = "/mnt/inputs/samplesInfo.xlsx"
 output_pdf_path    = "/mnt/outputs/validation_report.pdf"
 output_repeat_path = "/mnt/outputs/Samples2Repeat.xlsx"
-output_all_path    = "/mnt/outputs/allFinalData.xlsx"
+output_all_path    = "/mnt/outputs/All_Validated_Data.xlsx"
 
 # Temporary directories
 extract_dir = "/tmp/input/level2_validated"
