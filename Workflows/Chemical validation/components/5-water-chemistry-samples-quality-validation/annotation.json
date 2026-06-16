@@ -64,7 +64,7 @@
       "description": "ZIP archive containing tab-separated CSV files with water chemistry data after unit transformation (mg/l, µg/l, µeq/l), one per SiteCode per subprogram. Produced by the UnitTransformation wrapper."
     },
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "input-samples",
       "label": "Samples typology file",
       "path": "/mnt/inputs/samplesInfo.xlsx",

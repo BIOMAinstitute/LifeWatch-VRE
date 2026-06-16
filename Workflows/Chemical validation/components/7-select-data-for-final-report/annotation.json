@@ -7,14 +7,14 @@
   "parameters": [],
   "inputs": [
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "input-data",
       "label": "All final data (Excel)",
       "path": "/mnt/inputs/All_Validated_Data.xlsx",
       "description": "Excel file containing all validated water chemistry samples, produced by the WaterChemistryValidationReport wrapper. Must include a VAL column (SI/NO) and a SampleID column."
     },
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "input-samples",
       "label": "Samples typology file",
       "path": "/mnt/inputs/samplesInfo.xlsx",
@@ -23,14 +23,14 @@
   ],
   "outputs": [
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "output-data",
       "label": "Final report data (Excel)",
       "path": "/mnt/outputs/data2report.xlsx",
       "description": "Excel file containing the selected rows (one per sample per month) with the final chemistry columns ready for ICP reporting and database ingestion."
     },
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "output-data",
       "label": "Final report data (Excel)",
       "path": "/mnt/outputs/Final_Data.xlsx",

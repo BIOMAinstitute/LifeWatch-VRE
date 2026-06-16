@@ -14,7 +14,7 @@
       "description": "ZIP archive containing the validated tab-separated CSV files (one per SiteCode) produced by the WaterChemistryValidation wrapper. Each CSV must include the FINAL_VALIDATION column and the quality indicator columns."
     },
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "input-samples",
       "label": "Samples typology file",
       "path": "/mnt/inputs/samplesInfo.xlsx",
@@ -23,24 +23,24 @@
   ],
   "outputs": [
     {
-      "type": "Text",
+      "type": "Bin",
       "name": "output-pdf",
       "label": "Validation report PDF",
       "path": "/mnt/outputs/validation_report.pdf",
       "description": "Multi-page PDF report containing: key indicators summary, five validation charts (failed validations by month, failure type breakdown, monthly failure rate, outcome by non-repeated sample, outcome by repeated sample) and a colour-coded detailed validation table per sample."
     },
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "output-repeat",
       "label": "Samples to repeat (Excel)",
       "path": "/mnt/outputs/Samples2Repeat.xlsx",
       "description": "Excel file containing only the samples that failed validation (FINAL_VALIDATION = NO), sorted by year, month and SampleID. Empty cells are highlighted in red."
     },
     {
-      "type": "Text",
+      "type": "TabularDataSet",
       "name": "output-all",
       "label": "All final data (Excel)",
-      "path": "/mnt/outputs/allFinalData.xlsx",
+      "path": "/mnt/outputs/All_Validated_Data.xlsx",
       "description": "Excel file containing all samples regardless of validation outcome, with the same column layout and red highlighting for missing values."
     }
   ],
