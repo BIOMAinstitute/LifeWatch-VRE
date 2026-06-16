@@ -19,7 +19,7 @@
       "type": "Zip",
       "name": "output-data",
       "label": "Transformed data ZIP",
-      "path": "/mnt/outputs/level1.zip",
+      "path": "/mnt/outputs/water_chemical_data_level1.zip",
       "description": "ZIP archive containing one tab-separated CSV per SiteCode per subprogram if have been analysed (ALKALINITY, pH_COND_WEIGHTED_RAW, AMMONIUM, ANIONS, CATIONS, DOC_TN)."
     }
   ],

@@ -173,7 +173,7 @@ side by side — the `allData` output.
 
 ### Step B — Fill replicate (REP) samples
 
-Replicate samples (SampleID ending in `REP`) often lack some metadata columns
+Replicate samples (SampleID ending in `REP`) often lack some data columns
 because only the parameters that were re-analysed are recorded in the REP file.
 For each group sharing the same `(SiteCode, year, month, base SampleID)`,
 if a REP row has NaN in a column where the base NOREP row has a value, the
