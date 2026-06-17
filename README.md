@@ -21,7 +21,9 @@ Two complementary international monitoring programmes address this need under th
 
 Spain participates in both programmes through the **Ministry for Ecological Transition and the Demographic Challenge (MITECO)** in coordination with BIOMA — Institute of Biodiversity and Environmental Management at the **University of Navarra**.
 
-## The 14 Spanish Level-II Plots
+## The Spanish Monitoring Network
+
+### ICP Forests — 14 Level-II Plots
 
 The Spanish ICP Forests network includes 14 intensive Level-II monitoring plots distributed across the main forest biomes of the Iberian Peninsula, covering a climatic gradient from the Atlantic north (Galicia, Navarra, País Vasco) to the Mediterranean south and east (Andalucía, Valencia, Murcia) and the continental interior (Castilla y León, Aragón):
 
@@ -44,15 +46,15 @@ The Spanish ICP Forests network includes 14 intensive Level-II monitoring plots 
 
 Each plot collects water samples from multiple subprogrammes every month, generating a large volume of analytical data that feeds directly into European-scale assessments.
 
-## The ICP IM Station ES02 — Bertiz (Navarra)
+### ICP Integrated Monitoring — Station ES02 (Bertiz, Navarra)
 
 The Spanish ICP Integrated Monitoring station **ES02** is located in the **Señorío de Bertiz Natural Park** in Navarra, within an Atlantic mixed forest dominated by *Quercus robur*, *Alnus glutinosa* and *Fraxinus excelsior*. It is operated by BIOMA and has been active since the early 1990s, making it one of the longest continuous integrated monitoring records in southern Europe.
 
-Unlike the ICP Forests Level-II plots — which focus on a single forest stand — ES02 operates at the **catchment scale**, tracking the full water and element budget from atmospheric input to stream output. All water subprogrammes are active at ES02, plus runoff water from the gauged catchment outlet.
+Unlike the ICP Forests Level-II plots — which focus on a single forest stand — ES02 operates at the **catchment scale**, tracking the full water and element budget from atmospheric input to stream output. All five water subprogrammes are active at ES02, including runoff water from the gauged catchment outlet.
 
-| Station | Name | Programme | Region | Catchment area | Main vegetation |
-|---------|------|-----------|--------|---------------|-----------------|
-| ES02 | Bertiz | ICP Integrated Monitoring | Navarra | ~100 ha | *Quercus robur*, *Alnus glutinosa*, *Fraxinus excelsior* |
+| Station | Name | Programme | Region | Main vegetation |
+|---------|------|-----------|--------|-----------------|
+| ES02 | Bertiz | ICP Integrated Monitoring | Navarra | *Quercus robur*, *Alnus glutinosa*, *Fraxinus excelsior* |
 
 The same analytical templates and data processing pipeline used for ICP Forests Level-II plots apply to ES02. The `ICP_Program` column in `samplesInfo.xlsx` distinguishes between `ICP-Forest` and `ICP-IM` samples, allowing the pipeline to process both networks simultaneously within the same workflow execution.
 
@@ -110,13 +112,13 @@ The complete lifecycle of an ICP monitoring data point spans four distinct conce
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │  STAGE 1         STAGE 2              STAGE 3             STAGE 4            │
 │  COLLECTION  →   VALIDATION       →   INTEGRATION     →   ANALYSIS           │
-│                                                                               │
-│  Field &         Quality control,     Database             Trend analysis,    │
-│  laboratory      anomaly screening,   update,              load calculations, │
-│  templates       NOREP/REP            satellite            cross-site         │
-│                  selection            data fusion          comparisons        │
-│                                                                               │
-│  Workflow 1      Workflow 2           Workflow 3           Workflow 4         │
+│                                                                              │
+│  Field &         Quality control,     Database             Trend analysis,   │
+│  laboratory      anomaly screening,   update,              load calculations,│
+│  templates       NOREP/REP            satellite            cross-site        │
+│                  selection            data fusion          comparisons       │
+│                                                                              │
+│  Workflow 1      Workflow 1         Workflow 2+3           Workflow 4        │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -263,119 +265,6 @@ Two external files are required by multiple workflows and must be maintained and
 | `ID_PostgreSQL` | Database record key |
 
 **`tables_config.txt`** — JSON array defining the validation rules applied in Workflow 1, Step 1. One entry per template type, specifying expected columns, data types, critical columns, no-negative constraints, allowed ranges and regex formats.
-
----
-
-# Usage
-
-## Running a Workflow
-
-All workflows are available from the LifeWatch VRE at `beta.my.lifewatch.dev/vre`. Log in with your LifeWatch account and navigate to the **BIOMA ICP** virtual research environment.
-
-### Workflow 1 — Data Validation
-
-```
-Inputs required:
-  /mnt/inputs/allData.zip           — ZIP of completed Excel templates (Level 0)
-  /mnt/inputs/tables_config.txt     — Validation configuration JSON
-  /mnt/inputs/samplesInfo.xlsx      — Sample metadata (required from Step 5 onwards)
-
-Key parameters (Step 5):
-  param_ionsdiff_low_k   = 20.0   (IonsDiff% limit for EC ≤ 20 µS/cm)
-  param_ionsdiff_high_k  = 10.0   (IonsDiff% limit for EC > 20 µS/cm)
-  param_conddiff_low_1   = 30.0   (CondDiff% limit for EC ≤ 10 µS/cm)
-  param_conddiff_low_2   = 20.0   (CondDiff% limit for 10 < EC ≤ 20 µS/cm)
-  param_conddiff_high    = 10.0   (CondDiff% limit for EC > 20 µS/cm)
-  param_ratio_nacl_low   = 0.5    (Na/Cl lower bound)
-  param_ratio_nacl_high  = 1.5    (Na/Cl upper bound)
-
-LOQ parameters (Step 3): 24 element-specific parameters — see component documentation.
-
-Primary outputs:
-  validation_log.txt                  — Format check report (Step 1)
-  water_chemical_data_level2_validated.zip — Validated CSV per SiteCode (Step 5)
-  validation_report.pdf               — QC summary report (Step 6)
-  Samples2Repeat.xlsx                 — Samples requiring re-analysis (Step 6)
-  allFinalData.xlsx                   — All validated samples (Step 6)
-  data2report.xlsx                    — Level-3 reporting dataset (Step 7)
-```
-
-### Workflow 2 — Outlier Detection and Database Update
-
-```
-Inputs required:
-  /mnt/inputs/allFinalData.xlsx     — Level-3 validated data from Workflow 1
-  /mnt/inputs/samplesInfo.xlsx      — Sample metadata
-
-Outputs:
-  outlier_report.xlsx               — Flagged samples for expert review
-  database_update_log.txt           — Record of ingested samples
-```
-
-### Workflow 3 — Multi-Source Data Integration
-
-```
-Inputs required:
-  Validated Level-3 chemistry data
-  Area of Interest (AOI) spatial boundary
-  Date range for satellite image retrieval
-
-Outputs:
-  Harmonised analysis-ready dataset combining chemistry, spectral indices
-  and environmental covariates
-```
-
-### Workflow 4 — Environmental Analysis
-
-```
-Inputs required:
-  Integrated dataset from Workflow 3 (or directly from Workflow 2)
-
-Outputs:
-  Trend analysis tables and plots
-  Deposition load summaries
-  Cross-site comparison figures
-```
-
-## Local Execution (Workflow 1)
-
-All Tesseract wrappers can be built and run locally using Docker. Workflow 1 components are available as individual Docker images:
-
-```bash
-# Build a component
-docker build -t input-data-format-validation:0.0.1 .
-
-# Run with example data (Windows PowerShell)
-docker run --rm `
-  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
-  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  input-data-format-validation:0.0.1
-```
-
----
-
-# Repository Structure
-
-```
-lifewatch-vre/Workflows/Chemical validation/
-├── components/
-│   ├── 1-input-data-format-validation/
-│   │   ├── annotation.json
-│   │   ├── data_format_validation.py
-│   │   ├── Dockerfile
-│   │   ├── requirements.txt
-│   │   ├── README.md
-│   │   └── resources/example/data/
-│   │       ├── inputs/
-│   │       └── execution-parameters.json
-│   ├── 2-water-chemical-data-transformation/
-│   ├── 3-loq-application/
-│   ├── 4-unit-transformation/
-│   ├── 5-water-chemistry-validation/
-│   ├── 6-water-chemistry-validation-report/
-│   └── 7-data2final-report/
-└── README.Rmd     ← this file
-```
 
 ---
 
