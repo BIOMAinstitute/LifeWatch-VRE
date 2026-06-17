@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICP Programs Workflow — LifeWatch ERIC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest:   #1B3A2D;
+    --water:    #0D4A6B;
+    --amber:    #C17D3C;
+    --fog:      #E8EDE9;
+    --paper:    #FAFAFA;
+    --ink:      #1A1E1B;
+    --mid:      #5A6B5E;
+    --border:   #C8D4CA;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--forest);
+    background-image:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(13,74,107,0.45) 0%, transparent 70%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    color: white;
+    padding: 64px 48px 56px;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: 1.15;
+    max-width: 640px;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: rgba(193,125,60,0.9);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.07);
+  }
+
+  .badge span { font-size: 14px; }
+
+  /* ── ALIGNMENT STRIP ── */
+  .alignment {
+    background: var(--fog);
+    padding: 24px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .alignment-inner {
+    max-width: none;
+    margin: 0;
+  }
+
+  .alignment-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 14px;
+  }
+
+  .alignment-items {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .alignment-item {
+    padding: 0 28px 0 0;
+    margin-right: 28px;
+    border-right: 1px solid var(--border);
+  }
+  .alignment-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+
+  .alignment-item-tag {
+    display: inline-block;
+    background: var(--water);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+  }
+
+  .alignment-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--forest);
+    display: block;
+  }
+
+  .alignment-item-sub {
+    font-size: 11px;
+    color: var(--mid);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    padding: 56px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── WORKFLOW SECTION ── */
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--forest);
+    margin-bottom: 8px;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--mid);
+    max-width: 620px;
+    margin-bottom: 40px;
+  }
+
+  /* ── WORKFLOW CARDS ── */
+  .workflows {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 56px;
+    align-items: stretch;
+  }
+
+  .wf-card {
+    padding: 30px 26px;
+    background: white;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.15s;
+    display: flex;
+    flex-direction: column;
+    min-height: 410px;
+  }
+  .wf-card:last-child { border-right: none; }
+  .wf-card:hover { background: var(--fog); }
+
+  .wf-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .wf-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .wf-icon.green  { background: rgba(27,58,45,0.1); }
+  .wf-icon.blue   { background: rgba(13,74,107,0.1); }
+  .wf-icon.amber  { background: rgba(193,125,60,0.1); }
+  .wf-icon.satellite { background: rgba(27,58,45,0.1); }
+
+  .wf-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--forest);
+    margin-bottom: 6px;
+    min-height: 48px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .wf-sub {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+
+  .wf-desc {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .wf-launch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--forest);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s;
+    margin-top: auto;
+    width: fit-content;
+  }
+  .wf-launch:hover { background: var(--water); }
+  .wf-launch.blue-btn { background: var(--water); }
+  .wf-launch.blue-btn:hover { background: var(--forest); }
+  .wf-launch.satellite-btn { background: var(--forest); }
+  .wf-launch.satellite-btn:hover { background: var(--water); }
+  .wf-launch.amber-btn { background: var(--amber); }
+  .wf-launch.amber-btn:hover { background: #a5682d; }
+
+  /* connector arrow between cards */
+  .wf-arrow {
+    position: absolute;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--mid);
+    z-index: 2;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-section { margin-bottom: 56px; }
+
+  .flow-diagram {
+    background: var(--forest);
+    border-radius: 12px;
+    padding: 36px 32px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .flow-label-top {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 28px;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .flow-node {
+    flex: 0 0 auto;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 110px;
+    cursor: default;
+    transition: background 0.15s;
+  }
+  .flow-node:hover { background: rgba(255,255,255,0.12); }
+
+  .flow-node.accent { border-color: rgba(193,125,60,0.6); background: rgba(193,125,60,0.12); }
+  .flow-node.water  { border-color: rgba(13,74,107,0.7);  background: rgba(13,74,107,0.25); }
+
+  .flow-node-icon { font-size: 22px; margin-bottom: 6px; }
+
+  .flow-node-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.3;
+  }
+
+  .flow-node-tag {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.08);
+  }
+
+  .flow-node-tag.v1 { background: rgba(27,58,45,0.5);  color: rgba(255,255,255,0.75); }
+  .flow-node-tag.v2 { background: rgba(13,74,107,0.5); color: rgba(255,255,255,0.75); }
+  .flow-node-tag.v3 { background: rgba(193,125,60,0.4);color: rgba(255,255,255,0.75); }
+
+  .flow-arrow {
+    flex: 0 0 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 16px;
+    min-width: 28px;
+  }
+
+  .flow-branch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .flow-group {
+    flex: 0 0 auto;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 14px;
+    padding: 14px;
+    background: rgba(255,255,255,0.045);
+  }
+
+  .flow-group.validation {
+    border-color: rgba(193,125,60,0.32);
+  }
+
+  .flow-group.satellite {
+    border-color: rgba(27,58,45,0.55);
+    background: rgba(27,58,45,0.20);
+  }
+
+  .flow-group-title {
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+  }
+
+  .flow-group-row {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  .flow-node.satellite-node {
+    border-color: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+  }
+
+  .flow-node.index-node {
+    border-color: rgba(193,125,60,0.5);
+    background: rgba(193,125,60,0.12);
+  }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 56px;
+  }
+
+  .content-block h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--forest);
+    margin-bottom: 10px;
+  }
+
+  .content-block p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .bullet-list li {
+    font-size: 13.5px;
+    color: var(--mid);
+    padding: 5px 0 5px 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+
+  /* ── IMPACT BOXES ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .impact-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 20px;
+    background: white;
+  }
+
+  .impact-card-icon { font-size: 26px; margin-bottom: 10px; }
+  .impact-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+
+  .impact-card p {
+    font-size: 12.5px;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+
+  /* ── TEAM ── */
+  .team-section { margin-bottom: 40px; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .team-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+  }
+
+  .team-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--forest);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .team-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .team-affil {
+    font-size: 11px;
+    color: var(--mid);
+  }
+
+  .team-role {
+    font-size: 11px;
+    color: var(--amber);
+    font-weight: 500;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+  }
+
+  @media (max-width: 1050px) {
+    .workflows { grid-template-columns: repeat(2, 1fr); }
+    .wf-card:nth-child(2) { border-right: none; }
+    .wf-card:nth-child(3), .wf-card:nth-child(4) { border-top: 1px solid var(--border); }
+    .wf-arrow { display: none; }
+  }
+
+  @media (max-width: 800px) {
+    .hero, .alignment, .main { padding-left: 24px; padding-right: 24px; }
+    .workflows { grid-template-columns: 1fr; }
+    .wf-card { min-height: auto; border-right: none; border-top: 1px solid var(--border); }
+    .wf-card:first-child { border-top: none; }
+    .wf-title { min-height: auto; }
+    .wf-arrow { display: none; }
+    .two-col { grid-template-columns: 1fr; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+
+    .flow-diagram { padding: 28px 20px; }
+    .flow-row { min-width: 1180px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-eyebrow">ICP Forests &amp; ICP Integrated Monitoring · LifeWatch ERIC</div>
+  <h1 class="hero-title">Automated Data Validation for <em>European Forest Chemistry</em></h1>
+  <p class="hero-sub">
+    Standardised, reproducible workflows for ICP monitoring data — from raw laboratory templates
+    to validated, reporting-ready datasets.
+  </p>
+  <div class="hero-badges">
+    <div class="badge"><span>🌲</span> 14 Level-II plots · Spain</div>
+    <div class="badge"><span>🌿</span> IM plot ES02 · Integrated Monitoring</div>
+    <div class="badge"><span>💧</span> 5 water subprogrammes</div>
+    <div class="badge"><span>📅</span> Monthly reporting</div>
+    <div class="badge"><span>🔬</span> BIOMA · University of Navarra</div>
+  </div>
+</div>
+
+<!-- ── ALIGNMENT STRIP ── -->
+<div class="alignment">
+  <div class="alignment-inner">
+    <div class="alignment-label">Alignment with European Frameworks</div>
+    <div class="alignment-items">
+    <div class="alignment-item">
+      <span class="alignment-item-tag">CLRTAP</span>
+      <span class="alignment-item-name">Convention on LRTAP</span>
+      <span class="alignment-item-sub">UNECE · ICP Forests</span>
+    </div>
+    <div class="alignment-item">
+      <span class="alignment-item-tag">WFD</span>
+      <span class="alignment-item-name">EU Water Framework Directive</span>
+      <span class="alignment-item-sub">2000/60/EC</span>
+    </div>
+    <div class="alignment-item">
+      <span class="alignment-item-tag">FAIR</span>
+      <span class="alignment-item-name">FAIR Data Principles</span>
+      <span class="alignment-item-sub">Findable · Accessible · Interoperable</span>
+    </div>
+    <div class="alignment-item">
+      <span class="alignment-item-tag">SDG 15</span>
+      <span class="alignment-item-name">Life on Land</span>
+      <span class="alignment-item-sub">UN Sustainable Development Goal</span>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main">
+
+  <!-- Workflows -->
+  <div class="section-eyebrow">Run a Workflow</div>
+  <h2 class="section-title">Four workflows, one pipeline</h2>
+  <p class="section-desc">
+    Each workflow targets a distinct stage of the data lifecycle.
+    Run them in sequence or independently — from field and laboratory data validation to satellite-based environmental analysis.
+  </p>
+
+  <div class="workflows">
+    <!-- WF1 -->
+    <div class="wf-card">
+      <div class="wf-arrow">›</div>
+      <div class="wf-icon green">🧪</div>
+      <div class="wf-sub">Workflow 1</div>
+      <div class="wf-title">Data Validation</div>
+      <p class="wf-desc">
+        Format checks, LOQ substitution, unit conversion and full
+        physicochemical quality control (ionic balance, conductivity,
+        Na/Cl ratio, OrgN). Produces a <strong>FINAL_VALIDATION</strong> flag per sample
+        and a PDF report identifying samples to repeat.
+      </p>
+      <a class="wf-launch" href="#">Launch ›</a>
+    </div>
+
+    <!-- WF2 -->
+    <div class="wf-card">
+      <div class="wf-arrow">›</div>
+      <div class="wf-icon blue">🔍</div>
+      <div class="wf-sub">Workflow 2</div>
+      <div class="wf-title">Outlier Detection &amp; Database Update</div>
+      <p class="wf-desc">
+        Statistical outlier screening (z-score, IQR, temporal trends) on validated
+        Level-3 data. Flags anomalous measurements for expert review and pushes
+        clean records to the internal PostgreSQL / MinIO database.
+      </p>
+      <a class="wf-launch blue-btn" href="#">Launch ›</a>
+    </div>
+
+    <!-- WF3 -->
+    <div class="wf-card">
+      <div class="wf-arrow">›</div>
+      <div class="wf-icon satellite">🛰️</div>
+      <div class="wf-sub">Workflow 3</div>
+      <div class="wf-title">Multi-source Data Integration</div>
+      <p class="wf-desc">
+        Integrates validated monitoring data with complementary environmental layers:
+        satellite imagery and spectral indices (vegetation, moisture, disturbance),
+        atmospheric deposition model outputs, land-use datasets and PRTR emission
+        records. Produces a harmonised, analysis-ready dataset that links field
+        chemistry with the spatial context and environmental pressures acting on each monitored site.
+      </p>
+      <a class="wf-launch satellite-btn" href="#">Launch ›</a>
+    </div>
+
+    <!-- WF4 -->
+    <div class="wf-card">
+      <div class="wf-icon amber">📊</div>
+      <div class="wf-sub">Workflow 4</div>
+      <div class="wf-title">Environmental Analysis</div>
+      <p class="wf-desc">
+        Long-term trend analysis, load calculations (wet deposition, throughfall),
+        cross-site comparisons and exploratory visualisation of ICP chemistry and
+        satellite-derived indicators across the Spanish monitoring network.
+      </p>
+      <a class="wf-launch amber-btn" href="#">Launch ›</a>
+    </div>
+  </div>
+
+  <!-- Flow diagram -->
+  <div class="flow-section">
+    <div class="section-eyebrow">Data Flow</div>
+    <h2 class="section-title">From field, laboratory and satellite data to European-ready evidence</h2>
+    <p class="section-desc">The pipeline follows the complete data journey: validation, anomaly screening, database ingestion, satellite index generation and final environmental analysis.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-label-top">FULL PIPELINE · SEQUENTIAL STEPS</div>
+      <div class="flow-row">
+
+        <!-- Input -->
+        <div class="flow-node">
+          <div class="flow-node-icon">📋</div>
+          <div class="flow-node-name">Excel Templates</div>
+          <div class="flow-node-tag">Level 0</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- WF1 group -->
+        <div class="flow-group validation">
+          <div class="flow-group-title">WF 1 · Data Validation</div>
+          <div class="flow-group-row">
+            <div class="flow-node" style="min-width:88px;">
+              <div class="flow-node-icon">✅</div>
+              <div class="flow-node-name">Format Checks</div>
+              <div class="flow-node-tag v1">Step 1</div>
+            </div>
+            <div class="flow-arrow" style="min-width:18px;">→</div>
+            <div class="flow-node" style="min-width:88px;">
+              <div class="flow-node-icon">⚗️</div>
+              <div class="flow-node-name">Transform + LOQ</div>
+              <div class="flow-node-tag v1">Steps 2–3</div>
+            </div>
+            <div class="flow-arrow" style="min-width:18px;">→</div>
+            <div class="flow-node" style="min-width:88px;">
+              <div class="flow-node-icon">⚖️</div>
+              <div class="flow-node-name">Unit Conversion</div>
+              <div class="flow-node-tag v1">Step 4</div>
+            </div>
+            <div class="flow-arrow" style="min-width:18px;">→</div>
+            <div class="flow-node accent" style="min-width:88px;">
+              <div class="flow-node-icon">🔬</div>
+              <div class="flow-node-name">Chemical QC</div>
+              <div class="flow-node-tag v1">Step 5</div>
+            </div>
+            <div class="flow-arrow" style="min-width:18px;">→</div>
+            <div class="flow-node" style="min-width:88px;">
+              <div class="flow-node-icon">📄</div>
+              <div class="flow-node-name">Report + Selection</div>
+              <div class="flow-node-tag v1">Steps 6–7</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- Level 3 -->
+        <div class="flow-node">
+          <div class="flow-node-icon">🗂️</div>
+          <div class="flow-node-name">Validated Data</div>
+          <div class="flow-node-tag v1">Level 3</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- WF2 -->
+        <div class="flow-node water">
+          <div class="flow-node-icon">🔍</div>
+          <div class="flow-node-name">Outlier Detection</div>
+          <div class="flow-node-tag v2">WF 2</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- DB -->
+        <div class="flow-node water">
+          <div class="flow-node-icon">🗄️</div>
+          <div class="flow-node-name">Database Update</div>
+          <div class="flow-node-tag v2">MinIO / PG</div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- WF3 -->
+        <div class="flow-group satellite">
+          <div class="flow-group-title">WF 3 · Multi-source Data Integration</div>
+          <div class="flow-group-row">
+            <div class="flow-node satellite-node" style="min-width:96px;">
+              <div class="flow-node-icon">🗺️</div>
+              <div class="flow-node-name">Area of Interest</div>
+              <div class="flow-node-tag v1">AOI</div>
+            </div>
+            <div class="flow-arrow" style="min-width:18px;">→</div>
+            <div class="flow-node satellite-node" style="min-width:96px;">
+              <div class="flow-node-icon">🛰️</div>
+              <div class="flow-node-name">Image Download</div>
+              <div class="flow-node-tag v1">Scenes</div>
+            </div>
+            <div class="flow-arrow" style="min-width:18px;">→</div>
+            <div class="flow-node index-node" style="min-width:96px;">
+              <div class="flow-node-icon">🌿</div>
+              <div class="flow-node-name">Spectral Indices</div>
+              <div class="flow-node-tag v1">Indices</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- WF4 -->
+        <div class="flow-node" style="border-color:rgba(193,125,60,0.6);background:rgba(193,125,60,0.12);">
+          <div class="flow-node-icon">📊</div>
+          <div class="flow-node-name">Analysis</div>
+          <div class="flow-node-tag v3">WF 4</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Rationale + Hypothesis -->
+  <div class="two-col">
+    <div class="content-block">
+      <h3>Rationale</h3>
+      <p>
+        ICP monitoring data move through several critical stages before they can support
+        scientific interpretation or European reporting: field and laboratory templates,
+        physicochemical validation, outlier review, database ingestion, satellite-derived
+        indicators and final environmental analysis. Weaknesses at any stage can propagate
+        through the chain and reduce the reliability, comparability and reusability of the
+        final evidence.
+      </p>
+      <p>
+        This project treats the complete data lifecycle as a single reproducible pipeline.
+        Each workflow transforms raw or intermediate inputs into versioned outputs, preserving
+        traceability from the original sample, plot or area of interest to the final analytical
+        product. The aim is not only to validate chemistry, but to connect laboratory data,
+        spatial information and long-term indicators within one transparent processing system.
+      </p>
+    </div>
+    <div class="content-block">
+      <h3>Hypothesis &amp; Project Relevance</h3>
+      <p>
+        The central hypothesis is that ICP data become more robust, scalable and useful when
+        the full processing chain is automated as a connected system rather than handled as
+        isolated tasks. Linking validation, anomaly detection, database update, satellite
+        processing and environmental analysis can reduce delays, increase consistency and
+        make outputs easier to audit, reproduce and compare across plots and years.
+      </p>
+      <ul class="bullet-list">
+        <li>Complete data journey — from raw templates and AOIs to final analytical outputs</li>
+        <li>Traceable decisions — quality flags, outlier labels, database records and index layers</li>
+        <li>Integrated evidence — combining chemistry, monitoring metadata and satellite indicators</li>
+        <li>Modular design — each workflow reusable independently or as part of the full pipeline</li>
+        <li>FAIR-oriented outputs — versioned ZIP files, structured data and reproducible reports</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Impact -->
+  <div class="section-eyebrow">Expected Impact</div>
+  <h2 class="section-title" style="margin-bottom:24px;">What this enables</h2>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-card-icon">🌍</div>
+      <h4>European Data Quality</h4>
+      <p>Consistent, auditable validation across all Spanish ICP plots, directly improving
+         the quality of data submitted to international programme databases.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-card-icon">⚡</div>
+      <h4>Faster Reporting Cycles</h4>
+      <p>Automated workflows reduce the time from laboratory analysis to validated,
+         report-ready data from weeks to hours.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-card-icon">🔄</div>
+      <h4>Reusable by Any Researcher</h4>
+      <p>All workflows accept standard CSV/Excel inputs, spatial boundaries and versioned ZIP outputs. Any monitoring network
+         with comparable water chemistry data can adopt the pipeline independently.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-card-icon">🗄️</div>
+      <h4>Centralised Database</h4>
+      <p>Validated Level-3 data are ingested into a structured database enabling
+         long-term storage, cross-year trend analysis and real-time dashboards.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-card-icon">📋</div>
+      <h4>Policy-Ready Evidence</h4>
+      <p>Clean, validated datasets directly support critical load assessments,
+         emission reduction policy and biodiversity strategies at national and EU level.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-card-icon">🧩</div>
+      <h4>FAIR Compliance</h4>
+      <p>Findable, Accessible, Interoperable and Reusable outputs, with full metadata
+         registered in the LifeWatch metadata catalogue.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Team -->
+  <div class="team-section">
+    <div class="section-eyebrow">Research Team</div>
+    <h2 class="section-title" style="margin-bottom:24px;">BIOMA — University of Navarra</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">DE</div>
+        <div>
+          <div class="team-name">David Elustondo</div>
+          <div class="team-affil">BIOMA Institute · UNAV</div>
+          <div class="team-role">Coordinator</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">EL</div>
+        <div>
+          <div class="team-name">Esther Lasheras</div>
+          <div class="team-affil">BIOMA Institute · UNAV</div>
+          <div class="team-role">Scientific Leader</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">SI</div>
+        <div>
+          <div class="team-name">Sheila Izquieta</div>
+          <div class="team-affil">BIOMA Institute · UNAV</div>
+          <div class="team-role">Development &amp; Innovation</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--water);">JT</div>
+        <div>
+          <div class="team-name">Julen Torrens</div>
+          <div class="team-affil">BIOMA Institute · UNAV</div>
+          <div class="team-role">Data Scientist</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--water);">NG</div>
+        <div>
+          <div class="team-name">Nicolás Goyena</div>
+          <div class="team-affil">BIOMA Institute · UNAV</div>
+          <div class="team-role">Data Scientist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+</body>
+</html>
