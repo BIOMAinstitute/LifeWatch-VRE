@@ -44,6 +44,18 @@ The Spanish ICP Forests network includes 14 intensive Level-II monitoring plots 
 
 Each plot collects water samples from multiple subprogrammes every month, generating a large volume of analytical data that feeds directly into European-scale assessments.
 
+## The ICP IM Station ES02 — Bertiz (Navarra)
+
+The Spanish ICP Integrated Monitoring station **ES02** is located in the **Señorío de Bertiz Natural Park** in Navarra, within an Atlantic mixed forest dominated by *Quercus robur*, *Alnus glutinosa* and *Fraxinus excelsior*. It is operated by BIOMA and has been active since the early 1990s, making it one of the longest continuous integrated monitoring records in southern Europe.
+
+Unlike the ICP Forests Level-II plots — which focus on a single forest stand — ES02 operates at the **catchment scale**, tracking the full water and element budget from atmospheric input to stream output. All water subprogrammes are active at ES02, plus runoff water from the gauged catchment outlet.
+
+| Station | Name | Programme | Region | Catchment area | Main vegetation |
+|---------|------|-----------|--------|---------------|-----------------|
+| ES02 | Bertiz | ICP Integrated Monitoring | Navarra | ~100 ha | *Quercus robur*, *Alnus glutinosa*, *Fraxinus excelsior* |
+
+The same analytical templates and data processing pipeline used for ICP Forests Level-II plots apply to ES02. The `ICP_Program` column in `samplesInfo.xlsx` distinguishes between `ICP-Forest` and `ICP-IM` samples, allowing the pipeline to process both networks simultaneously within the same workflow execution.
+
 ## Water Monitoring Subprogrammes
 
 Water chemistry is one of the most information-rich components of Level-II monitoring. It captures the chemical signature of atmospheric deposition as it passes through the ecosystem — from open-field precipitation, through the canopy (throughfall and stemflow), into the soil (soil water at different depths), and out of the catchment (runoff water). The five water subprogrammes are:
@@ -92,7 +104,7 @@ The LifeWatch workflows described in this document address all five of these wea
 
 # The Data Journey: Four Stages from Measurement to Knowledge
 
-The complete lifecycle of an ICP monitoring data point spans four distinct conceptual stages. The four workflows described in this project correspond to these four stages, making the pipeline a direct computational representation of the scientific and operational process.
+The complete lifecycle of an ICP monitoring data point spans four distinct conceptual stages. Workflows 1 and 2 together cover Stage 2 (validation), while Workflows 3 and 4 cover integration and analysis respectively. The diagram below shows how the four workflows map onto these stages:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
