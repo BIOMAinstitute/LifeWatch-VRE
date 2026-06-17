@@ -1,0 +1,316 @@
+TABLE VALIDATION — 2026-06-02 14:44:01.687866
+============================================================
+
+File: /mnt/outputs/templates/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'Conductivity(µS/cm)' has some empty values
+⚠️  Optional column 'pH' has some empty values
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'CollectorID' has some empty values
+⚠️  Optional column 'sampler_radius' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'Conductivity(µS/cm)' has some empty values
+⚠️  Optional column 'pH' has some empty values
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'CollectorID' has some empty values
+⚠️  Optional column 'sampler_radius' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'Conductivity(µS/cm)' has some empty values
+⚠️  Optional column 'pH' has some empty values
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'VolumeCollector(ml)' has some empty values
+⚠️  Optional column 'Comments' has some empty values
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'Conductivity(µS/cm)' has some empty values
+⚠️  Optional column 'pH' has some empty values
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'CollectorID' has some empty values
+⚠️  Optional column 'sampler_radius' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'Conductivity(µS/cm)' has some empty values
+⚠️  Optional column 'pH' has some empty values
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'CollectorID' has some empty values
+⚠️  Optional column 'sampler_radius' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'VolumeCollector(ml)' has some empty values
+⚠️  Optional column 'Comments' has some empty values
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'Conductivity(µS/cm)' has some empty values
+⚠️  Optional column 'pH' has some empty values
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'CollectorID' has some empty values
+⚠️  Optional column 'sampler_radius' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_05.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_06.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_07.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_10.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_102.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_11.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_115.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_22.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_25.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_26.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_30.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_33.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_37.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_ALKALINITY_54.xlsx
+✅ No issues found. Template is valid.
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_01_FOREST_AMMONIUM.xlsx
+⚠️  Optional column 'NH4N(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_02_FOREST_AMMONIUM.xlsx
+⚠️  Optional column 'NH4N(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_03_FOREST_AMMONIUM.xlsx
+⚠️  Optional column 'NH4N(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_04_FOREST_AMMONIUM.xlsx
+⚠️  Optional column 'NH4N(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_05_FOREST_AMMONIUM.xlsx
+⚠️  Optional column 'NH4N(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_06_FOREST_AMMONIUM.xlsx
+⚠️  Optional column 'NH4N(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_01_FOREST_ANIONS.xlsx
+⚠️  Optional column 'CL(mg/l)' has some empty values
+⚠️  Optional column 'NO3(mg/l)' has some empty values
+⚠️  Optional column 'SO4(mg/l)' has some empty values
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_02_FOREST_ANIONS.xlsx
+⚠️  Optional column 'CL(mg/l)' has some empty values
+⚠️  Optional column 'NO3(mg/l)' has some empty values
+⚠️  Optional column 'SO4(mg/l)' has some empty values
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_03_FOREST_ANIONS.xlsx
+⚠️  Optional column 'CL(mg/l)' has some empty values
+⚠️  Optional column 'NO3(mg/l)' has some empty values
+⚠️  Optional column 'SO4(mg/l)' has some empty values
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_04_FOREST_ANIONS.xlsx
+⚠️  Optional column 'CL(mg/l)' has some empty values
+⚠️  Optional column 'NO3(mg/l)' has some empty values
+⚠️  Optional column 'SO4(mg/l)' has some empty values
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_05_FOREST_ANIONS.xlsx
+⚠️  Optional column 'CL(mg/l)' has some empty values
+⚠️  Optional column 'NO3(mg/l)' has some empty values
+⚠️  Optional column 'SO4(mg/l)' has some empty values
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_06_FOREST_ANIONS.xlsx
+⚠️  Optional column 'CL(mg/l)' has some empty values
+⚠️  Optional column 'NO3(mg/l)' has some empty values
+⚠️  Optional column 'SO4(mg/l)' has some empty values
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_01_FOREST_CATIONS.xlsx
+⚠️  Optional column 'CA(mg/l)' has some empty values
+⚠️  Optional column 'MG(mg/l)' has some empty values
+⚠️  Optional column 'NA(mg/l)' has some empty values
+⚠️  Optional column 'K(mg/l)' has some empty values
+⚠️  Optional column 'AL(mg/l)' has some empty values
+⚠️  Optional column 'FE(mg/l)' has some empty values
+⚠️  Optional column 'MN(mg/l)' has some empty values
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_02_FOREST_CATIONS.xlsx
+⚠️  Optional column 'CA(mg/l)' has some empty values
+⚠️  Optional column 'MG(mg/l)' has some empty values
+⚠️  Optional column 'NA(mg/l)' has some empty values
+⚠️  Optional column 'K(mg/l)' has some empty values
+⚠️  Optional column 'AL(mg/l)' has some empty values
+⚠️  Optional column 'FE(mg/l)' has some empty values
+⚠️  Optional column 'MN(mg/l)' has some empty values
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_03_FOREST_CATIONS.xlsx
+⚠️  Optional column 'CA(mg/l)' has some empty values
+⚠️  Optional column 'MG(mg/l)' has some empty values
+⚠️  Optional column 'NA(mg/l)' has some empty values
+⚠️  Optional column 'K(mg/l)' has some empty values
+⚠️  Optional column 'AL(mg/l)' has some empty values
+⚠️  Optional column 'FE(mg/l)' has some empty values
+⚠️  Optional column 'MN(mg/l)' has some empty values
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_04_FOREST_CATIONS.xlsx
+⚠️  Optional column 'CA(mg/l)' has some empty values
+⚠️  Optional column 'MG(mg/l)' has some empty values
+⚠️  Optional column 'NA(mg/l)' has some empty values
+⚠️  Optional column 'K(mg/l)' has some empty values
+⚠️  Optional column 'AL(mg/l)' has some empty values
+⚠️  Optional column 'FE(mg/l)' has some empty values
+⚠️  Optional column 'MN(mg/l)' has some empty values
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_05_FOREST_CATIONS.xlsx
+⚠️  Optional column 'CA(mg/l)' has some empty values
+⚠️  Optional column 'MG(mg/l)' has some empty values
+⚠️  Optional column 'NA(mg/l)' has some empty values
+⚠️  Optional column 'K(mg/l)' has some empty values
+⚠️  Optional column 'AL(mg/l)' has some empty values
+⚠️  Optional column 'FE(mg/l)' has some empty values
+⚠️  Optional column 'MN(mg/l)' has some empty values
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_06_FOREST_CATIONS.xlsx
+⚠️  Optional column 'CA(mg/l)' has some empty values
+⚠️  Optional column 'MG(mg/l)' has some empty values
+⚠️  Optional column 'NA(mg/l)' has some empty values
+⚠️  Optional column 'K(mg/l)' has some empty values
+⚠️  Optional column 'AL(mg/l)' has some empty values
+⚠️  Optional column 'FE(mg/l)' has some empty values
+⚠️  Optional column 'MN(mg/l)' has some empty values
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_01_FOREST_DOC_TN.xlsx
+⚠️  Optional column 'DOC(mg/l)' has some empty values
+⚠️  Optional column 'TN(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_02_FOREST_DOC_TN.xlsx
+⚠️  Optional column 'DOC(mg/l)' has some empty values
+⚠️  Optional column 'TN(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_03_FOREST_DOC_TN.xlsx
+⚠️  Optional column 'DOC(mg/l)' has some empty values
+⚠️  Optional column 'TN(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_04_FOREST_DOC_TN.xlsx
+⚠️  Optional column 'DOC(mg/l)' has some empty values
+⚠️  Optional column 'TN(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_05_FOREST_DOC_TN.xlsx
+⚠️  Optional column 'DOC(mg/l)' has some empty values
+⚠️  Optional column 'TN(mg/l)' has some empty values
+------------------------------------------------------------
+File: /mnt/outputs/templates/2025_06_FOREST_DOC_TN.xlsx
+⚠️  Optional column 'DOC(mg/l)' has some empty values
+⚠️  Optional column 'TN(mg/l)' has some empty values
+------------------------------------------------------------

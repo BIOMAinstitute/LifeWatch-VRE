@@ -1,0 +1,61 @@
+{
+  "name": "UnitTransformation",
+  "label": "Unit transformation",
+  "description": "Converts water chemistry measurements to a standardised set of three units per analyte: mg/l, µg/l and µeq/l. The transformation is unit-agnostic: the input unit is detected from the column name (e.g. 'NH4N(µg/l)') and converted accordingly, making this component reusable with any CSV dataset following the '{ANALYTE}({unit})' column naming convention. Supported input units: mg/l, µg/l, ug/l, µeq/l, ueq/l. Also handles paired cross-conversions: NH4 <-> NH4N, NO3 <-> NO3N, SO4 <-> SO4S, PO4 <-> PO4P.",
+  "type": "DataProcessing",
+  "dockerImage": "lw-unit-transformation",
+  "parameters": [],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "LOQ-corrected data ZIP",
+      "path": "/mnt/inputs/water_chemical_data_level1_loq.zip",
+      "description": "ZIP archive containing tab-separated CSV files with water chemistry data after LOQ correction, one per SiteCode per subprogram. Each CSV must follow the '{ANALYTE}({unit})' column naming convention (e.g. 'NH4N(mg/l)', 'CA(µg/l)'). Produced by the LoqApplication wrapper, but compatible with any CSV set sharing the same column naming convention."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Zip",
+      "name": "output-data",
+      "label": "Unit-transformed data ZIP",
+      "path": "/mnt/outputs/water_chemical_data_level1_units.zip",
+      "description": "ZIP archive with the same CSV files expanded with three unit columns per analyte: mg/l, µg/l and µeq/l."
+    }
+  ],
+  "resources": {
+    "cores": 1,
+    "memory": 512,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 3
+  },
+  "tags": ["unit conversion", "water chemistry", "mg/l", "µeq/l", "ICP-Forest", "lifewatch"],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2025-05-27",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "unitTransformationUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

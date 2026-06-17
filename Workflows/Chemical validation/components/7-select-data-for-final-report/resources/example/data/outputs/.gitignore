@@ -1,0 +1,5 @@
+*
+!.gitignore
+!level0/
+!level0/**
+!*.xlsx

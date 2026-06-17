@@ -34,14 +34,14 @@
       "type": "Text",
       "name": "output-log",
       "label": "Validation log",
-      "path": "/mnt/outputs/validation_log.txt",
+      "path": "/mnt/outputs/level0/validation_log.txt",
       "description": "Plain-text report listing critical errors and warnings per file, or a success message when no issues are found."
     },
     {
       "type": "Zip",
       "name": "output-data",
       "label": "Validated data ZIP",
-      "path": "/mnt/outputs/allData_validated.zip",
+      "path": "/mnt/outputs/level0/allData_templates_format_validated.zip",
       "description": "ZIP archive containing the same Excel files as the input, renamed with a 'validated_' prefix to confirm they have passed (or been inspected by) the validation step."
     }
   ],

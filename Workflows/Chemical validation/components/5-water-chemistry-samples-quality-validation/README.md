@@ -1,249 +1,567 @@
-# Wrapper development kit
-The aim of this project is to help contributors developing wrappers for the LifeWatch ERIC Tesseract platform.
+# 5 — Water Chemistry Validation
 
-## Usage
+This is the **central quality control step** of the workflow. Every analytical
+sample that has passed format validation and preprocessing is subjected here
+to a set of physicochemical checks that verify internal consistency of the
+measurements. The result is a `FINAL_VALIDATION` flag (SI/NO) per sample,
+indicating whether the data are fit for reporting.
 
-```mermaid
-flowchart TB
-   A[Start] --> I[Install dependencies]
-   B{"`Is there
-    an example for my
-    programming language?`"}
-   I --> B
-   B -- Yes --> C[Copy example files]
-   C --> D[Implement custom algorithm]
-   D --> G[Implement annotation]
-   G --> H[Test with execution-parameters and inputs]
-   B -- No --> E[Create one]
-   F["`Commit your wrapper 
-    as an example of
-     the new programming 
-    language in a sub-folder`"]
-   E --> F
-   Z[Done]
-   H ----> Z
-   F ----> Z
-   C ----> EF
-    
+The component merges all subprogram CSV files for each SiteCode into a single
+wide table, propagates metadata to replicate samples, joins the sampling
+typology from `samplesInfo.xlsx`, and runs 14 sequential calculation modules
+to derive all chemical quality indicators.
 
-   subgraph EF[Example files to be copied]
-      f1[annotation.json] --> fr[Project root folder]
-      f2[Dockerfile] --> fr
-      f3[Source code] --> fr
-      f4[Dependencies file] --> fr
-      fi["/data/inputs/"]
-      fo["/data/outputs/"]
-      fp["/data/execution-parameters.json"]
-      f5[Input files] --> fi
-      f6[Output files] --> fo
-      f7[Parameters] --> fp
+---
 
-   end
+## Workflow position
+
+```
+UnitTransformation  →  WaterChemistryValidation  →  WaterChemistryValidationReport
 ```
 
-This project has examples for the following languages:
-- Python
-- Node
-- C
-- R (rlang)
-- Octave (gnuoctave/octave, an open source alternative to MATLAB)
+---
 
-Choose a language and copy the contents of its folder to the root of this project.
+## Inputs
 
-Lets say we want to create a **Python** based wrapper:
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| input-data | Zip | `/mnt/inputs/water_chemical_data_level1_units.zip` | ZIP of tab-separated CSV files with all three unit representations per analyte (mg/l, µg/l, µeq/l), as produced by component 4. One CSV per SiteCode per subprogram. |
+| input-samples | Text | `/mnt/inputs/samplesInfo.xlsx` | Excel file mapping each SampleID to its SamplingTypology and programme metadata. If not provided, all typology-dependent checks are skipped. |
 
-1. Copy the contents of `./examples/python` to `./`
-2. run `./bin/build-image`
-3. run `./bin/execute`
+### Input CSV format
 
-## Anatomy of a Wrapper
-A _Wrapper_ represents an individual operation unit that needs to be executed within the larger context of a Tesseract Workflow.\
-Wrappers are small, discrete, and specific in nature, allowing for focused tasks with clear objectives.\
-A _Wrapper_ is always implemented inside a [Docker container](https://www.docker.com/resources/what-container/#:~:text=A%20Docker%20container%20image%20is,tools%2C%20system%20libraries%20and%20settings).
+The input ZIP must contain tab-separated CSVs following this naming convention:
+`<SiteCode>_WATER_<SUBPROGRAM>.csv`
 
-### Interacting with the outside environment of a _Wrapper_
-A _Wrapper_ can be parametrized and operated with the following three components:
-1. **Inputs:** The inputs represents the data, information, or resources that are required for the _Wrapper_ to begin and be executed successfully. An input is **always a file**. It serves as the starting point for the _Wrapper_ and provides the necessary context for the _Wrapper_'s completion. Inputs come from other _Wrappers_.
-2. **Outputs:** The outputs are the results or deliverables produced by the _Wrapper_ once it is completed. These are tangible **files** that are generated as a result of the _Wrapper_'s execution. Outputs represent the outcome of the _Wrapper_ and are usually the input for subsequent _Wrappers_ in the workflow. An output is **always a file**.
-3. **Parameters:** Parameters are the configurable settings, options, or variables that influence the behavior and outcome of the _Wrapper_. They allow the _Wrapper_ to be adapted to different scenarios without modifying the underlying logic. Parameters are used to customize the behavior of the _Wrapper_ and may affect how it processes input data and generates outputs.
+The component expects CSVs for these subprograms (any subset is accepted):
 
-### Developing a _Wrapper_
-In order to develop a wrapper the following information must be provided:
-```mermaid
-flowchart LR
-A[Wrapper]
-A --> B(Docker file)
-A --> C(Annotation JSON)
-A --> D(Wrapper script)
-A --> E(Readme file)
-A --> F(Unit test assets)
+| File pattern | Key columns required for validation |
+|---|---|
+| `*_WATER_ALKALINITY.csv` | `SampleID`, `SiteCode`, `year`, `month`, `AlkalinityICPForests(µeq/l)` |
+| `*_WATER_AMMONIUM.csv` | `SampleID`, `SiteCode`, `year`, `month`, `NH4N(µeq/l)`, `NH4N(mg/l)` |
+| `*_WATER_ANIONS.csv` | `SampleID`, `SiteCode`, `year`, `month`, `CL(µeq/l)`, `SO4S(µeq/l)`, `NO3N(µeq/l)`, `NO3N(mg/l)` |
+| `*_WATER_CATIONS.csv` | `SampleID`, `SiteCode`, `year`, `month`, `CA(µeq/l)`, `MG(µeq/l)`, `NA(µeq/l)`, `K(µeq/l)`, `AL(µeq/l)`, `FE(µeq/l)`, `MN(µeq/l)` |
+| `*_WATER_DOC_TN.csv` | `SampleID`, `SiteCode`, `year`, `month`, `DOC(mg/l)`, `TN(mg/l)` |
+| `*_WATER_pH_COND_WEIGHTED_RAW.csv` | `SampleID`, `SiteCode`, `year`, `month`, `WeightedConductivity(µS/cm)`, `WeightedpH`, `H(µeq/l)` |
+
+### samplesInfo.xlsx format
+
+This file maps each SampleID to its programme metadata. It is used to:
+1. Assign the `SamplingTypology` to each sample — required for several
+   typology-dependent calculations (Org-, ion balance filter, Na/Cl filter).
+2. Fill typology for replicate (REP) samples whose SampleID suffix was added
+   during transformation and may not appear in this file.
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `SampleID` | ✅ | Sample identifier — must match those in the CSVs |
+| `SamplingTypology` | ✅ | Sampling type code (see table below) |
+| `SiteCode` | ⚠️ optional | Plot code |
+| `SiteName` | ⚠️ optional | Plot name |
+| `ICP_Program` | ⚠️ optional | Programme (e.g. `ICP-Forest`, `ICP-IM`) |
+| `Instrument` | ⚠️ optional | Instrument identifier (e.g. `LISIM-20`) |
+| `ID_PostgreSQL` | ⚠️ optional | Database identifier |
+
+**Real example from the ICP-Forest Spain network:**
+
+| SampleID | SiteCode | SamplingTypology | ICP_Program |
+|----------|----------|-----------------|-------------|
+| 05PS INT | 05 | THR CON | ICP-Forest |
+| 05PS INT LIX 20 | 05 | SW CON | ICP-Forest |
+| 05PS EXT | 05 | BOF CON | ICP-Forest |
+| 06QI INT | 06 | THR BL | ICP-Forest |
+| 06QI EXT | 06 | BOF BL | ICP-Forest |
+
+**SamplingTypology codes** — the first part identifies the water collection
+type, which drives which validation rules apply:
+
+| Code prefix | Full name | Validation rules applied |
+|-------------|-----------|--------------------------|
+| `BOF` | Bulk open field (wet deposition) | Ion balance + Na/Cl ratio |
+| `WET` | Wet-only deposition | Ion balance + Na/Cl ratio |
+| `THR` | Throughfall | Na/Cl ratio; Org- coefficient |
+| `THR BL` | Throughfall bulk/litterfall | Na/Cl ratio; specific Org- coefficient |
+| `STF` | Stemflow | Na/Cl ratio; specific Org- coefficient |
+| `SW` | Soil water | Metal sum; specific Org- coefficient |
+
+The suffix (e.g. `CON`, `BL`, `SNOW`) provides additional detail about the
+collection method but does not change the validation rules.
+
+---
+
+## Outputs
+
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| output-alldata | Zip | `/mnt/outputs/water_chemical_data_level2_alldata.zip` | One merged CSV per SiteCode with all subprograms joined into a single wide table (pre-validation, no quality indicator columns). |
+| output-validated | Zip | `/mnt/outputs/water_chemical_data_level2_validated.zip` | Same CSV per SiteCode with all 14 quality indicator sets appended and the `FINAL_VALIDATION` flag per sample. |
+
+---
+
+## Parameters — quality thresholds
+
+All thresholds have ICP-Forest default values and can be overridden per
+execution. They correspond to the acceptable limits defined in the ICP-Forest
+manual for water chemistry quality control.
+
+| Parameter | Default | Unit | Description |
+|-----------|---------|------|-------------|
+| `param_ionsdiff_low_k` | `20.0` | % | Max IonsDiff% for WeightedConductivity ≤ 20 µS/cm |
+| `param_ionsdiff_high_k` | `10.0` | % | Max IonsDiff% for WeightedConductivity > 20 µS/cm |
+| `param_conddiff_low_1` | `30.0` | % | Max CondDiff% for WeightedConductivity ≤ 10 µS/cm |
+| `param_conddiff_low_2` | `20.0` | % | Max CondDiff% for WeightedConductivity 10–20 µS/cm |
+| `param_conddiff_high` | `10.0` | % | Max CondDiff% for WeightedConductivity > 20 µS/cm |
+| `param_ratio_nacl_low` | `0.5` | — | Lower bound of acceptable Na/Cl ratio (µeq/l basis) |
+| `param_ratio_nacl_high` | `1.5` | — | Upper bound of acceptable Na/Cl ratio (µeq/l basis) |
+
+**Why two tiers for ionic balance and three tiers for conductivity?**
+Both thresholds depend on WeightedConductivity because more dilute samples
+(lower conductivity) have proportionally larger analytical errors — a 2 µeq/l
+measurement error matters much more in a 10 µS/cm sample than in a 100 µS/cm
+sample. The tiered thresholds reflect this: dilute samples are allowed a
+larger relative deviation before being flagged.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\5-water-chemistry-samples-quality-validation"
+
+docker build -t water-chemistry-samples-quality-validation:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  water-chemistry-samples-quality-validation:0.0.1 `
+  --param_ionsdiff_low_k=20.0 --param_ionsdiff_high_k=10.0
 ```
-1. **Docker file:** The Dockerfile is a plain text configuration file used to define the specifications and instructions to create a _Wrapper_'s Docker container.
-2. **Annotation JSON:** The Annotation JSON is a JSON file describing the ontology of the wrapper.
-3. **Wrapper script:** A script that runs the actual logic (e.g. analysis of data) inside the docker image
-   1. The script can be written in any language as long as there is docker environment that can run it (most used languages are Python, Node, R)
-   2. A script can consist of multiple files or modules (sometimes there is too much logic to fit in a single file). Make sure to copy all additional files into the Docker image (_see Dockerfile_) and add the top-level script/module as `ENTRYPOINT`.
-4. **Readme file:** The Readme file is a MARKDOWN file that serves as a user-friendly introduction and guide to the _Wrapper_.
-5. **Unit test assets:** The Unit test assets allow the _Wrapper_ to be tested in isolation. 
 
-### Wrapper annotation JSON:
-Documentation of the fields present in a _Wrapper annotation JSON_ file: 
-```json lines
+## resources/example/data/execution-parameters.json
+
+```json
 {
-  // String identifying the wrapper, must be unique in the system and written in pascal case.
-  // https://betterprogramming.pub/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
-  "name": "TextTranslator",
-  // Label used in the UI / human-readable name of the component
-  "label": "Text translator",
-  // Description displayed in the UI to describe the general purpose of this wrapper
-  "description": "This wrapper translates all the given documents to an user specified language",
-  // Type of this wrapper, it can be one of the following [ DataAnalysing, DataCollection, DataProcessing, DataSink, DataFlow ] 
-  "type": "DataCollection",
-  // Name of the Docker image for this wrapper
-  "dockerImage": "text-translator",
-  // Lit describing all the parameters for this wrapper 
   "parameters": [
-    {
-      // Identifier of the variable, will be exposed in the main function inside the entrypoint Docker image => def execute(pcs: Process, db: str)
-      "name": "languageCode",
-      // Used in the UI, human-readable name of the parameter
-      "label": "Language code",
-      // Used in the UI, human-readable description for this parameter
-      "description": "Language code following ISO 3166-1 alpha-2",
-      // Default value for this parameter if no value is provided by the user
-      "defaultValue": "en_GB",
-      // Type for this parameter, it can be one of the following [ List, Boolean, Date, Double, Float, Integer, String, Timestamp ]
-      "type": "String"
-    }
-  ],
-  // List describing all the input files for this wrapper
-  "inputs": [
-    {
-      // Type of this input file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Documents",
-      // Unique identifier of this parameter
-      "name": "documents",
-      // Used in the UI, human-readable description for this input
-      "description": "Compressed file containing all the documents to be translated"
-    }
-  ],
-  // List describing all the output files for this wrapper
-  "outputs": [
-    {
-      // Path were to place this output file relative to /mnt/outputs
-      "path": "translatedDocuments.zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Translated",
-      // Unique identifier of this parameter
-      "name": "translated-documents",
-      // Used in the UI, human-readable name of this output
-      "description": "Compressed file containing all the translated documents",
-      // Type of this output file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip"
-    },
-    {
-      "path": "language-dictionary/dictionary.txt",
-      "label": "Dictionary",
-      "description": "Full language dictionary of the translated language",
-      "type": "Text"
-    }
-  ],
-  // Object describing the necessary hardware resources to run this wrapper
-  "resources": {
-    // Recommended number of cores
-    cores: 8,
-    // Recommended amount of memory in MB
-    memory: 4096,
-    // Boolean indicating if a GPU is needed to execute this wrapper
-    gpuNeeded: true,
-    // Recommended amount of GPU memory in MB
-    gpuMemory: 1024,
-    // Maximum number of hours expected for this wrapper to complete with the provided example dataset
-    estimatedTime: 4
-  },
-  // List of keyword tags, used to search and group wrappers in the UI
-  "tags": [ "tag 1", "tag 2" ],
-  // License of this wrapper, must be a valid spdx_id https://spdx.dev/ids/ 
-  "license": "GPL v3",
-  // Semantic version of this wrapper https://semver.org/
-  "version": "1.0.1",
-  // Object describing the license and version of the software used inside this wrapper
-  "dependencies": [
-    {
-      // Name of the library or dependency
-      "name": "translate",
-      // License of this library or dependency, must be a valid spdx_id https://spdx.dev/ids/
-      "license": "GPL v3",
-      // Semantic version of this library or dependency https://semver.org/
-      "version": "3.5.0",
-       // Person or association who created this dependency
-       "author": "Charles Elton",
-       // Text reserved for the citation of the work related with this dependency
-       "citation": "Charles Elton, IJI NIS Workflows, https://url-to-scientific-paper.org",
-    }
-  ],
-  // UTC time of the publication of this version of the wrapper
-  "publicationDate": "Thu, 18 May 2023 11:43:09 GMT",
-  // Person or association who created this wrapper
-  "author": "LifeWatch ERIC",
-  // Text reserved for the citation of the work related with this wrapper
-  "citation": "Charles Elton, IJI NIS Workflows, ",
-  // Report bugs information
-  "bugs": {
-    // Email address where bugs can be submitted
-    "email": "help@exampleorg.com",
-    // URL of the ticketing system of this organisation where bugs can be submitted
-    "url": "https://ictofficedesk.lifewatch.eu/portal/lifewatcheric/home"
-  },
-  // Path to the unit test script
-  "testPath": "translateUnitTest.sh",
-  // URL of this wrapper in the LifeWatch metadata catalogue
-  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/oai:marineinfo.org:id:dataset:2744"
+    { "name": "param_ionsdiff_low_k",  "defaultValue": "20.0", "value": "20.0" },
+    { "name": "param_ionsdiff_high_k", "defaultValue": "10.0", "value": "10.0" },
+    { "name": "param_conddiff_low_1",  "defaultValue": "30.0", "value": "30.0" },
+    { "name": "param_conddiff_low_2",  "defaultValue": "20.0", "value": "20.0" },
+    { "name": "param_conddiff_high",   "defaultValue": "10.0", "value": "10.0" },
+    { "name": "param_ratio_nacl_low",  "defaultValue": "0.5",  "value": "0.5"  },
+    { "name": "param_ratio_nacl_high", "defaultValue": "1.5",  "value": "1.5"  }
+  ]
 }
 ```
 
-### Wrappers in the context of a Tesseract Workflow
-The boxes below are a visual representation of 3 wrappers.\
-The blue lines represent the connection between the outputs and inputs of the different wrappers, therefore the file generated as outputs of a _Wrapper_ are given as input of the next _Wrapper_.
+---
 
-![Workflow example](./docs/images/workflow.png)\
-_Visual representation of a workflow consisting of 3 wrappers_
+## Pre-processing steps before validation
 
-## Dependencies
-_Please make sure the following dependencies are present on your system:_
+Before running the 14 quality checks, two preparatory steps are applied:
 
-### 1) jq
+### Step A — Merge subprogram files by SiteCode
 
-_A command-line JSON processor_
+For each SiteCode, all available subprogram CSVs are read and joined into a
+single wide DataFrame on the identity columns
+`(SampleID, SiteCode, SiteName, year, month)` using an outer join. Only
+columns defined in `PATTERNS` for each subprogram are kept. Rows with no
+data beyond the identity columns are dropped. Duplicates on the identity key
+are removed (first occurrence kept).
 
-#### Installation
+The result is one row per sample per month with all measured parameters
+side by side — the `allData` output.
 
-Ubuntu
-`apt-get install -y jq`
+### Step B — Fill replicate (REP) samples
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
+Replicate samples (SampleID ending in `REP`) often lack some data columns
+because only the parameters that were re-analysed are recorded in the REP file.
+For each group sharing the same `(SiteCode, year, month, base SampleID)`,
+if a REP row has NaN in a column where the base NOREP row has a value, the
+NOREP value is propagated into the REP row. This ensures REP samples carry
+complete site and date metadata before entering the quality checks.
 
-`brew install jq`
+---
 
-### 2) readarray
+## The 14 quality checks — detailed description
 
-_Reads lines from a file into a 2D array_\
-*_Present in Bash from version 4 or higher_
+### Check 1 — Heavy metal sum for soil water (SW) samples
 
-#### Installation
+**Output column:** `Metals_SW(µeq/l)`
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
-`brew install bash`
+For samples with SamplingTypology containing `SW` (soil water), the sum of
+aluminium, iron and manganese in µeq/l is computed:
 
-### TODO (things we must add to the documentation later)  
+```
+Metals_SW(µeq/l) = AL(µeq/l) + FE(µeq/l) + MN(µeq/l)
+```
 
-- Add R example
-- Add Octave example
+This sum is used later as an additional cation contribution in the ionic
+balance for soil water samples, where dissolved metals represent a
+significant fraction of the cation load. For all other typologies this
+column is NaN.
 
-_Remove this section from the README after Todo's are done_
+---
+
+### Check 2 — Dissolved organic nitrogen (NDON)
+
+**Output columns:** `NDON(mg/l)`, `Quality_NDON`
+
+```
+NDON(mg/l) = TN(mg/l) - (NO3N(mg/l) + NH4N(mg/l))
+```
+
+NDON (Non-ionic Dissolved Organic Nitrogen) represents the organic nitrogen
+fraction not accounted for by the inorganic nitrogen species. It is computed
+as a difference and serves as a data consistency check.
+
+`Quality_NDON` is set to `ok` if all three input columns are present, or
+`incomplete` if any is missing. Note: a negative NDON value is handled
+separately in Check 13 (OrgN quality flag).
+
+---
+
+### Check 3 — Organic anion estimation (Org-)
+
+**Output column:** `Org-(µeq/l)`
+
+Dissolved organic matter carries a negative charge that contributes to the
+overall anion balance but is not directly measured. It is estimated from DOC
+using **empirical linear relationships calibrated by sampling typology**
+(ICP-Forest protocol):
+
+| SamplingTypology contains | Formula |
+|---------------------------|---------|
+| `STF` (stemflow) | `Org- = 5.04 × DOC - 6.67` |
+| `THR` and ends with `BL` (throughfall bulk) | `Org- = 6.80 × DOC - 12.32` |
+| `THR` (other throughfall) | `Org- = 4.17 × DOC - 5.01` |
+| `SW` (soil water) | `Org- = 9.80 × DOC` |
+
+These coefficients are derived from regression analyses specific to European
+forest monitoring sites. If no typology information is available, `Org-`
+remains NaN and the organic-corrected ion balance cannot be computed.
+
+---
+
+### Check 4 — Sum of anions
+
+**Output column:** `SumAnions(µeq/l)`
+
+```
+SumAnions(µeq/l) = AlkalinityICPForests(µeq/l) + CL(µeq/l) + SO4S(µeq/l) + NO3N(µeq/l)
+```
+
+This is the total measured anion charge in the sample. NaN values for
+individual anions are treated as zero in the sum (min_count=1 — at least
+one non-NaN value must be present for a non-NaN result).
+
+---
+
+### Check 5 — Sum of anions with organic correction, and sum of cations
+
+**Output columns:** `+Org(µeq/l)`, `SumCations(µeq/l)`
+
+```
++Org(µeq/l) = SumAnions(µeq/l) + Org-(µeq/l)
+```
+
+```
+SumCations(µeq/l) = H(µeq/l) + NH4N(µeq/l) + CA(µeq/l) + MG(µeq/l)
+                  + NA(µeq/l) + K(µeq/l) + Metals_SW(µeq/l)
+```
+
+Note that `Metals_SW(µeq/l)` is only non-NaN for SW samples — for all other
+typologies, only the six base cations contribute to the sum.
+
+---
+
+### Check 6 — Ionic balance: sC - sA (without organic correction)
+
+**Output columns:** `sC - sA IonsDiff.%`, `IonsDiff.Limit(%)`,
+`IonsDiff.OverLimit.pp`, `IonsDiff.OverLimit.relative%`,
+`sC - sA QualityIonsBalance`
+
+In a chemically consistent water sample, the total positive charge (cations)
+must equal the total negative charge (anions). The **IonsDiff%** quantifies
+the relative deviation from this balance:
+
+```
+IonsDiff% = 100 × (SumCations - SumAnions) / (0.5 × (SumCations + SumAnions))
+```
+
+The acceptable limit depends on WeightedConductivity:
+
+```
+If WeightedConductivity ≤ 20 µS/cm  →  limit = param_ionsdiff_low_k  (default 20%)
+If WeightedConductivity  > 20 µS/cm  →  limit = param_ionsdiff_high_k (default 10%)
+```
+
+`sC - sA QualityIonsBalance` = `ok` if `|IonsDiff%| ≤ limit`, otherwise `NO`.
+
+Additional diagnostic columns:
+- `IonsDiff.OverLimit.pp`: excess in percentage points above the limit (0 if within limit)
+- `IonsDiff.OverLimit.relative%`: excess expressed as % of the limit itself
+
+---
+
+### Check 7 — Ionic balance with organic correction: sC - sA - Org-
+
+**Output columns:** `sC - sA - Org- IonsDiff.%`, `IonsDiffOrg.Limit(%)`,
+`IonsDiffOrg.OverLimit.pp`, `IonsDiffOrg.OverLimit.relative%`,
+`sC - sA - Org- QualityIonsBalance`
+
+Same calculation as Check 6, but using `+Org(µeq/l)` (SumAnions + Org-)
+as the anion sum:
+
+```
+IonsDiff_Org% = 100 × (SumCations - +Org) / (0.5 × (SumCations + +Org))
+```
+
+This version is more complete for samples rich in dissolved organic matter,
+where ignoring Org- would artificially inflate the apparent cation excess.
+The same tiered limits apply.
+
+**This is the version used for the FINAL_VALIDATION flag** for BOF and WET
+typology samples, as specified by the ICP-Forest protocol.
+
+---
+
+### Check 8 — Na/Cl ratio
+
+**Output columns:** `RatioNa/Cl`, `NaClDelta`, `NaClOverLimit.relative%`,
+`QualityRatioNa/Cl`
+
+```
+RatioNa/Cl = NA(µeq/l) / CL(µeq/l)
+```
+
+The ratio of sodium to chloride (in µeq/l) reflects the marine origin of
+these ions. In most European forest monitoring contexts the expected range is
+`[param_ratio_nacl_low, param_ratio_nacl_high]` (default [0.5, 1.5]), which
+brackets the seawater ratio (~1.17 µeq/µeq).
+
+- Below 0.5: possible Cl contamination or analytical error
+- Above 1.5: possible Na contamination, road salt influence, or analytical error
+
+`QualityRatioNa/Cl` = `ok` if within range, `NO` otherwise.
+`NaClDelta`: absolute distance to the nearest limit (0 if within range).
+`NaClOverLimit.relative%`: delta expressed as % of the relevant limit.
+
+**Applied only to:** BOF, WET, THR, THR BL and STF typologies.
+Not applied to SW (soil water) because soil processes can substantially
+alter Na/Cl ratios independently of atmospheric deposition.
+
+---
+
+### Check 9 — Theoretical conductivity (without ionic activity correction)
+
+**Output column:** `ConductivityCalculatedWithoutCorrection(µS/cm)`
+
+The theoretical conductivity is calculated from the ion concentrations
+using their equivalent conductances (Kohlrausch's law):
+
+```
+Cc_uncorrected = Σ(c_i × λ_i) / 1000
+```
+
+where `c_i` is the concentration of ion i in µeq/l and `λ_i` is its
+equivalent conductance in S·cm²/eq. The constants used are:
+
+| Ion | λ (S·cm²/eq) |
+|-----|-------------|
+| H⁺ | 350.0 |
+| NH₄⁺ (as NH4N) | 73.5 |
+| Ca²⁺ | 59.5 |
+| Mg²⁺ | 53.1 |
+| Na⁺ | 50.1 |
+| K⁺ | 73.5 |
+| Al³⁺ | 61.0 |
+| Fe²⁺ | 68.0 |
+| Mn²⁺ | 53.5 |
+| Alkalinity (HCO₃⁻) | 44.5 |
+| SO₄²⁻ (as SO4S) | 80.0 |
+| NO₃⁻ (as NO3N) | 71.4 |
+| Cl⁻ | 76.4 |
+
+---
+
+### Check 10 — Ionic strength
+
+**Output column:** `IonicStrenght(mol/l)`
+
+The ionic strength is computed using a semi-empirical formula based on
+the measured ion concentrations:
+
+```
+I = Σ(c_i × z_i) / (1000 × 2000)
+```
+
+where `c_i` is the concentration in µeq/l and `z_i` is the charge number
+of ion i. This is used as input for the ionic activity correction in Check 11.
+
+---
+
+### Check 11 — Ionic activity factor and corrected conductivity
+
+**Output columns:** `IonicActivityFactor`,
+`ConductivityCalculatedCorrected(µS/cm)`
+
+At higher ionic strengths, ions interact with each other and their effective
+conductance decreases. The **ionic activity factor** accounts for this using
+the Davies equation (semi-empirical):
+
+```
+f = 10^(-0.5 × (√I / (1 + √I) - 0.3 × I))
+```
+
+The corrected theoretical conductivity is:
+
+```
+Cc_corrected = Cc_uncorrected × f²
+```
+
+This corrected value is what gets compared to the measured WeightedConductivity
+in Check 12.
+
+---
+
+### Check 12 — Conductivity difference %
+
+**Output columns:** `ConductivityDiff.(µS/cm)`, `Cond.-Cond.H+(µS/cm)`,
+`Cond. Diff.%Cc-Xm`, `CondDiff.Limit(%)`, `CondDiff.OverLimit.pp`,
+`CondDiff.OverLimit.relative%`, `QualityConductivity`
+
+The relative difference between the theoretically calculated conductivity
+and the measured conductivity (Xm = WeightedConductivity) is:
+
+```
+CondDiff%Cc-Xm = 100 × (Cc_corrected - Xm) / Xm
+```
+
+The acceptable limit depends on Xm (three tiers):
+
+```
+Xm ≤ 10 µS/cm       →  limit = param_conddiff_low_1  (default 30%)
+10 < Xm ≤ 20 µS/cm  →  limit = param_conddiff_low_2  (default 20%)
+Xm > 20 µS/cm       →  limit = param_conddiff_high   (default 10%)
+```
+
+A large discrepancy indicates a missing ion, a measurement error, or a
+systematic offset in one of the analytical methods.
+
+`Cond.-Cond.H+(µS/cm)` is an auxiliary diagnostic: the measured conductivity
+minus the H⁺ contribution — useful for assessing conductivity in acidic samples
+where H⁺ dominates.
+
+`QualityConductivity` = `ok` if `|CondDiff%| ≤ limit`, otherwise `NO`.
+
+---
+
+### Check 13 — OrgN quality flag
+
+**Output columns:** `QualityOrgN`, `OrgN_UnderLimit.mgL`,
+`OrgN_UnderLimit.relative%`
+
+Total Nitrogen must be greater than or equal to the sum of its measured
+inorganic fractions. If this is violated, TN was measured lower than the
+sum of its components, which is chemically impossible:
+
+```
+OrgN = TN(mg/l) - (NO3N(mg/l) + NH4N(mg/l))
+
+OrgN > 0  →  QualityOrgN = 'ok'
+OrgN ≤ 0  →  QualityOrgN = 'NO TN'
+```
+
+`OrgN_UnderLimit.mgL`: the absolute deficit (0 if OrgN ≥ 0).
+`OrgN_UnderLimit.relative%`: deficit expressed as % of |TN|.
+
+---
+
+### Check 14 — FINAL_VALIDATION flag
+
+**Output column:** `FINAL_VALIDATION`
+
+The final flag aggregates all quality checks. A sample receives
+`FINAL_VALIDATION = NO` if **any** of the following conditions are true:
+
+| Condition | Typologies checked |
+|-----------|-------------------|
+| Organic-corrected ion balance fails (`sC - sA - Org- QualityIonsBalance = NO` or NaN) | BOF, WET |
+| Conductivity check fails (`QualityConductivity = NO` or NaN) | All |
+| OrgN check fails (`QualityOrgN = NO TN` or NaN) | All |
+| Na/Cl ratio fails (`QualityRatioNa/Cl = NO` or NaN) | BOF, WET, THR, THR BL, STF |
+
+If none of these conditions apply, `FINAL_VALIDATION = SI`.
+
+**Note on NaN handling:** a NaN result in a quality column (caused by missing
+input data) is treated the same as a failing result — the sample is flagged
+NO. This is conservative: incomplete data cannot be considered validated.
+
+---
+
+## Complete list of output columns added by this component
+
+The validated CSV contains all the input columns plus:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `SamplingTypology` | text | From samplesInfo.xlsx |
+| `Metals_SW(µeq/l)` | float | AL+FE+MN sum (SW only) |
+| `NDON(mg/l)` | float | TN - NO3N - NH4N |
+| `Quality_NDON` | text | `ok` / `incomplete` |
+| `Org-(µeq/l)` | float | Estimated organic anion |
+| `SumAnions(µeq/l)` | float | Alkalinity + Cl + SO4S + NO3N |
+| `+Org(µeq/l)` | float | SumAnions + Org- |
+| `SumCations(µeq/l)` | float | H + NH4N + Ca + Mg + Na + K + metals |
+| `sC - sA IonsDiff.%` | float | Ion balance deviation % |
+| `IonsDiff.Limit(%)` | float | Applicable threshold |
+| `IonsDiff.OverLimit.pp` | float | Excess in pp above threshold |
+| `IonsDiff.OverLimit.relative%` | float | Excess as % of threshold |
+| `sC - sA QualityIonsBalance` | text | `ok` / `NO` |
+| `sC - sA - Org- IonsDiff.%` | float | Ion balance with organic correction |
+| `IonsDiffOrg.Limit(%)` | float | Applicable threshold |
+| `IonsDiffOrg.OverLimit.pp` | float | Excess in pp above threshold |
+| `IonsDiffOrg.OverLimit.relative%` | float | Excess as % of threshold |
+| `sC - sA - Org- QualityIonsBalance` | text | `ok` / `NO` |
+| `RatioNa/Cl` | float | Na/Cl molar ratio in µeq/l |
+| `NaClDelta` | float | Distance to nearest limit |
+| `NaClOverLimit.relative%` | float | Delta as % of nearest limit |
+| `QualityRatioNa/Cl` | text | `ok` / `NO` |
+| `ConductivityCalculatedWithoutCorrection(µS/cm)` | float | Theoretical Cc before activity correction |
+| `IonicStrenght(mol/l)` | float | Ionic strength I |
+| `IonicActivityFactor` | float | Activity correction factor f |
+| `ConductivityCalculatedCorrected(µS/cm)` | float | Corrected theoretical conductivity |
+| `ConductivityDiff.(µS/cm)` | float | Absolute difference Cc - Xm |
+| `Cond.-Cond.H+(µS/cm)` | float | Xm minus H⁺ contribution |
+| `Cond. Diff.%Cc-Xm` | float | Relative conductivity difference % |
+| `CondDiff.Limit(%)` | float | Applicable threshold |
+| `CondDiff.OverLimit.pp` | float | Excess in pp above threshold |
+| `CondDiff.OverLimit.relative%` | float | Excess as % of threshold |
+| `QualityConductivity` | text | `ok` / `NO` |
+| `QualityOrgN` | text | `ok` / `NO TN` |
+| `OrgN_UnderLimit.mgL` | float | Deficit below zero |
+| `OrgN_UnderLimit.relative%` | float | Deficit as % of TN |
+| `FINAL_VALIDATION` | text | `SI` / `NO` |
+
+---
+
+## Reusing this component
+
+This component can be applied to **any ZIP of tab-separated CSV files**
+with water chemistry data, provided:
+
+1. **Column naming:** analyte columns follow `{ELEMENT}(µeq/l)` and
+   `{ELEMENT}(mg/l)` conventions (as produced by Component 4).
+2. **Identity columns:** each CSV must have `SampleID`, `SiteCode`, `year`,
+   `month`.
+3. **Tab separator and header row** as in all other components.
+
+The `samplesInfo.xlsx` is optional but strongly recommended. Without it:
+- `Org-` estimation is skipped (requires typology).
+- Ion balance filter for BOF/WET is skipped.
+- Na/Cl filter for BOF/WET/THR/STF is skipped.
+- All other checks (conductivity, OrgN) still run on all samples.
+
+The quality thresholds are fully configurable via parameters, making the
+component adaptable to other monitoring programmes with different
+analytical precision standards.
