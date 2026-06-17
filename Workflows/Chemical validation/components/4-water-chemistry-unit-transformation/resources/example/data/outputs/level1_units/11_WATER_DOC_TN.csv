@@ -1,0 +1,13 @@
+SampleID	SiteCode	SiteName	StartDate	EndDate	year	month	DOC(mg/l)	TN(mg/l)	Comments	DOC(µg/l)	DOC(µeq/l)
+11QS INT	11	Villanueva de la Sierra		2025-01-27	2025	1	2.904	0.4013		2904.0	968.0
+11QS EXT	11	Villanueva de la Sierra		2025-01-27	2025	1	1.076	0.2576		1076.0	358.6666666666667
+11QS INT	11	Villanueva de la Sierra		2025-02-26	2025	2	2.864	0.7018		2864.0	954.6666666666666
+11QS EXT	11	Villanueva de la Sierra		2025-02-26	2025	2	1.62	0.4833		1620.0	540.0
+11QS INT	11	Villanueva de la Sierra		2025-03-25	2025	3	2.409	0.3898		2409.0	802.9999999999999
+11QS EXT	11	Villanueva de la Sierra		2025-03-25	2025	3	1.59	0.3928		1590.0	530.0
+11QS INT	11	Villanueva de la Sierra		2025-04-22	2025	4	4.278	0.8127		4278.0	1426.0
+11QS EXT	11	Villanueva de la Sierra		2025-04-22	2025	4	1.985	0.4449		1985.0	661.6666666666667
+11QS INT	11	Villanueva de la Sierra		2025-06-02	2025	5	5.441	0.8842		5441.0	1813.6666666666665
+11QS EXT	11	Villanueva de la Sierra		2025-06-02	2025	5	3.646	0.2167		3646.0	1215.3333333333335
+11QS INT	11	Villanueva de la Sierra		2025-06-16	2025	6					
+11QS EXT	11	Villanueva de la Sierra		2025-06-16	2025	6					

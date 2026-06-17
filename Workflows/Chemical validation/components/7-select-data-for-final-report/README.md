@@ -1,250 +1,339 @@
-# Wrapper development kit
-The aim of this project is to help contributors developing wrappers for the LifeWatch ERIC Tesseract platform.
+# 7 — Data to Final Report
 
-## Usage
+Selects the best available measurement per sample per month and produces
+the final clean dataset ready for ICP programme reporting and database
+ingestion. This is the last step of the workflow — it applies a priority
+rule to resolve the NOREP/REP choice for each sample, keeps only the
+chemistry columns needed for reporting, and discards samples that failed
+validation and were never repeated.
 
-```mermaid
-flowchart TB
-   A[Start] --> I[Install dependencies]
-   B{"`Is there
-    an example for my
-    programming language?`"}
-   I --> B
-   B -- Yes --> C[Copy example files]
-   C --> D[Implement custom algorithm]
-   D --> G[Implement annotation]
-   G --> H[Test with execution-parameters and inputs]
-   B -- No --> E[Create one]
-   F["`Commit your wrapper 
-    as an example of
-     the new programming 
-    language in a sub-folder`"]
-   E --> F
-   Z[Done]
-   H ----> Z
-   F ----> Z
-   C ----> EF
-    
+---
 
-   subgraph EF[Example files to be copied]
-      f1[annotation.json] --> fr[Project root folder]
-      f2[Dockerfile] --> fr
-      f3[Source code] --> fr
-      f4[Dependencies file] --> fr
-      fi["/data/inputs/"]
-      fo["/data/outputs/"]
-      fp["/data/execution-parameters.json"]
-      f5[Input files] --> fi
-      f6[Output files] --> fo
-      f7[Parameters] --> fp
+## Workflow position
 
-   end
+```
+WaterChemistryValidationReport  →  Data2FinalReport
 ```
 
-This project has examples for the following languages:
-- Python
-- Node
-- C
-- R (rlang)
-- Octave (gnuoctave/octave, an open source alternative to MATLAB)
+---
 
-Choose a language and copy the contents of its folder to the root of this project.
+## Inputs
 
-Lets say we want to create a **Python** based wrapper:
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| input-data | Text | `/mnt/inputs/allFinalData.xlsx` | All validated samples from component 6. Must contain at minimum the `SampleID`, `year`, `month` and `VAL` columns. |
+| input-samples | Text | `/mnt/inputs/samplesInfo.xlsx` | SampleID metadata file. Used to bring in `ICP_Program`, `SamplingTypology`, `Instrument` and `ID_PostgreSQL`. |
 
-1. Copy the contents of `./examples/python` to `./`
-2. run `./bin/build-image`
-3. run `./bin/execute`
+### allFinalData.xlsx — required columns
 
-## Anatomy of a Wrapper
-A _Wrapper_ represents an individual operation unit that needs to be executed within the larger context of a Tesseract Workflow.\
-Wrappers are small, discrete, and specific in nature, allowing for focused tasks with clear objectives.\
-A _Wrapper_ is always implemented inside a [Docker container](https://www.docker.com/resources/what-container/#:~:text=A%20Docker%20container%20image%20is,tools%2C%20system%20libraries%20and%20settings).
+The input Excel file must contain the following columns. All are present
+in the `allFinalData.xlsx` produced by component 6 — no manual preparation
+is needed if the data comes from that component.
 
-### Interacting with the outside environment of a _Wrapper_
-A _Wrapper_ can be parametrized and operated with the following three components:
-1. **Inputs:** The inputs represents the data, information, or resources that are required for the _Wrapper_ to begin and be executed successfully. An input is **always a file**. It serves as the starting point for the _Wrapper_ and provides the necessary context for the _Wrapper_'s completion. Inputs come from other _Wrappers_.
-2. **Outputs:** The outputs are the results or deliverables produced by the _Wrapper_ once it is completed. These are tangible **files** that are generated as a result of the _Wrapper_'s execution. Outputs represent the outcome of the _Wrapper_ and are usually the input for subsequent _Wrappers_ in the workflow. An output is **always a file**.
-3. **Parameters:** Parameters are the configurable settings, options, or variables that influence the behavior and outcome of the _Wrapper_. They allow the _Wrapper_ to be adapted to different scenarios without modifying the underlying logic. Parameters are used to customize the behavior of the _Wrapper_ and may affect how it processes input data and generates outputs.
+**Identity and validation columns** (mandatory):
 
-### Developing a _Wrapper_
-In order to develop a wrapper the following information must be provided:
-```mermaid
-flowchart LR
-A[Wrapper]
-A --> B(Docker file)
-A --> C(Annotation JSON)
-A --> D(Wrapper script)
-A --> E(Readme file)
-A --> F(Unit test assets)
-```
-1. **Docker file:** The Dockerfile is a plain text configuration file used to define the specifications and instructions to create a _Wrapper_'s Docker container.
-2. **Annotation JSON:** The Annotation JSON is a JSON file describing the ontology of the wrapper.
-3. **Wrapper script:** A script that runs the actual logic (e.g. analysis of data) inside the docker image
-   1. The script can be written in any language as long as there is docker environment that can run it (most used languages are Python, Node, R)
-   2. A script can consist of multiple files or modules (sometimes there is too much logic to fit in a single file). Make sure to copy all additional files into the Docker image (_see Dockerfile_) and add the top-level script/module as `ENTRYPOINT`.
-4. **Readme file:** The Readme file is a MARKDOWN file that serves as a user-friendly introduction and guide to the _Wrapper_.
-5. **Unit test assets:** The Unit test assets allow the _Wrapper_ to be tested in isolation. 
+| Column | Description |
+|--------|-------------|
+| `SampleID` | Sample identifier (may include REP suffix) |
+| `SiteCode` | Plot code |
+| `SiteName` | Plot name |
+| `year` | Year of collection |
+| `month` | Month of collection (1–12) |
+| `VAL` | Final validation flag: `SI` (passed) or `NO` (failed) |
 
-### Wrapper annotation JSON:
-Documentation of the fields present in a _Wrapper annotation JSON_ file: 
-```json lines
-{
-  // String identifying the wrapper, must be unique in the system and written in pascal case.
-  // https://betterprogramming.pub/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
-  "name": "TextTranslator",
-  // Label used in the UI / human-readable name of the component
-  "label": "Text translator",
-  // Description displayed in the UI to describe the general purpose of this wrapper
-  "description": "This wrapper translates all the given documents to an user specified language",
-  // Type of this wrapper, it can be one of the following [ DataAnalysing, DataCollection, DataProcessing, DataSink, DataFlow ] 
-  "type": "DataCollection",
-  // Name of the Docker image for this wrapper
-  "dockerImage": "text-translator",
-  // Lit describing all the parameters for this wrapper 
-  "parameters": [
-    {
-      // Identifier of the variable, will be exposed in the main function inside the entrypoint Docker image => def execute(pcs: Process, db: str)
-      "name": "languageCode",
-      // Used in the UI, human-readable name of the parameter
-      "label": "Language code",
-      // Used in the UI, human-readable description for this parameter
-      "description": "Language code following ISO 3166-1 alpha-2",
-      // Default value for this parameter if no value is provided by the user
-      "defaultValue": "en_GB",
-      // Type for this parameter, it can be one of the following [ List, Boolean, Date, Double, Float, Integer, String, Timestamp ]
-      "type": "String"
-    }
-  ],
-  // List describing all the input files for this wrapper
-  "inputs": [
-    {
-      // Type of this input file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Documents",
-      // Unique identifier of this parameter
-      "name": "documents",
-      // Used in the UI, human-readable description for this input
-      "description": "Compressed file containing all the documents to be translated"
-    }
-  ],
-  // List describing all the output files for this wrapper
-  "outputs": [
-    {
-      // Path were to place this output file relative to /mnt/outputs
-      "path": "translatedDocuments.zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Translated",
-      // Unique identifier of this parameter
-      "name": "translated-documents",
-      // Used in the UI, human-readable name of this output
-      "description": "Compressed file containing all the translated documents",
-      // Type of this output file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip"
-    },
-    {
-      "path": "language-dictionary/dictionary.txt",
-      "label": "Dictionary",
-      "description": "Full language dictionary of the translated language",
-      "type": "Text"
-    }
-  ],
-  // Object describing the necessary hardware resources to run this wrapper
-  "resources": {
-    // Recommended number of cores
-    cores: 8,
-    // Recommended amount of memory in MB
-    memory: 4096,
-    // Boolean indicating if a GPU is needed to execute this wrapper
-    gpuNeeded: true,
-    // Recommended amount of GPU memory in MB
-    gpuMemory: 1024,
-    // Maximum number of hours expected for this wrapper to complete with the provided example dataset
-    estimatedTime: 4
-  },
-  // List of keyword tags, used to search and group wrappers in the UI
-  "tags": [ "tag 1", "tag 2" ],
-  // License of this wrapper, must be a valid spdx_id https://spdx.dev/ids/ 
-  "license": "GPL v3",
-  // Semantic version of this wrapper https://semver.org/
-  "version": "1.0.1",
-  // Object describing the license and version of the software used inside this wrapper
-  "dependencies": [
-    {
-      // Name of the library or dependency
-      "name": "translate",
-      // License of this library or dependency, must be a valid spdx_id https://spdx.dev/ids/
-      "license": "GPL v3",
-      // Semantic version of this library or dependency https://semver.org/
-      "version": "3.5.0",
-       // Person or association who created this dependency
-       "author": "Charles Elton",
-       // Text reserved for the citation of the work related with this dependency
-       "citation": "Charles Elton, IJI NIS Workflows, https://url-to-scientific-paper.org",
-    }
-  ],
-  // UTC time of the publication of this version of the wrapper
-  "publicationDate": "Thu, 18 May 2023 11:43:09 GMT",
-  // Person or association who created this wrapper
-  "author": "LifeWatch ERIC",
-  // Text reserved for the citation of the work related with this wrapper
-  "citation": "Charles Elton, IJI NIS Workflows, ",
-  // Report bugs information
-  "bugs": {
-    // Email address where bugs can be submitted
-    "email": "help@exampleorg.com",
-    // URL of the ticketing system of this organisation where bugs can be submitted
-    "url": "https://ictofficedesk.lifewatch.eu/portal/lifewatcheric/home"
-  },
-  // Path to the unit test script
-  "testPath": "translateUnitTest.sh",
-  // URL of this wrapper in the LifeWatch metadata catalogue
-  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/oai:marineinfo.org:id:dataset:2744"
-}
+**Chemistry columns** (included in the output if present):
+
+| Column | Unit | Subprogram |
+|--------|------|------------|
+| `CL(mg/l)` | mg/L | ANIONS |
+| `SO4S(mg/l)` | mg/L | ANIONS |
+| `NO3N(mg/l)` | mg/L | ANIONS |
+| `PO4P(mg/l)` | mg/L | ANIONS |
+| `CA(mg/l)` | mg/L | CATIONS |
+| `MG(mg/l)` | mg/L | CATIONS |
+| `NA(mg/l)` | mg/L | CATIONS |
+| `K(mg/l)` | mg/L | CATIONS |
+| `AL(mg/l)` | mg/L | CATIONS |
+| `FE(mg/l)` | mg/L | CATIONS |
+| `MN(mg/l)` | mg/L | CATIONS |
+| `AS(mg/l)` | mg/L | CATIONS |
+| `CD(mg/l)` | mg/L | CATIONS |
+| `CR(mg/l)` | mg/L | CATIONS |
+| `CU(mg/l)` | mg/L | CATIONS |
+| `CO(mg/l)` | mg/L | CATIONS |
+| `MO(mg/l)` | mg/L | CATIONS |
+| `NI(mg/l)` | mg/L | CATIONS |
+| `PB(mg/l)` | mg/L | CATIONS |
+| `ZN(mg/l)` | mg/L | CATIONS |
+| `P(mg/l)` | mg/L | CATIONS |
+| `S(mg/l)` | mg/L | CATIONS |
+| `NH4N(mg/l)` | mg/L | AMMONIUM |
+| `TN(mg/l)` | mg/L | DOC_TN |
+| `DOC(mg/l)` | mg/L | DOC_TN |
+| `H(µeq/l)` | µeq/L | pH/COND |
+| `WeightedConductivity(µS/cm)` | µS/cm | pH/COND |
+| `Volume(ml)` | mL | pH/COND |
+| `Precip(l/m2)` | l/m² | pH/COND |
+| `WeightedpH` | — | pH/COND |
+| `AlkalinityICPForests(µeq/l)` | µeq/L | ALKALINITY |
+
+If a column is absent from the input (e.g. the ALKALINITY subprogram was
+not measured), it will appear as an empty column in the output — the output
+always has the full fixed column set.
+
+### samplesInfo.xlsx — required columns
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `SampleID` | ✅ | Must match the SampleIDs in `allFinalData.xlsx` |
+| `ICP_Program` | ⚠️ optional | Programme name (e.g. `ICP-Forest`, `ICP-IM`) |
+| `SamplingTypology` | ⚠️ optional | Sampling type code |
+| `Instrument` | ⚠️ optional | Instrument identifier |
+| `ID_PostgreSQL` | ⚠️ optional | Database record identifier |
+
+Only columns actually present in the file are merged. If a column is missing
+from `samplesInfo.xlsx`, it is simply not added to the output.
+
+---
+
+## Outputs
+
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| output-data | Text | `/mnt/outputs/data2report.xlsx` | One row per sample per month with the final chemistry columns, ready for ICP reporting and database ingestion. Sheet name: `Datos`. |
+
+---
+
+## Parameters
+
+None. The selection logic is fixed and deterministic.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\7-select-data-for-final-report"
+
+docker build -t select-data-for-final-report:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  select-data-for-final-report:0.0.1
 ```
 
-### Wrappers in the context of a Tesseract Workflow
-The boxes below are a visual representation of 3 wrappers.\
-The blue lines represent the connection between the outputs and inputs of the different wrappers, therefore the file generated as outputs of a _Wrapper_ are given as input of the next _Wrapper_.
+## resources/example/data/execution-parameters.json
 
-![Workflow example](./docs/images/workflow.png)\
-_Visual representation of a workflow consisting of 3 wrappers_
+```json
+{ "parameters": [] }
+```
 
-## Dependencies
-_Please make sure the following dependencies are present on your system:_
+---
 
-### 1) jq
+## Selection logic — choosing between NOREP and REP
 
-_A command-line JSON processor_
+The component groups all rows by `(base SampleID / year / month)` and applies
+four rules in priority order. Only the first matching rule is applied.
 
-#### Installation
+The **base SampleID** is the SampleID with the `REP` suffix removed
+(e.g. `05PSINT` for both `05PSINT` and `05PSINT_REP`).
 
-Ubuntu
-`apt-get install -y jq`
+| Rule | Condition | Action | Reason |
+|------|-----------|--------|--------|
+| 1 | NOREP exists AND `VAL = SI` | Keep NOREP | The original measurement passed — use it. |
+| 2 | NOREP failed AND REP exists AND REP `VAL = SI` | Keep REP | The repetition improved the result — use the better measurement. |
+| 3 | NOREP failed AND REP exists AND REP `VAL = NO` | Keep NOREP | Both failed — the sample was deliberately repeated and must be reported, but use the original. |
+| 4 | NOREP failed AND no REP exists | Discard | Unvalidated data with no chance of recovery — not included in the final dataset. |
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
+### Worked example
 
-`brew install jq`
+| SampleID | year | month | VAL | Selected? | Rule |
+|----------|------|-------|-----|-----------|------|
+| 05PSINT | 2025 | 1 | SI | ✅ Yes (as NOREP) | 1 |
+| 05PSINT | 2025 | 2 | NO | — | — |
+| 05PSINT_REP | 2025 | 2 | SI | ✅ Yes (as REP) | 2 |
+| 05PSINT | 2025 | 3 | NO | ✅ Yes (as NOREP) | 3 |
+| 05PSINT_REP | 2025 | 3 | NO | — | — |
+| 05PSINT | 2025 | 4 | NO | ❌ Discarded | 4 |
 
-### 2) readarray
+In the output, month 2 is represented by the REP row, month 3 by the NOREP
+row (both failed), and month 4 is absent.
 
-_Reads lines from a file into a 2D array_\
-*_Present in Bash from version 4 or higher_
+### SampleID normalisation
 
-#### Installation
+Before the grouping, all SampleIDs are normalised:
+- Converted to uppercase
+- Spaces, hyphens and underscores removed
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
-`brew install bash`
+This ensures that `05PS INT`, `05PS-INT` and `05PSINT` are treated as the same
+sample, and that `05PSINT_REP`, `05PS INT REP` and `05PSINT REP` are all
+correctly identified as REP samples of the same base.
 
-### TODO (things we must add to the documentation later)  
+---
 
-- Add R example
-- Add Octave example
+## Monthly composite samples
 
-_Remove this section from the README after Todo's are done_
+After the NOREP/REP selection step, the script checks whether more than one selected sample exists for the same `SiteCode`, `SiteName`, `year` and `month` combination.
 
+When multiple selected samples are available for the same site and month, they are merged into a single monthly composite sample using **volume-weighted averaging**. This situation may occur when a monthly sample is represented by more than one collection bottle or analytical record.
+
+The resulting output contains one representative row per `SiteCode`, `SiteName`, `year` and `month`.
+
+---
+
+### Weighting principle
+
+For all concentration-based variables, including values expressed as `mg/L`, `µeq/L` or `µS/cm`, the final monthly value is calculated as:
+
+$$
+C_{final} = \frac{\sum_i C_i \times V_i}{\sum_i V_i}
+$$
+
+where:
+
+* $C_i$ = measured concentration in sample `i`
+* $V_i$ = collected sample volume, using `Volume(ml)`, for sample `i`
+
+The final volume is calculated as:
+
+$$
+V_{final} = \sum_i V_i
+$$
+
+---
+
+### Variables combined by volume-weighted averaging
+
+The following variables are combined using volume-weighted averaging:
+
+* `CL(mg/l)`
+* `SO4S(mg/l)`
+* `NO3N(mg/l)`
+* `PO4P(mg/l)`
+* `CA(mg/l)`
+* `MG(mg/l)`
+* `NA(mg/l)`
+* `K(mg/l)`
+* `AL(mg/l)`
+* `FE(mg/l)`
+* `MN(mg/l)`
+* `AS(mg/l)`
+* `CD(mg/l)`
+* `CR(mg/l)`
+* `CU(mg/l)`
+* `CO(mg/l)`
+* `MO(mg/l)`
+* `NI(mg/l)`
+* `PB(mg/l)`
+* `ZN(mg/l)`
+* `P(mg/l)`
+* `S(mg/l)`
+* `NH4N(mg/l)`
+* `TN(mg/l)`
+* `DOC(mg/l)`
+* `H(µeq/l)`
+* `WeightedConductivity(µS/cm)`
+* `AlkalinityICPForests(µeq/l)`
+
+---
+
+### Variables summed directly
+
+The following variables are summed directly:
+
+* `Volume(ml)`
+* `Precip(l/m2)`
+
+---
+
+### pH calculation
+
+Because pH is a logarithmic variable, it is **not averaged directly**.
+
+The script first converts each `WeightedpH` value into hydrogen ion concentration:
+
+$$
+[H^+]_i = 10^{-pH_i}
+$$
+
+Then it calculates the volume-weighted hydrogen ion concentration:
+
+$$
+[H^+]_{final} = \frac{\sum_i [H^+]_i \times V_i}{\sum_i V_i}
+$$
+
+Finally, the weighted hydrogen ion concentration is converted back to pH:
+
+$$
+pH_{final} = -\log_{10}([H^+]_{final})
+$$
+
+This approach ensures that the resulting pH is chemically consistent with the mixed sample.
+
+---
+
+### Final SampleID
+
+After the monthly composite step, the final `SampleID` is regenerated using information from `samplesInfo.xlsx`.
+
+The format is:
+
+```text
+SiteCode_SamplingTypology_Instrument
+```
+
+Spaces are removed from `SamplingTypology`. The `Instrument` part is only added when it is not empty.
+
+Example with instrument:
+
+```text
+ES01_BulkDeposition_ICP
+```
+
+Example without instrument:
+
+```text
+ES01_BulkDeposition
+```
+
+---
+
+### Example
+
+| Sample | Volume (mL) | Cl (mg/L) |
+| ------ | ----------- | --------- |
+| A      | 7380        | 0.4461    |
+| B      | 8915        | 0.4277    |
+
+The combined chloride concentration is:
+
+$$
+Cl_{final} =
+\frac{0.4461 \times 7380 + 0.4277 \times 8915}
+{7380 + 8915}
+$$
+
+$$
+Cl_{final} = 0.4360 \text{ mg/L}
+$$
+
+The final volume is:
+
+$$
+V_{final} = 7380 + 8915 = 16295 \text{ mL}
+$$
+
+The resulting output contains a single row for that site and month, representing the volume-weighted monthly composite sample.
+
+
+## Notes
+
+- The output always contains the full fixed set of 36 chemistry columns
+  regardless of which subprograms were measured. Missing subprogram columns
+  appear as empty cells in the output Excel file.
+- Metadata columns from `samplesInfo.xlsx` (`ICP_Program`, `SamplingTypology`,
+  `Instrument`, `ID_PostgreSQL`) are not included in the final output column
+  set — they are only used internally during the merge step and then dropped.
+  If you need these columns in the output, the script would need to be modified.
+- The output file has a single sheet named `Datos`.

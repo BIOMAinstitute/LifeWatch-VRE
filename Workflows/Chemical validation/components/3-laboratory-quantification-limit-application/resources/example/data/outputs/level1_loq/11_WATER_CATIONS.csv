@@ -1,0 +1,13 @@
+SampleID	SiteCode	SiteName	StartDate	EndDate	year	month	CA(mg/l)	MG(mg/l)	NA(mg/l)	K(mg/l)	AL(mg/l)	FE(mg/l)	MN(mg/l)	AS(mg/l)	CD(mg/l)	CR(mg/l)	CU(mg/l)	CO(mg/l)	NI(mg/l)	PB(mg/l)	ZN(mg/l)	P(mg/l)	S(mg/l)	Comments
+11QS INT	11	Villanueva de la Sierra		2025-01-27	2025	1	0.3755199999999999	0.10303	0.461	0.873	0.010718	0.0053609999999999	0.007378											
+11QS EXT	11	Villanueva de la Sierra		2025-01-27	2025	1	0.275706	0.060719	0.427	0.075	0.005	0.0025	0.0025											
+11QS INT	11	Villanueva de la Sierra		2025-02-26	2025	2	0.538818	0.2155989999999999	1.4739612400000002	1.117	0.010592	0.0025	0.009503											
+11QS EXT	11	Villanueva de la Sierra		2025-02-26	2025	2	0.433592	0.1442709999999999	0.975	0.075	0.005	0.0025	0.0025											
+11QS INT	11	Villanueva de la Sierra		2025-03-25	2025	3	0.212242	0.081962	0.626	0.716	0.005	0.0025	0.007005											
+11QS EXT	11	Villanueva de la Sierra		2025-03-25	2025	3	0.075	0.055788	0.52	0.075	0.010792	0.0025	0.0025											
+11QS INT	11	Villanueva de la Sierra		2025-04-22	2025	4	1.015124	0.1988089999999999	0.983	1.529746193	0.017415	0.008681	0.0055709999999999											
+11QS EXT	11	Villanueva de la Sierra		2025-04-22	2025	4	0.410315	0.106446	0.709	0.16	0.005	0.0025	0.0025											
+11QS INT	11	Villanueva de la Sierra		2025-06-02	2025	5	0.877738	0.224123	0.999136	2.063756	0.0164349999999999	0.01025	0.0025											
+11QS EXT	11	Villanueva de la Sierra		2025-06-02	2025	5	0.991748	0.151852	0.997	0.234142	0.005	0.0025	0.0025											
+11QS INT	11	Villanueva de la Sierra		2025-06-16	2025	6																		
+11QS EXT	11	Villanueva de la Sierra		2025-06-16	2025	6																		

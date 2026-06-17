@@ -1,0 +1,110 @@
+{
+  "name": "WaterChemistryValidationReport",
+  "label": "Water chemistry validation report",
+  "description": "Generates a validation report for ICP-Forest water chemistry samples from the validated CSV files produced by the WaterChemistryValidation wrapper. Produces a multi-page PDF with key indicators, five summary charts and a colour-coded per-sample validation table; an Excel file with only the samples that failed validation (Samples2Repeat); and an Excel file with all samples regardless of outcome (allFinalData). Both Excel files highlight missing values in red.",
+  "type": "DataAnalysing",
+  "dockerImage": "lw-water-chemistry-validation-report",
+  "parameters": [],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Validated data ZIP",
+      "path": "/mnt/inputs/water_chemical_data_level2_validated.zip",
+      "description": "ZIP archive containing the validated tab-separated CSV files (one per SiteCode) produced by the WaterChemistryValidation wrapper. Each CSV must include the FINAL_VALIDATION column and the quality indicator columns."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "input-samples",
+      "label": "Samples typology file",
+      "path": "/mnt/inputs/samplesInfo.xlsx",
+      "description": "Excel file mapping each SampleID to its SamplingTypology (e.g. THR CON, BOF BL, SW CON). Used to fill typology for REP samples and to define the sample sort order in the report tables. Required columns: SampleID, SamplingTypology."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Bin",
+      "name": "output-pdf",
+      "label": "Validation report PDF",
+      "path": "/mnt/outputs/validation_report.pdf",
+      "description": "Multi-page PDF report containing: key indicators summary, five validation charts (failed validations by month, failure type breakdown, monthly failure rate, outcome by non-repeated sample, outcome by repeated sample) and a colour-coded detailed validation table per sample."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-repeat",
+      "label": "Samples to repeat (Excel)",
+      "path": "/mnt/outputs/Samples2Repeat.xlsx",
+      "description": "Excel file containing only the samples that failed validation (FINAL_VALIDATION = NO), sorted by year, month and SampleID. Empty cells are highlighted in red."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-all",
+      "label": "All final data (Excel)",
+      "path": "/mnt/outputs/All_Validated_Data.xlsx",
+      "description": "Excel file containing all samples regardless of validation outcome, with the same column layout and red highlighting for missing values."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 1024,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 10
+  },
+  "tags": ["report", "validation", "water chemistry", "ICP-Forest", "lifewatch"],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "matplotlib",
+      "license": "PSF",
+      "version": "3.9.0",
+      "author": "Matplotlib Development Team",
+      "citation": null
+    },
+    {
+      "name": "fpdf2",
+      "license": "LGPL-3.0",
+      "version": "2.7.9",
+      "author": "Olivier Plathey, contributors",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "Eric Gazoni, Charlie Clark",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2025-05-27",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "reportUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

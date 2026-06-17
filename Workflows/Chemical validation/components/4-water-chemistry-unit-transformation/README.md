@@ -1,249 +1,315 @@
-# Wrapper development kit
-The aim of this project is to help contributors developing wrappers for the LifeWatch ERIC Tesseract platform.
+# 4 — Unit Transformation
 
-## Usage
+Converts water chemistry measurements to a standardised set of three units
+per analyte: **mg/l**, **µg/l** and **µeq/l**. The transformation is
+**unit-agnostic**: the input unit is automatically detected from the column
+name (e.g. `NH4N(µg/l)`) and the three output columns are generated regardless
+of which unit was originally used. If only one unit representation exists in
+the input, all three will exist in the output.
 
-```mermaid
-flowchart TB
-   A[Start] --> I[Install dependencies]
-   B{"`Is there
-    an example for my
-    programming language?`"}
-   I --> B
-   B -- Yes --> C[Copy example files]
-   C --> D[Implement custom algorithm]
-   D --> G[Implement annotation]
-   G --> H[Test with execution-parameters and inputs]
-   B -- No --> E[Create one]
-   F["`Commit your wrapper 
-    as an example of
-     the new programming 
-    language in a sub-folder`"]
-   E --> F
-   Z[Done]
-   H ----> Z
-   F ----> Z
-   C ----> EF
-    
+Also handles four paired cross-conversions between molecular and elemental
+forms, generating both representations simultaneously:
+- NH4 ↔ NH4N (ammonium / ammonium-nitrogen)
+- NO3 ↔ NO3N (nitrate / nitrate-nitrogen)
+- SO4 ↔ SO4S (sulphate / sulphate-sulphur)
+- PO4 ↔ PO4P (phosphate / phosphate-phosphorus)
 
-   subgraph EF[Example files to be copied]
-      f1[annotation.json] --> fr[Project root folder]
-      f2[Dockerfile] --> fr
-      f3[Source code] --> fr
-      f4[Dependencies file] --> fr
-      fi["/data/inputs/"]
-      fo["/data/outputs/"]
-      fp["/data/execution-parameters.json"]
-      f5[Input files] --> fi
-      f6[Output files] --> fo
-      f7[Parameters] --> fp
+---
 
-   end
+## Workflow position
+
+```
+LoqApplication  →  UnitTransformation  →  WaterChemistryValidation
 ```
 
-This project has examples for the following languages:
-- Python
-- Node
-- C
-- R (rlang)
-- Octave (gnuoctave/octave, an open source alternative to MATLAB)
+---
 
-Choose a language and copy the contents of its folder to the root of this project.
+## Inputs
 
-Lets say we want to create a **Python** based wrapper:
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| input-data | Zip | `/mnt/inputs/water_chemical_data_level1_loq.zip` | ZIP of tab-separated CSV files from component 3. |
 
-1. Copy the contents of `./examples/python` to `./`
-2. run `./bin/build-image`
-3. run `./bin/execute`
+## Outputs
 
-## Anatomy of a Wrapper
-A _Wrapper_ represents an individual operation unit that needs to be executed within the larger context of a Tesseract Workflow.\
-Wrappers are small, discrete, and specific in nature, allowing for focused tasks with clear objectives.\
-A _Wrapper_ is always implemented inside a [Docker container](https://www.docker.com/resources/what-container/#:~:text=A%20Docker%20container%20image%20is,tools%2C%20system%20libraries%20and%20settings).
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| output-data | Zip | `/mnt/outputs/water_chemical_data_level1_units.zip` | Same CSV files with three unit columns added per recognised analyte. |
 
-### Interacting with the outside environment of a _Wrapper_
-A _Wrapper_ can be parametrized and operated with the following three components:
-1. **Inputs:** The inputs represents the data, information, or resources that are required for the _Wrapper_ to begin and be executed successfully. An input is **always a file**. It serves as the starting point for the _Wrapper_ and provides the necessary context for the _Wrapper_'s completion. Inputs come from other _Wrappers_.
-2. **Outputs:** The outputs are the results or deliverables produced by the _Wrapper_ once it is completed. These are tangible **files** that are generated as a result of the _Wrapper_'s execution. Outputs represent the outcome of the _Wrapper_ and are usually the input for subsequent _Wrappers_ in the workflow. An output is **always a file**.
-3. **Parameters:** Parameters are the configurable settings, options, or variables that influence the behavior and outcome of the _Wrapper_. They allow the _Wrapper_ to be adapted to different scenarios without modifying the underlying logic. Parameters are used to customize the behavior of the _Wrapper_ and may affect how it processes input data and generates outputs.
+## Parameters
 
-### Developing a _Wrapper_
-In order to develop a wrapper the following information must be provided:
-```mermaid
-flowchart LR
-A[Wrapper]
-A --> B(Docker file)
-A --> C(Annotation JSON)
-A --> D(Wrapper script)
-A --> E(Readme file)
-A --> F(Unit test assets)
-```
-1. **Docker file:** The Dockerfile is a plain text configuration file used to define the specifications and instructions to create a _Wrapper_'s Docker container.
-2. **Annotation JSON:** The Annotation JSON is a JSON file describing the ontology of the wrapper.
-3. **Wrapper script:** A script that runs the actual logic (e.g. analysis of data) inside the docker image
-   1. The script can be written in any language as long as there is docker environment that can run it (most used languages are Python, Node, R)
-   2. A script can consist of multiple files or modules (sometimes there is too much logic to fit in a single file). Make sure to copy all additional files into the Docker image (_see Dockerfile_) and add the top-level script/module as `ENTRYPOINT`.
-4. **Readme file:** The Readme file is a MARKDOWN file that serves as a user-friendly introduction and guide to the _Wrapper_.
-5. **Unit test assets:** The Unit test assets allow the _Wrapper_ to be tested in isolation. 
+None. The transformation is fully deterministic from the column names and
+the built-in chemical constants (atomic weights, molecular weights, valences).
 
-### Wrapper annotation JSON:
-Documentation of the fields present in a _Wrapper annotation JSON_ file: 
-```json lines
-{
-  // String identifying the wrapper, must be unique in the system and written in pascal case.
-  // https://betterprogramming.pub/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
-  "name": "TextTranslator",
-  // Label used in the UI / human-readable name of the component
-  "label": "Text translator",
-  // Description displayed in the UI to describe the general purpose of this wrapper
-  "description": "This wrapper translates all the given documents to an user specified language",
-  // Type of this wrapper, it can be one of the following [ DataAnalysing, DataCollection, DataProcessing, DataSink, DataFlow ] 
-  "type": "DataCollection",
-  // Name of the Docker image for this wrapper
-  "dockerImage": "text-translator",
-  // Lit describing all the parameters for this wrapper 
-  "parameters": [
-    {
-      // Identifier of the variable, will be exposed in the main function inside the entrypoint Docker image => def execute(pcs: Process, db: str)
-      "name": "languageCode",
-      // Used in the UI, human-readable name of the parameter
-      "label": "Language code",
-      // Used in the UI, human-readable description for this parameter
-      "description": "Language code following ISO 3166-1 alpha-2",
-      // Default value for this parameter if no value is provided by the user
-      "defaultValue": "en_GB",
-      // Type for this parameter, it can be one of the following [ List, Boolean, Date, Double, Float, Integer, String, Timestamp ]
-      "type": "String"
-    }
-  ],
-  // List describing all the input files for this wrapper
-  "inputs": [
-    {
-      // Type of this input file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Documents",
-      // Unique identifier of this parameter
-      "name": "documents",
-      // Used in the UI, human-readable description for this input
-      "description": "Compressed file containing all the documents to be translated"
-    }
-  ],
-  // List describing all the output files for this wrapper
-  "outputs": [
-    {
-      // Path were to place this output file relative to /mnt/outputs
-      "path": "translatedDocuments.zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Translated",
-      // Unique identifier of this parameter
-      "name": "translated-documents",
-      // Used in the UI, human-readable name of this output
-      "description": "Compressed file containing all the translated documents",
-      // Type of this output file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip"
-    },
-    {
-      "path": "language-dictionary/dictionary.txt",
-      "label": "Dictionary",
-      "description": "Full language dictionary of the translated language",
-      "type": "Text"
-    }
-  ],
-  // Object describing the necessary hardware resources to run this wrapper
-  "resources": {
-    // Recommended number of cores
-    cores: 8,
-    // Recommended amount of memory in MB
-    memory: 4096,
-    // Boolean indicating if a GPU is needed to execute this wrapper
-    gpuNeeded: true,
-    // Recommended amount of GPU memory in MB
-    gpuMemory: 1024,
-    // Maximum number of hours expected for this wrapper to complete with the provided example dataset
-    estimatedTime: 4
-  },
-  // List of keyword tags, used to search and group wrappers in the UI
-  "tags": [ "tag 1", "tag 2" ],
-  // License of this wrapper, must be a valid spdx_id https://spdx.dev/ids/ 
-  "license": "GPL v3",
-  // Semantic version of this wrapper https://semver.org/
-  "version": "1.0.1",
-  // Object describing the license and version of the software used inside this wrapper
-  "dependencies": [
-    {
-      // Name of the library or dependency
-      "name": "translate",
-      // License of this library or dependency, must be a valid spdx_id https://spdx.dev/ids/
-      "license": "GPL v3",
-      // Semantic version of this library or dependency https://semver.org/
-      "version": "3.5.0",
-       // Person or association who created this dependency
-       "author": "Charles Elton",
-       // Text reserved for the citation of the work related with this dependency
-       "citation": "Charles Elton, IJI NIS Workflows, https://url-to-scientific-paper.org",
-    }
-  ],
-  // UTC time of the publication of this version of the wrapper
-  "publicationDate": "Thu, 18 May 2023 11:43:09 GMT",
-  // Person or association who created this wrapper
-  "author": "LifeWatch ERIC",
-  // Text reserved for the citation of the work related with this wrapper
-  "citation": "Charles Elton, IJI NIS Workflows, ",
-  // Report bugs information
-  "bugs": {
-    // Email address where bugs can be submitted
-    "email": "help@exampleorg.com",
-    // URL of the ticketing system of this organisation where bugs can be submitted
-    "url": "https://ictofficedesk.lifewatch.eu/portal/lifewatcheric/home"
-  },
-  // Path to the unit test script
-  "testPath": "translateUnitTest.sh",
-  // URL of this wrapper in the LifeWatch metadata catalogue
-  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/oai:marineinfo.org:id:dataset:2744"
-}
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\4-water-chemistry-unit-transformation"
+
+docker build -t water-chemistry-unit-transformation:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  water-chemistry-unit-transformation:0.0.1
 ```
 
-### Wrappers in the context of a Tesseract Workflow
-The boxes below are a visual representation of 3 wrappers.\
-The blue lines represent the connection between the outputs and inputs of the different wrappers, therefore the file generated as outputs of a _Wrapper_ are given as input of the next _Wrapper_.
+## resources/example/data/execution-parameters.json
 
-![Workflow example](./docs/images/workflow.png)\
-_Visual representation of a workflow consisting of 3 wrappers_
+```json
+{ "parameters": [] }
+```
 
-## Dependencies
-_Please make sure the following dependencies are present on your system:_
+---
 
-### 1) jq
+## Understanding the three units
 
-_A command-line JSON processor_
+For each analyte, the component generates three columns covering the two
+most common measurement conventions in water chemistry:
 
-#### Installation
+### mg/l — mass concentration
+The mass of the element or compound dissolved per litre of water.
+This is the unit typically reported by laboratory instruments and
+recorded in the original templates.
 
-Ubuntu
-`apt-get install -y jq`
+```
+Example: CA(mg/l) = 0.665
+→ 0.665 mg of calcium per litre of water
+```
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
+### µg/l — micro mass concentration
+The same as mg/l but expressed at the micro scale. Useful for trace
+elements whose concentrations are very small as mg/l values.
 
-`brew install jq`
+```
+Conversion: µg/l = mg/l × 1000
 
-### 2) readarray
+Example: CA(mg/l) = 0.665  →  CA(µg/l) = 665
+         AS(mg/l) = 0.000025  →  AS(µg/l) = 0.025
+```
 
-_Reads lines from a file into a 2D array_\
-*_Present in Bash from version 4 or higher_
+### µeq/l — microequivalent concentration (charge-based)
+This is the electrochemical unit used for **ion balance calculations**.
+It expresses the number of electric charges (equivalents) per litre,
+scaled to the micro level. Unlike mg/l, it accounts for both the
+molecular weight and the ionic charge (valence) of the element.
 
-#### Installation
+This unit is essential for checking whether the sum of positive ions
+(cations) equals the sum of negative ions (anions) in a water sample —
+a fundamental physicochemical constraint used in Component 5.
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
-`brew install bash`
+```
+Conversion: µeq/l = mg/l × valence / molecular_weight × 1000
 
-### TODO (things we must add to the documentation later)  
+Example: CA(mg/l) = 0.665
+         Ca atomic weight = 40.08 g/mol, valence = 2
+         CA(µeq/l) = 0.665 × 2 / 40.08 × 1000 = 33.18 µeq/l
 
-- Add R example
-- Add Octave example
+Example: SO4(mg/l) = 0.381
+         SO4 molecular weight = 95.996 g/mol, valence = 2
+         SO4S(µeq/l) = 0.381 × 2 / 95.996 × 1000 = 7.94 µeq/l
+```
 
-_Remove this section from the README after Todo's are done_
+**Why does valence matter?** A calcium ion (Ca²⁺) carries 2 positive
+charges, so 1 mg/l of calcium contributes twice as many charge equivalents
+as 1 mg/l of sodium (Na⁺, valence 1). The µeq/l unit normalises for this,
+making concentrations of different ions directly comparable for charge balance.
+
+---
+
+## Elements and compounds supported
+
+The component recognises analytes by their name in the column header
+(case-insensitive). Below is the complete list of supported analytes with
+the chemical constants used for conversion.
+
+### Elements and ions
+
+| Analyte | Column name | Atomic weight (g/mol) | Valence | Notes |
+|---------|------------|----------------------|---------|-------|
+| Arsenic | `AS(mg/l)` | 74.992 | 5 | Trace metal |
+| Cadmium | `CD(mg/l)` | 112.41 | 2 | Trace metal |
+| Chromium | `CR(mg/l)` | 51.996 | 6 | Trace metal |
+| Copper | `CU(mg/l)` | 63.546 | 2 | Trace metal |
+| Cobalt | `CO(mg/l)` | 58.933 | 6 | Trace metal |
+| Nickel | `NI(mg/l)` | 58.693 | 2 | Trace metal |
+| Lead | `PB(mg/l)` | 207.20 | 2 | Trace metal |
+| Zinc | `ZN(mg/l)` | 65.380 | 2 | Trace metal |
+| Phosphorus | `P(mg/l)` | 30.974 | 3 | Element |
+| Sulphur | `S(mg/l)` | 32.065 | 2 | Element |
+| Calcium | `CA(mg/l)` | 40.08 | 2 | Major cation |
+| Magnesium | `MG(mg/l)` | 24.31 | 2 | Major cation |
+| Sodium | `NA(mg/l)` | 22.99 | 1 | Major cation |
+| Potassium | `K(mg/l)` | 39.1 | 1 | Major cation |
+| Aluminium | `AL(mg/l)` | 26.982 | 3 | Metal |
+| Iron | `FE(mg/l)` | 55.8 | 2 | Metal |
+| Manganese | `MN(mg/l)` | 54.938 | 1 | Metal |
+| Chloride | `CL(mg/l)` | 35.45 | 1 | Major anion |
+
+### Molecules
+
+| Analyte | Column name | Molecular weight (g/mol) | Charge | Notes |
+|---------|------------|--------------------------|--------|-------|
+| Ammonium | `NH4(mg/l)` | 18.0 | 1 | |
+| Nitrate | `NO3(mg/l)` | 61.997 | 1 | |
+| Sulphate | `SO4(mg/l)` | 95.996 | 2 | |
+| Phosphate | `PO4(mg/l)` | 94.974 | 3 | |
+| Dissolved organic carbon | `DOC(mg/l)` | 12.0 (C) | 4 | Uses C atomic weight |
+
+---
+
+## Paired cross-conversions
+
+In analytical chemistry, nitrogen-bearing and sulphur-bearing compounds are
+sometimes reported in their molecular form (e.g. NO₃⁻) and sometimes as the
+element alone (e.g. N from NO₃). Both representations carry the same
+information but require different weights for conversion.
+
+The component handles four such pairs automatically — **if either form is
+present in the input, both forms are generated in the output**:
+
+### NH4 ↔ NH4N
+
+| Direction | Formula | Constants |
+|-----------|---------|-----------|
+| NH4N → NH4 | `NH4(mg/l) = NH4N(mg/l) × MW_NH4 / AW_N` | MW_NH4 = 18, AW_N = 14 |
+| NH4 → NH4N | `NH4N(mg/l) = NH4(mg/l) × AW_N / MW_NH4` | |
+
+### NO3 ↔ NO3N
+
+| Direction | Formula | Constants |
+|-----------|---------|-----------|
+| NO3 → NO3N | `NO3N(mg/l) = NO3(mg/l) × AW_N / MW_NO3` | MW_NO3 = 61.997, AW_N = 14 |
+| NO3N → NO3 | `NO3(mg/l) = NO3N(mg/l) × MW_NO3 / AW_N` | |
+
+### SO4 ↔ SO4S
+
+| Direction | Formula | Constants |
+|-----------|---------|-----------|
+| SO4 → SO4S | `SO4S(mg/l) = SO4(mg/l) × AW_S / MW_SO4` | MW_SO4 = 95.996, AW_S = 32.065 |
+| SO4S → SO4 | `SO4(mg/l) = SO4S(mg/l) × MW_SO4 / AW_S` | |
+
+### PO4 ↔ PO4P
+
+| Direction | Formula | Constants |
+|-----------|---------|-----------|
+| PO4 → PO4P | `PO4P(mg/l) = PO4(mg/l) × AW_P / MW_PO4` | MW_PO4 = 94.974, AW_P = 30.974 |
+| PO4P → PO4 | `PO4(mg/l) = PO4P(mg/l) × MW_PO4 / AW_P` | |
+
+---
+
+## What the output looks like — example per CSV type
+
+Starting from the LOQ-corrected CSVs (same structure as Component 2 output,
+see Component 3 README for the exact column layout), each recognised analyte
+column is expanded into three. Below are the new columns added per CSV type.
+
+### AMMONIUM CSV — columns added
+
+| Original column | New columns generated |
+|-----------------|----------------------|
+| `NH4N(mg/l)` | `NH4N(mg/l)` (kept), `NH4N(µg/l)`, `NH4N(µeq/l)`, `NH4(mg/l)`, `NH4(µg/l)`, `NH4(µeq/l)` |
+
+### ANIONS CSV — columns added
+
+| Original column | New columns generated |
+|-----------------|----------------------|
+| `CL(mg/l)` | `CL(mg/l)`, `CL(µg/l)`, `CL(µeq/l)` |
+| `NO3(mg/l)` | `NO3(mg/l)`, `NO3(µg/l)`, `NO3(µeq/l)`, `NO3N(mg/l)`, `NO3N(µg/l)`, `NO3N(µeq/l)` |
+| `SO4(mg/l)` | `SO4(mg/l)`, `SO4(µg/l)`, `SO4(µeq/l)`, `SO4S(mg/l)`, `SO4S(µg/l)`, `SO4S(µeq/l)` |
+| `PO4(mg/l)` | `PO4(mg/l)`, `PO4(µg/l)`, `PO4(µeq/l)`, `PO4P(mg/l)`, `PO4P(µg/l)`, `PO4P(µeq/l)` |
+
+### CATIONS CSV — columns added
+
+| Original column | New columns generated |
+|-----------------|----------------------|
+| `CA(mg/l)` | `CA(mg/l)`, `CA(µg/l)`, `CA(µeq/l)` |
+| `MG(mg/l)` | `MG(mg/l)`, `MG(µg/l)`, `MG(µeq/l)` |
+| `NA(mg/l)` | `NA(mg/l)`, `NA(µg/l)`, `NA(µeq/l)` |
+| `K(mg/l)` | `K(mg/l)`, `K(µg/l)`, `K(µeq/l)` |
+| `AL(mg/l)` | `AL(mg/l)`, `AL(µg/l)`, `AL(µeq/l)` |
+| `FE(mg/l)` | `FE(mg/l)`, `FE(µg/l)`, `FE(µeq/l)` |
+| `MN(mg/l)` | `MN(mg/l)`, `MN(µg/l)`, `MN(µeq/l)` |
+| `AS(mg/l)` | `AS(mg/l)`, `AS(µg/l)`, `AS(µeq/l)` |
+| `CD(mg/l)` | `CD(mg/l)`, `CD(µg/l)`, `CD(µeq/l)` |
+| `CR(mg/l)` | `CR(mg/l)`, `CR(µg/l)`, `CR(µeq/l)` |
+| `CU(mg/l)` | `CU(mg/l)`, `CU(µg/l)`, `CU(µeq/l)` |
+| `CO(mg/l)` | `CO(mg/l)`, `CO(µg/l)`, `CO(µeq/l)` |
+| `NI(mg/l)` | `NI(mg/l)`, `NI(µg/l)`, `NI(µeq/l)` |
+| `PB(mg/l)` | `PB(mg/l)`, `PB(µg/l)`, `PB(µeq/l)` |
+| `ZN(mg/l)` | `ZN(mg/l)`, `ZN(µg/l)`, `ZN(µeq/l)` |
+| `P(mg/l)` | `P(mg/l)`, `P(µg/l)`, `P(µeq/l)` |
+| `S(mg/l)` | `S(mg/l)`, `S(µg/l)`, `S(µeq/l)` |
+
+### DOC_TN CSV — columns added
+
+| Original column | New columns generated |
+|-----------------|----------------------|
+| `DOC(mg/l)` | `DOC(mg/l)`, `DOC(µg/l)`, `DOC(µeq/l)` |
+| `TN(mg/l)` | not expanded (TN has no ionic charge and is not in the analyte dictionary) |
+
+### ALKALINITY and pH/Conductivity CSVs
+
+These CSVs (`AlkalinityICPForests(µeq/l)`, `WeightedConductivity(µS/cm)`,
+`WeightedpH`, `H(µeq/l)` etc.) do not follow the `{ELEMENT}(mg/l)` pattern
+and are not in the analyte dictionary. They pass through unchanged.
+
+---
+
+## Reusing this component with other datasets
+
+This component can be applied to **any ZIP of tab-separated CSV files** as
+long as these conditions are met:
+
+### ✅ Requirements
+
+1. **Column naming convention:** analyte columns must follow `{ANALYTE}({unit})`,
+   e.g. `CA(mg/l)`, `NO3(µg/l)`, `SO4(µeq/l)`. The analyte name is matched
+   case-insensitively against the supported list.
+
+2. **Tab separator (`\t`):** files must use tab as the column delimiter.
+
+3. **Header row:** the first row must contain column names.
+
+4. **Numeric values:** analyte columns must contain numbers or be empty.
+
+### ✅ Supported input units
+
+Any of the following input units are accepted — the component detects the unit
+from the column name and converts to all three regardless:
+
+| Input unit | Recognised as |
+|------------|--------------|
+| `mg/l` | mg/l |
+| `µg/l` or `ug/l` | µg/l |
+| `µeq/l` or `ueq/l` | µeq/l |
+| `μg/l` (Greek mu) | µg/l (normalised) |
+| `μeq/l` (Greek mu) | µeq/l (normalised) |
+
+### ⚠️ Only the listed analytes are expanded
+
+The component only generates unit columns for the **22 analytes** in the
+supported list above. Any column whose name does not match a known analyte
+passes through unchanged without error. This means the component works
+directly with any dataset measuring a **subset** of these analytes.
+
+### ⚠️ Existing columns are never overwritten
+
+If a column already exists in the input (e.g. the dataset already contains
+both `NO3(mg/l)` and `NO3N(mg/l)`), the existing column is **preserved** and
+not recalculated. Only genuinely missing unit columns are added.
+
+---
+
+## Notes
+
+- Both `μ` (Greek mu, U+03BC) and `µ` (micro sign, U+00B5) are treated
+  identically throughout — the component normalises to the micro sign before
+  any comparison.
+- The ALKALINITY CSV passes through this component without any unit expansion
+  because its main column `AlkalinityICPForests(µeq/l)` does not match any
+  analyte in the dictionary.
+- All output CSVs use tab (`\t`) as the column separator and include a
+  header row, preserving the same format as the input.

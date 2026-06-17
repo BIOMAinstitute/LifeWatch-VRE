@@ -1,0 +1,7 @@
+*
+!.gitignore
+!level2_alldata/
+!level2_alldata/**
+!level2_validated/
+!level2_validated/**
+!*.zip

@@ -1,0 +1,139 @@
+{
+  "name": "WaterChemistryValidation",
+  "label": "Water chemistry validation",
+  "description": "Merges per-subprogram water chemistry CSV files by SiteCode, fills replicate samples, and computes a full set of chemical quality indicators following ICP-Forest protocols: ionic balance (with and without organic anion correction), Na/Cl ratio, theoretical vs measured conductivity, ionic strength, ionic activity factor, NDON and OrgN consistency checks. Produces a FINAL_VALIDATION flag per sample. Quality thresholds are fully configurable via parameters.",
+  "type": "DataAnalysing",
+  "dockerImage": "lw-water-chemistry-validation",
+  "parameters": [
+    {
+      "name": "param_ionsdiff_low_k",
+      "label": "Ion balance limit — low conductivity (µS/cm <= 20)",
+      "description": "Maximum allowed IonsDiff% for samples with WeightedConductivity <= 20 µS/cm. Samples exceeding this threshold receive QualityIonsBalance = NO.",
+      "defaultValue": "20.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_ionsdiff_high_k",
+      "label": "Ion balance limit — high conductivity (µS/cm > 20)",
+      "description": "Maximum allowed IonsDiff% for samples with WeightedConductivity > 20 µS/cm. Samples exceeding this threshold receive QualityIonsBalance = NO.",
+      "defaultValue": "10.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_low_1",
+      "label": "Conductivity difference limit — very low conductivity (µS/cm <= 10)",
+      "description": "Maximum allowed CondDiff% for samples with WeightedConductivity <= 10 µS/cm.",
+      "defaultValue": "30.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_low_2",
+      "label": "Conductivity difference limit — low conductivity (µS/cm 10–20)",
+      "description": "Maximum allowed CondDiff% for samples with WeightedConductivity between 10 and 20 µS/cm.",
+      "defaultValue": "20.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_high",
+      "label": "Conductivity difference limit — high conductivity (µS/cm > 20)",
+      "description": "Maximum allowed CondDiff% for samples with WeightedConductivity > 20 µS/cm.",
+      "defaultValue": "10.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_ratio_nacl_low",
+      "label": "Na/Cl ratio lower bound",
+      "description": "Minimum acceptable Na/Cl molar ratio (µeq/l basis). Values below this threshold suggest sea-salt influence or analytical error.",
+      "defaultValue": "0.5",
+      "type": "Float"
+    },
+    {
+      "name": "param_ratio_nacl_high",
+      "label": "Na/Cl ratio upper bound",
+      "description": "Maximum acceptable Na/Cl molar ratio (µeq/l basis). Values above this threshold suggest Na contamination or analytical error.",
+      "defaultValue": "1.5",
+      "type": "Float"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Unit-transformed data ZIP",
+      "path": "/mnt/inputs/water_chemical_data_level1_units.zip",
+      "description": "ZIP archive containing tab-separated CSV files with water chemistry data after unit transformation (mg/l, µg/l, µeq/l), one per SiteCode per subprogram. Produced by the UnitTransformation wrapper."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "input-samples",
+      "label": "Samples typology file",
+      "path": "/mnt/inputs/samplesInfo.xlsx",
+      "description": "Excel file mapping each SampleID to its SamplingTypology (e.g. THR CON, BOF BL, SW CON). Required columns: SampleID, SamplingTypology. If not provided, typology-dependent checks (Org- estimation, BOF/WET ion balance filter, Na/Cl filter) are skipped."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Zip",
+      "name": "output-alldata",
+      "label": "Merged allData ZIP",
+      "path": "/mnt/outputs/water_chemical_data_level2_alldata.zip",
+      "description": "ZIP archive containing one merged CSV per SiteCode with all subprograms joined (pre-validation)."
+    },
+    {
+      "type": "Zip",
+      "name": "output-validated",
+      "label": "Validated data ZIP",
+      "path": "/mnt/outputs/water_chemical_data_level2_validated.zip",
+      "description": "ZIP archive containing one validated CSV per SiteCode, with all quality indicator columns and the FINAL_VALIDATION flag (SI/NO) appended."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 1024,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 10
+  },
+  "tags": ["validation", "water chemistry", "ionic balance", "ICP-Forest", "lifewatch"],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "Eric Gazoni, Charlie Clark",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2025-05-27",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "chemicalValidationUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

@@ -1,0 +1,6 @@
+*
+!.gitignore
+!level0/
+!level0/**
+!templates/
+!templates/**

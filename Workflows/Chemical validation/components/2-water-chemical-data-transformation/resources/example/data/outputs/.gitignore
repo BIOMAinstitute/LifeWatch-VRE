@@ -1,0 +1,5 @@
+*
+!.gitignore
+!level1/
+!level1/**
+!*.zip

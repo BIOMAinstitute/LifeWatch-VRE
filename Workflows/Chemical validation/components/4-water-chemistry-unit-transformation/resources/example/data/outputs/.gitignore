@@ -1,0 +1,5 @@
+*
+!.gitignore
+!level1_units/
+!level1_units/**
+!*.zip

@@ -1,249 +1,291 @@
-# Wrapper development kit
-The aim of this project is to help contributors developing wrappers for the LifeWatch ERIC Tesseract platform.
+# 3 — LOQ Application
 
-## Usage
+Applies the Limit of Quantification (LOQ) to water chemistry CSV files.
+Values below the LOQ for a given element or compound are replaced by **LOQ / 2**,
+which is the standard half-LOQ substitution method for left-censored analytical
+data in environmental chemistry. Every substitution is recorded in a
+traceability log.
 
-```mermaid
-flowchart TB
-   A[Start] --> I[Install dependencies]
-   B{"`Is there
-    an example for my
-    programming language?`"}
-   I --> B
-   B -- Yes --> C[Copy example files]
-   C --> D[Implement custom algorithm]
-   D --> G[Implement annotation]
-   G --> H[Test with execution-parameters and inputs]
-   B -- No --> E[Create one]
-   F["`Commit your wrapper 
-    as an example of
-     the new programming 
-    language in a sub-folder`"]
-   E --> F
-   Z[Done]
-   H ----> Z
-   F ----> Z
-   C ----> EF
-    
+---
 
-   subgraph EF[Example files to be copied]
-      f1[annotation.json] --> fr[Project root folder]
-      f2[Dockerfile] --> fr
-      f3[Source code] --> fr
-      f4[Dependencies file] --> fr
-      fi["/data/inputs/"]
-      fo["/data/outputs/"]
-      fp["/data/execution-parameters.json"]
-      f5[Input files] --> fi
-      f6[Output files] --> fo
-      f7[Parameters] --> fp
+## Workflow position
 
-   end
+```
+WaterChemicalDataTransformation  →  LoqApplication  →  UnitTransformation
 ```
 
-This project has examples for the following languages:
-- Python
-- Node
-- C
-- R (rlang)
-- Octave (gnuoctave/octave, an open source alternative to MATLAB)
+---
 
-Choose a language and copy the contents of its folder to the root of this project.
+## Inputs
 
-Lets say we want to create a **Python** based wrapper:
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| input-data | Zip | `/mnt/inputs/water_chemical_data_level1.zip` | ZIP of tab-separated CSV files from component 2. |
 
-1. Copy the contents of `./examples/python` to `./`
-2. run `./bin/build-image`
-3. run `./bin/execute`
+## Outputs
 
-## Anatomy of a Wrapper
-A _Wrapper_ represents an individual operation unit that needs to be executed within the larger context of a Tesseract Workflow.\
-Wrappers are small, discrete, and specific in nature, allowing for focused tasks with clear objectives.\
-A _Wrapper_ is always implemented inside a [Docker container](https://www.docker.com/resources/what-container/#:~:text=A%20Docker%20container%20image%20is,tools%2C%20system%20libraries%20and%20settings).
+| Name | Type | Path | Description |
+|------|------|------|-------------|
+| output-data | Zip | `/mnt/outputs/water_chemical_data_level1_loq.zip` | Same CSV files with LOQ substitutions applied. |
+| output-log | Text | `/mnt/outputs/level1_loq/loq_substitutions.log` | Tab-separated traceability log: FILE, ROW, COLUMN, ORIGINAL_VALUE, LOQ, REPLACED_BY. |
 
-### Interacting with the outside environment of a _Wrapper_
-A _Wrapper_ can be parametrized and operated with the following three components:
-1. **Inputs:** The inputs represents the data, information, or resources that are required for the _Wrapper_ to begin and be executed successfully. An input is **always a file**. It serves as the starting point for the _Wrapper_ and provides the necessary context for the _Wrapper_'s completion. Inputs come from other _Wrappers_.
-2. **Outputs:** The outputs are the results or deliverables produced by the _Wrapper_ once it is completed. These are tangible **files** that are generated as a result of the _Wrapper_'s execution. Outputs represent the outcome of the _Wrapper_ and are usually the input for subsequent _Wrappers_ in the workflow. An output is **always a file**.
-3. **Parameters:** Parameters are the configurable settings, options, or variables that influence the behavior and outcome of the _Wrapper_. They allow the _Wrapper_ to be adapted to different scenarios without modifying the underlying logic. Parameters are used to customize the behavior of the _Wrapper_ and may affect how it processes input data and generates outputs.
+---
 
-### Developing a _Wrapper_
-In order to develop a wrapper the following information must be provided:
-```mermaid
-flowchart LR
-A[Wrapper]
-A --> B(Docker file)
-A --> C(Annotation JSON)
-A --> D(Wrapper script)
-A --> E(Readme file)
-A --> F(Unit test assets)
+## Parameters
+
+All 24 parameters are the LOQ values for each measurable element or compound.
+The defaults correspond to the detection limits of the ICP laboratory
+equipment at BIOMA – University of Navarra. **They can be changed if your
+laboratory uses different instruments with different detection limits.**
+
+Column matching is **case-insensitive** — `NH4N(mg/l)`, `nh4n(mg/l)` and
+`Nh4N(Mg/L)` all map to the same LOQ. Original column casing is preserved
+in the output files.
+
+| Parameter | Default | Unit | Element / compound |
+|-----------|---------|------|--------------------|
+| `param_WeightedConductivity` | `3.0` | µS/cm | Weighted electrical conductivity |
+| `param_NH4N` | `0.04` | mg/L | Ammonium-nitrogen (NH₄-N) |
+| `param_NO3` | `0.05` | mg/L | Nitrate (NO₃) |
+| `param_SO4` | `0.1` | mg/L | Sulphate (SO₄) |
+| `param_CL` | `0.05` | mg/L | Chloride (Cl) |
+| `param_AS` | `0.000025` | mg/L | Arsenic (As) |
+| `param_CD` | `0.000008` | mg/L | Cadmium (Cd) |
+| `param_CR` | `0.000037` | mg/L | Chromium (Cr) |
+| `param_CU` | `0.000062` | mg/L | Copper (Cu) |
+| `param_CO` | `0.00001` | mg/L | Cobalt (Co) |
+| `param_NI` | `0.000073` | mg/L | Nickel (Ni) |
+| `param_PB` | `0.000011` | mg/L | Lead (Pb) |
+| `param_ZN` | `0.000049` | mg/L | Zinc (Zn) |
+| `param_P` | `0.016603` | mg/L | Phosphorus (P) |
+| `param_S` | `0.5` | mg/L | Sulphur (S) |
+| `param_CA` | `0.15` | mg/L | Calcium (Ca) |
+| `param_K` | `0.15` | mg/L | Potassium (K) |
+| `param_MG` | `0.03` | mg/L | Magnesium (Mg) |
+| `param_NA` | `0.04` | mg/L | Sodium (Na) |
+| `param_AL` | `0.01` | mg/L | Aluminium (Al) |
+| `param_FE` | `0.005` | mg/L | Iron (Fe) |
+| `param_MN` | `0.005` | mg/L | Manganese (Mn) |
+| `param_DOC` | `0.5` | mg/L | Dissolved organic carbon (DOC) |
+| `param_TN` | `0.1` | mg/L | Total nitrogen (TN) |
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\3-laboratory-quantification-limit-application"
+
+docker build -t laboratory-quantification-limit-application:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  laboratory-quantification-limit-application:0.0.1 `
 ```
-1. **Docker file:** The Dockerfile is a plain text configuration file used to define the specifications and instructions to create a _Wrapper_'s Docker container.
-2. **Annotation JSON:** The Annotation JSON is a JSON file describing the ontology of the wrapper.
-3. **Wrapper script:** A script that runs the actual logic (e.g. analysis of data) inside the docker image
-   1. The script can be written in any language as long as there is docker environment that can run it (most used languages are Python, Node, R)
-   2. A script can consist of multiple files or modules (sometimes there is too much logic to fit in a single file). Make sure to copy all additional files into the Docker image (_see Dockerfile_) and add the top-level script/module as `ENTRYPOINT`.
-4. **Readme file:** The Readme file is a MARKDOWN file that serves as a user-friendly introduction and guide to the _Wrapper_.
-5. **Unit test assets:** The Unit test assets allow the _Wrapper_ to be tested in isolation. 
 
-### Wrapper annotation JSON:
-Documentation of the fields present in a _Wrapper annotation JSON_ file: 
-```json lines
+## resources/example/data/execution-parameters.json
+
+```json
 {
-  // String identifying the wrapper, must be unique in the system and written in pascal case.
-  // https://betterprogramming.pub/string-case-styles-camel-pascal-snake-and-kebab-case-981407998841
-  "name": "TextTranslator",
-  // Label used in the UI / human-readable name of the component
-  "label": "Text translator",
-  // Description displayed in the UI to describe the general purpose of this wrapper
-  "description": "This wrapper translates all the given documents to an user specified language",
-  // Type of this wrapper, it can be one of the following [ DataAnalysing, DataCollection, DataProcessing, DataSink, DataFlow ] 
-  "type": "DataCollection",
-  // Name of the Docker image for this wrapper
-  "dockerImage": "text-translator",
-  // Lit describing all the parameters for this wrapper 
   "parameters": [
-    {
-      // Identifier of the variable, will be exposed in the main function inside the entrypoint Docker image => def execute(pcs: Process, db: str)
-      "name": "languageCode",
-      // Used in the UI, human-readable name of the parameter
-      "label": "Language code",
-      // Used in the UI, human-readable description for this parameter
-      "description": "Language code following ISO 3166-1 alpha-2",
-      // Default value for this parameter if no value is provided by the user
-      "defaultValue": "en_GB",
-      // Type for this parameter, it can be one of the following [ List, Boolean, Date, Double, Float, Integer, String, Timestamp ]
-      "type": "String"
-    }
-  ],
-  // List describing all the input files for this wrapper
-  "inputs": [
-    {
-      // Type of this input file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Documents",
-      // Unique identifier of this parameter
-      "name": "documents",
-      // Used in the UI, human-readable description for this input
-      "description": "Compressed file containing all the documents to be translated"
-    }
-  ],
-  // List describing all the output files for this wrapper
-  "outputs": [
-    {
-      // Path were to place this output file relative to /mnt/outputs
-      "path": "translatedDocuments.zip",
-      // Used in the UI, human-readable name of this input
-      "label": "Translated",
-      // Unique identifier of this parameter
-      "name": "translated-documents",
-      // Used in the UI, human-readable name of this output
-      "description": "Compressed file containing all the translated documents",
-      // Type of this output file
-      // Must be one of the following [ Bin, Fastq, Image, Json, Map, Rar, TempFile, Text, DataSetClass, TabularDataSet, ClassificationMetric, RDF, Zip ]
-      "type": "Zip"
-    },
-    {
-      "path": "language-dictionary/dictionary.txt",
-      "label": "Dictionary",
-      "description": "Full language dictionary of the translated language",
-      "type": "Text"
-    }
-  ],
-  // Object describing the necessary hardware resources to run this wrapper
-  "resources": {
-    // Recommended number of cores
-    cores: 8,
-    // Recommended amount of memory in MB
-    memory: 4096,
-    // Boolean indicating if a GPU is needed to execute this wrapper
-    gpuNeeded: true,
-    // Recommended amount of GPU memory in MB
-    gpuMemory: 1024,
-    // Maximum number of hours expected for this wrapper to complete with the provided example dataset
-    estimatedTime: 4
-  },
-  // List of keyword tags, used to search and group wrappers in the UI
-  "tags": [ "tag 1", "tag 2" ],
-  // License of this wrapper, must be a valid spdx_id https://spdx.dev/ids/ 
-  "license": "GPL v3",
-  // Semantic version of this wrapper https://semver.org/
-  "version": "1.0.1",
-  // Object describing the license and version of the software used inside this wrapper
-  "dependencies": [
-    {
-      // Name of the library or dependency
-      "name": "translate",
-      // License of this library or dependency, must be a valid spdx_id https://spdx.dev/ids/
-      "license": "GPL v3",
-      // Semantic version of this library or dependency https://semver.org/
-      "version": "3.5.0",
-       // Person or association who created this dependency
-       "author": "Charles Elton",
-       // Text reserved for the citation of the work related with this dependency
-       "citation": "Charles Elton, IJI NIS Workflows, https://url-to-scientific-paper.org",
-    }
-  ],
-  // UTC time of the publication of this version of the wrapper
-  "publicationDate": "Thu, 18 May 2023 11:43:09 GMT",
-  // Person or association who created this wrapper
-  "author": "LifeWatch ERIC",
-  // Text reserved for the citation of the work related with this wrapper
-  "citation": "Charles Elton, IJI NIS Workflows, ",
-  // Report bugs information
-  "bugs": {
-    // Email address where bugs can be submitted
-    "email": "help@exampleorg.com",
-    // URL of the ticketing system of this organisation where bugs can be submitted
-    "url": "https://ictofficedesk.lifewatch.eu/portal/lifewatcheric/home"
-  },
-  // Path to the unit test script
-  "testPath": "translateUnitTest.sh",
-  // URL of this wrapper in the LifeWatch metadata catalogue
-  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/oai:marineinfo.org:id:dataset:2744"
+    { "name": "param_WeightedConductivity", "defaultValue": "3.0",      "value": "3.0"      },
+    { "name": "param_NH4N",                 "defaultValue": "0.04",     "value": "0.04"     },
+    { "name": "param_NO3",                  "defaultValue": "0.05",     "value": "0.05"     },
+    { "name": "param_SO4",                  "defaultValue": "0.1",      "value": "0.1"      },
+    { "name": "param_CL",                   "defaultValue": "0.05",     "value": "0.05"     },
+    { "name": "param_AS",                   "defaultValue": "0.000025", "value": "0.000025" },
+    { "name": "param_CD",                   "defaultValue": "0.000008", "value": "0.000008" },
+    { "name": "param_CR",                   "defaultValue": "0.000037", "value": "0.000037" },
+    { "name": "param_CU",                   "defaultValue": "0.000062", "value": "0.000062" },
+    { "name": "param_CO",                   "defaultValue": "0.00001",  "value": "0.00001"  },
+    { "name": "param_NI",                   "defaultValue": "0.000073", "value": "0.000073" },
+    { "name": "param_PB",                   "defaultValue": "0.000011", "value": "0.000011" },
+    { "name": "param_ZN",                   "defaultValue": "0.000049", "value": "0.000049" },
+    { "name": "param_P",                    "defaultValue": "0.016603", "value": "0.016603" },
+    { "name": "param_S",                    "defaultValue": "0.5",      "value": "0.5"      },
+    { "name": "param_CA",                   "defaultValue": "0.15",     "value": "0.15"     },
+    { "name": "param_K",                    "defaultValue": "0.15",     "value": "0.15"     },
+    { "name": "param_MG",                   "defaultValue": "0.03",     "value": "0.03"     },
+    { "name": "param_NA",                   "defaultValue": "0.04",     "value": "0.04"     },
+    { "name": "param_AL",                   "defaultValue": "0.01",     "value": "0.01"     },
+    { "name": "param_FE",                   "defaultValue": "0.005",    "value": "0.005"    },
+    { "name": "param_MN",                   "defaultValue": "0.005",    "value": "0.005"    },
+    { "name": "param_DOC",                  "defaultValue": "0.5",      "value": "0.5"      },
+    { "name": "param_TN",                   "defaultValue": "0.1",      "value": "0.1"      }
+  ]
 }
 ```
 
-### Wrappers in the context of a Tesseract Workflow
-The boxes below are a visual representation of 3 wrappers.\
-The blue lines represent the connection between the outputs and inputs of the different wrappers, therefore the file generated as outputs of a _Wrapper_ are given as input of the next _Wrapper_.
+---
 
-![Workflow example](./docs/images/workflow.png)\
-_Visual representation of a workflow consisting of 3 wrappers_
+## What this component does
 
-## Dependencies
-_Please make sure the following dependencies are present on your system:_
+For each CSV file in the input ZIP and for each column whose name matches one
+of the 24 known elements/compounds:
 
-### 1) jq
+1. Compares each value against the corresponding LOQ.
+2. If the value is **below the LOQ** → replaces it with **LOQ / 2**.
+3. Logs the substitution (file, row, column, original value, LOQ, replacement).
+4. Writes the corrected CSV to the output ZIP.
 
-_A command-line JSON processor_
+Values equal to or above the LOQ are left unchanged. NaN (missing) values are
+ignored. Non-numeric values in a numeric column are coerced to NaN before the
+comparison.
 
-#### Installation
+### Why LOQ / 2?
 
-Ubuntu
-`apt-get install -y jq`
+The LOQ is the minimum concentration that the laboratory instrument can reliably
+quantify. Values reported below the LOQ exist but are too close to the noise
+floor to be trustworthy as exact measurements — they are **left-censored data**.
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
+Setting them to zero would underestimate the true concentration. Keeping the
+original sub-LOQ value would overstate analytical precision. The standard
+convention in environmental chemistry (and the one recommended by ICP-Forest)
+is to substitute with **LOQ / 2**, which acknowledges that the concentration
+is low while contributing a reasonable non-zero estimate to aggregate
+calculations such as ionic balance and weighted means.
 
-`brew install jq`
+---
 
-### 2) readarray
+## Input CSV format
 
-_Reads lines from a file into a 2D array_\
-*_Present in Bash from version 4 or higher_
+The component accepts any ZIP containing tab-separated (``\t``) CSV files where
+column names follow the ``{ELEMENT}(unit)`` convention. This is exactly the
+format produced by Component 2. Below is the structure of each CSV type with
+the columns that will be checked against the LOQ.
 
-#### Installation
+### AMMONIUM CSV
+```
+SampleID  SiteCode  SiteName  StartDate  EndDate  year  month  NH4N(mg/l)  Comments
+05PS INT  5         Valsain              2025-01-24  2025  1  0.151
+```
+**LOQ-checked column:** `NH4N(mg/l)`
 
-Os X
-We recommend installing it using [Homebrew](https://brew.sh/)
-`brew install bash`
+---
 
-### TODO (things we must add to the documentation later)  
+### ANIONS CSV
+```
+SampleID  SiteCode  SiteName  StartDate  EndDate  year  month  CL(mg/l)  NO3(mg/l)  SO4(mg/l)  PO4(mg/l)  Comments
+05PS INT  5         Valsain              2025-01-24  2025  1  1.4493    0.578      0.3809
+```
+**LOQ-checked columns:** `CL(mg/l)`, `NO3(mg/l)`, `SO4(mg/l)`
+> Note: `PO4(mg/l)` is not in the LOQ parameter list and will be left unchanged.
 
-- Add R example
-- Add Octave example
+---
 
-_Remove this section from the README after Todo's are done_
+### CATIONS CSV
+```
+SampleID  SiteCode  SiteName  StartDate  EndDate  year  month  CA(mg/l)  MG(mg/l)  NA(mg/l)  K(mg/l)  AL(mg/l)  FE(mg/l)  MN(mg/l)  AS(mg/l)  CD(mg/l)  CR(mg/l)  CU(mg/l)  CO(mg/l)  NI(mg/l)  PB(mg/l)  ZN(mg/l)  P(mg/l)  S(mg/l)  Comments
+05PS INT  5         Valsain              2025-01-24  2025  1  0.664781  0.141924  0.853     0.89     0.01753   0.006429  0.028052
+```
+**LOQ-checked columns:** `CA(mg/l)`, `MG(mg/l)`, `NA(mg/l)`, `K(mg/l)`, `AL(mg/l)`, `FE(mg/l)`, `MN(mg/l)`, `AS(mg/l)`, `CD(mg/l)`, `CR(mg/l)`, `CU(mg/l)`, `CO(mg/l)`, `NI(mg/l)`, `PB(mg/l)`, `ZN(mg/l)`, `P(mg/l)`, `S(mg/l)`
+
+---
+
+### DOC_TN CSV
+```
+SampleID  SiteCode  SiteName  StartDate  EndDate  year  month  DOC(mg/l)  TN(mg/l)  Comments
+05PS INT  5         Valsain              2025-01-24  2025  1  4.266      0.2906
+```
+**LOQ-checked columns:** `DOC(mg/l)`, `TN(mg/l)`
+
+---
+
+### pH / Conductivity CSV
+```
+SampleID  SiteCode  SiteName  ...  WeightedConductivity(µS/cm)  WeightedpH  H(µeq/l)  ...
+05PS INT  5         Valsain   ...  13.133                       6.127       0.747      ...
+```
+**LOQ-checked column:** `WeightedConductivity(µS/cm)`
+> Note: pH, H(µeq/l) and other derived columns are not in the LOQ parameter list
+> and will be left unchanged.
+
+---
+
+### ALKALINITY CSV
+```
+SampleID  SiteCode  SiteName  year  month  AlkalinityICPForests(µeq/l)
+05PSINT   5         Valsain   2025  1      45.533
+```
+**LOQ-checked columns:** none — alkalinity in µeq/l does not have an
+associated LOQ parameter in this component. The ALKALINITY CSV passes through
+unchanged (it is still included in the output ZIP).
+
+---
+
+## Reusing this component with other datasets
+
+This component can be applied to **any ZIP of tab-separated CSV files** as long
+as the following conditions are met:
+
+### ✅ Requirements
+
+1. **Column naming convention:** analytical columns must follow the pattern
+   `{ELEMENT}(mg/l)` (or `{ELEMENT}(µS/cm)` for conductivity). The component
+   recognises columns by their exact lowercase name after stripping spaces
+   (see the full list in the Parameters table above).
+
+2. **Tab separator:** files must use `\t` as the column delimiter.
+
+3. **Header row:** the first row must be the column names.
+
+4. **Numeric values:** concentration columns must contain numbers (or be empty).
+   Non-numeric text in a numeric column is coerced to NaN and ignored.
+
+### ⚠️ Important constraint — only the 24 listed elements are checked
+
+The component only applies LOQ substitution to the **24 elements and compounds**
+listed in the Parameters table. If your dataset contains other analytes
+(e.g. `HG(mg/l)`, `BR(mg/l)`, `F(mg/l)`), those columns will pass through the
+component without any LOQ check. The component does not raise an error for
+unrecognised columns — it simply ignores them.
+
+This means the component is directly reusable for any water chemistry dataset
+that measures a **subset** of these 24 analytes. If your dataset measures all
+24, all will be checked. If it only measures 5, only those 5 will be checked.
+
+### ⚠️ LOQ values are instrument-specific
+
+The default LOQ values correspond to the specific laboratory equipment used in
+the ICP-Forest workflow at BIOMA – University of Navarra. **If you use different
+instruments, you must provide your own LOQ values as parameters.** Using the
+defaults with a different instrument may result in incorrect substitutions
+(too few or too many).
+
+### Example: reusing with a different dataset
+
+If you have a ZIP of CSV files from a different project measuring Ca, Mg, K and
+Na in water samples with a different instrument, you would:
+
+1. Ensure your CSVs are tab-separated with columns `CA(mg/l)`, `MG(mg/l)`,
+   `K(mg/l)`, `NA(mg/l)`.
+2. Set the four relevant parameters to your instrument's LOQ values.
+3. Leave all other parameters at their defaults — they will simply be skipped
+   because those column names are not present in your files.
+
+---
+
+## Traceability log format
+
+The log file `loq_substitutions.log` is tab-separated with one row per
+substitution:
+
+```
+FILE                    ROW  COLUMN      ORIGINAL_VALUE  LOQ     REPLACED_BY
+5_WATER_AMMONIUM.csv    3    nh4n(mg/l)  0.017           0.04    0.02
+5_WATER_CATIONS.csv     7    al(mg/l)    0.003           0.01    0.005
+```
+
+Column names in the log are lowercased (the internal working format).
+The original column casing is preserved in the output CSV files.
+
+---
+
+## Notes
+
+- Files in the input ZIP that are not `.csv` are silently ignored.
+- A CSV file that contains none of the 24 recognised columns is copied to
+  the output unchanged (ALKALINITY CSVs typically fall into this category).
+- The output ZIP contains both the corrected CSVs **and** the log file,
+  so the full audit trail is preserved in a single archive.
