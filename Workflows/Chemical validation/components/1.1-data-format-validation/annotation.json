@@ -19,24 +19,19 @@
       "defaultValue": "AUTO",
       "type": "String",
       "optionList": [
-        {"value": "AUTO", "label": "Automatic detection"},
-        {"value": "ARCHIVE", "label": "ZIP archive"},
-        {"value": "SINGLE_FILE", "label": "Standalone table"}
+        {
+          "value": "AUTO",
+          "label": "Automatic detection"
+        },
+        {
+          "value": "ARCHIVE",
+          "label": "ZIP archive"
+        },
+        {
+          "value": "SINGLE_FILE",
+          "label": "Standalone table"
+        }
       ]
-    },
-    {
-      "name": "tableType",
-      "label": "Forced table type",
-      "description": "Optional configuration type to use for a standalone file when its filename and columns do not identify a unique table rule. Leave empty for automatic assignment.",
-      "defaultValue": "",
-      "type": "String"
-    },
-    {
-      "name": "requireAllTableTypes",
-      "label": "Require every configured table type",
-      "description": "When TRUE, every table type defined in the configuration must have at least one associated input file. Normally keep FALSE when validating a single standalone table.",
-      "defaultValue": "FALSE",
-      "type": "Boolean"
     },
     {
       "name": "unmatchedFiles",
@@ -45,9 +40,18 @@
       "defaultValue": "ERROR",
       "type": "String",
       "optionList": [
-        {"value": "ERROR", "label": "Critical error"},
-        {"value": "WARNING", "label": "Warning only"},
-        {"value": "IGNORE", "label": "Ignore file"}
+        {
+          "value": "ERROR",
+          "label": "Critical error"
+        },
+        {
+          "value": "WARNING",
+          "label": "Warning only"
+        },
+        {
+          "value": "IGNORE",
+          "label": "Ignore file"
+        }
       ]
     },
     {
@@ -79,21 +83,21 @@
       "type": "Text",
       "name": "output-log",
       "label": "Validation log",
-      "path": "/mnt/outputs/level0/validation_log.txt",
+      "path": "/mnt/outputs/validation_log.txt",
       "description": "Human-readable report listing critical errors, warnings, reader settings and rule assignment for every inspected file."
     },
     {
       "type": "Json",
       "name": "output-report",
       "label": "Validation report JSON",
-      "path": "/mnt/outputs/level0/validation_report.json",
+      "path": "/mnt/outputs/validation_report.json",
       "description": "Machine-readable validation summary and per-file results."
     },
     {
       "type": "Zip",
       "name": "output-data",
       "label": "Inspected data ZIP",
-      "path": "/mnt/outputs/level0/validated_data.zip",
+      "path": "/mnt/outputs/validated_data.zip",
       "description": "ZIP containing the supplied table files with the configured output prefix. The files are not modified; validation status is reported separately."
     }
   ],

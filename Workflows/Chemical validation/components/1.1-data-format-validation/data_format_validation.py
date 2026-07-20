@@ -41,16 +41,6 @@ parser.add_argument(
     help="AUTO, ARCHIVE or SINGLE_FILE. AUTO detects the input content.",
 )
 parser.add_argument(
-    "--tableType",
-    default="",
-    help="Optional table type to force for a standalone file whose filename is not informative.",
-)
-parser.add_argument(
-    "--requireAllTableTypes",
-    default="FALSE",
-    help="Treat table types without a matching file as critical errors (TRUE/FALSE).",
-)
-parser.add_argument(
     "--unmatchedFiles",
     default="ERROR",
     help="How to handle data files that cannot be associated with a table rule: ERROR, WARNING or IGNORE.",
@@ -69,8 +59,6 @@ def parse_bool(value: str) -> bool:
 
 stop_on_errors = parse_bool(args.stopOnErrors)
 input_mode = args.inputMode.strip().upper()
-forced_table_type = args.tableType.strip()
-require_all_table_types = parse_bool(args.requireAllTableTypes)
 unmatched_policy = args.unmatchedFiles.strip().upper()
 output_prefix = args.outputPrefix
 
@@ -362,11 +350,11 @@ def load_configuration(config_path: Path) -> dict[str, Any]:
         if not isinstance(tables, list):
             raise ValueError("Configuration must contain a 'tables' list")
         defaults = deep_merge(DEFAULTS, raw.get("defaults", {}))
-        return {"version": raw.get("version", 2), "defaults": defaults, "tables": tables}
+        return {"defaults": defaults, "tables": tables}
 
     # Backward-compatible format: a direct list of table definitions
     if isinstance(raw, list):
-        return {"version": 1, "defaults": dict(DEFAULTS), "tables": raw}
+        return {"defaults": dict(DEFAULTS), "tables": raw}
 
     raise ValueError("Configuration must be either a JSON object or a JSON list")
 
@@ -956,13 +944,13 @@ def choose_table_by_schema(
     discriminator_overlap = best_score[1]
     if len(candidates) > 1 and discriminator_overlap == 0:
         return None, (
-            "schema inference found no table-specific columns; use a filename matching a pattern "
-            "or set the tableType parameter"
+            "schema inference found no table-specific columns; use a filename matching a "
+            "configured pattern or make the table schemas more distinct"
         )
     if len(tied) > 1:
         tied_types = [str(item[1].get("type", "unknown")) for item in tied]
         return None, (
-            f"schema inference is ambiguous between {tied_types}; use tableType to select one"
+            f"schema inference is ambiguous between {tied_types}; use a filename matching one pattern or make the schemas more distinct"
         )
 
     return best_table, (
@@ -975,7 +963,6 @@ def assign_table_configuration(
     fpath: Path,
     tables: list[dict[str, Any]],
     defaults: dict[str, Any],
-    forced_type: str,
 ) -> tuple[dict[str, Any] | None, str]:
     pattern_matches = [
         table for table in tables if file_matches_patterns(fpath, table, WORK_DIR)
@@ -987,12 +974,6 @@ def assign_table_configuration(
             fpath, pattern_matches, defaults, tables
         )
         return selected, f"multiple filename patterns; {detail}"
-
-    if forced_type:
-        selected = table_by_type(tables, forced_type)
-        if selected is None:
-            return None, f"tableType '{forced_type}' does not identify exactly one configuration"
-        return selected, f"forced tableType '{forced_type}'"
 
     selected, detail = choose_table_by_schema(fpath, tables, defaults, tables)
     return selected, detail
@@ -1157,11 +1138,6 @@ def main() -> int:
         )
         tables.append(table_cfg)
 
-    if forced_table_type and table_by_type(tables, forced_table_type) is None:
-        raise RuntimeError(
-            f"tableType '{forced_table_type}' does not identify exactly one configured table"
-        )
-
     prepared_files, preparation_notes = prepare_input_data(
         INPUT_ROOT, config_path, input_mode
     )
@@ -1173,7 +1149,7 @@ def main() -> int:
     for fpath in prepared_files:
         display_file = fpath.relative_to(WORK_DIR).as_posix()
         table_cfg, assignment_method = assign_table_configuration(
-            fpath, tables, defaults, forced_table_type
+            fpath, tables, defaults
         )
 
         if table_cfg is None:
@@ -1208,8 +1184,8 @@ def main() -> int:
 
     for table_cfg in tables:
         table_type = str(table_cfg.get("type", "unknown"))
-        table_required = require_all_table_types or bool(
-            table_cfg.get("fail_if_no_files", False)
+        table_required = bool(
+            table_cfg.get("fail_if_no_files", defaults.get("fail_if_no_files", False))
         )
         if table_required and table_type.casefold() not in assigned_types:
             results.append(missing_table_result(table_cfg))

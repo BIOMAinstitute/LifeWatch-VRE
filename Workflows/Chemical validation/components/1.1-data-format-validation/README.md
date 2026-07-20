@@ -1,114 +1,80 @@
 # Flexible Data Format Validation
 
-Tesseract wrapper for validating tabular files against a JSON configuration.
+Tesseract component for validating tabular data against a JSON configuration.
 It accepts either:
 
 - one standalone Excel, CSV, TSV or delimited TXT file; or
-- one ZIP containing any number and mixture of those formats.
+- one ZIP containing several files in any mixture of those formats.
 
-The validation rules are independent of the physical file format. Excel and
-delimited files are first read into a pandas `DataFrame`; the same column,
-type, completeness, range and format rules are then applied to both.
-
-## Input model
-
-A Tesseract input is one file. This wrapper therefore exposes one generic
-`Bin` input named `input-data`:
-
-- upload a single table directly when only one file must be validated;
-- upload a ZIP when several files must be validated in one execution.
-
-The `Bin` input may be mounted as `/mnt/inputs/input_data` without its original
-extension. The wrapper identifies ZIP, modern Excel, legacy Excel and delimited
-text from the file content and creates an internal working copy with the
-appropriate extension.
-
-A ZIP may contain folders and a mixture such as:
-
-```text
-2025_01_FOREST_ANIONS.xlsx
-2025_01_FOREST_CATIONS.csv
-laboratory/2025_ALKALINITY_05.xlsm
-laboratory/2025_01_FOREST_DOC_TN.tsv
-```
-
-Supported table formats:
-
-- `.xlsx`
-- `.xlsm`
-- `.xls`
-- `.csv`
-- `.tsv`
-- delimited `.txt`
-
-## Component position
-
-```text
-[input_data + tables_config.json]
-                  |
-                  v
-    FlexibleDataFormatValidation
-          |        |        |
-          v        v        v
-        TXT      JSON      ZIP
-```
+The component reads every supported table into a pandas `DataFrame` and then
+applies the same column, type, completeness, range and format rules regardless
+of the original file format.
 
 ## Inputs
 
 | Name | Type | Mounted path | Description |
 |---|---|---|---|
-| `input-data` | `Bin` | `/mnt/inputs/input_data` | One standalone table or a ZIP containing several tables. |
-| `input-config` | `Json` | `/mnt/inputs/tables_config.json` | Reader and validation rules. The legacy `/mnt/inputs/tables_config.txt` name is also recognised by the Python script. |
+| `input-data` | `Bin` | `/mnt/inputs/input_data` | One standalone table or one ZIP containing several tables. |
+| `input-config` | `Json` | `/mnt/inputs/tables_config.json` | Reader and validation configuration. |
+
+The uploaded data file may have any original filename. Tesseract mounts it at
+`/mnt/inputs/input_data`. When running Docker manually, the input directory may
+also contain a normally named `.zip`, `.xlsx`, `.csv`, `.tsv` or `.txt` file.
 
 ## Outputs
 
 | Name | Type | Path | Description |
 |---|---|---|---|
-| `output-log` | `Text` | `/mnt/outputs/validation_log.txt` | Human-readable report. |
+| `output-log` | `Text` | `/mnt/outputs/validation_log.txt` | Human-readable validation report. |
 | `output-report` | `Json` | `/mnt/outputs/validation_report.json` | Machine-readable summary and per-file results. |
-| `output-data` | `Zip` | `/mnt/outputs/validated_data.zip` | Supplied table files, unchanged, with the configured filename prefix. |
+| `output-data` | `Zip` | `/mnt/outputs/validated_data.zip` | Inspected input tables with the configured filename prefix. |
 
-The output ZIP means that the files were **inspected**, not necessarily that
-they passed. Always use `validation_log.txt` or `validation_report.json` to
-check the validation result.
+The ZIP contains the inspected files unchanged. Its creation does not mean that
+all files passed validation; always check the TXT or JSON report.
+
+Files inside `validated_data.zip` are stored below an `input_data/` directory:
+
+```text
+validated_data.zip
+└── input_data/
+    ├── validated_example.xlsx
+    └── validated_example.csv
+```
 
 ## Parameters
 
 | Parameter | Type | Default | Behaviour |
 |---|---|---:|---|
-| `stopOnErrors` | Boolean | `TRUE` | Exit with code 1 when critical errors are found. Reports and the output ZIP are still written first. |
-| `inputMode` | String | `AUTO` | `AUTO`, `ARCHIVE` or `SINGLE_FILE`. AUTO inspects the file content. |
-| `tableType` | String | empty | Force one configured table type for a standalone file. Normally leave empty. |
-| `requireAllTableTypes` | Boolean | `FALSE` | Require at least one file for every table type in the configuration. Useful for complete ZIP deliveries; normally false for a standalone file. |
-| `unmatchedFiles` | String | `ERROR` | Treat supported files that match no table rule as `ERROR`, `WARNING` or `IGNORE`. |
-| `outputPrefix` | String | `validated_` | Prefix added to filenames inside `validated_data.zip`. |
+| `stopOnErrors` | Boolean | `TRUE` | Returns exit code 1 when critical validation errors are found. Reports and the output ZIP are written first. |
+| `inputMode` | String | `AUTO` | `AUTO`, `ARCHIVE` or `SINGLE_FILE`. |
+| `unmatchedFiles` | String | `ERROR` | Handles files that cannot be associated with a table rule as `ERROR`, `WARNING` or `IGNORE`. |
+| `outputPrefix` | String | `validated_` | Prefix added to each filename inside the output ZIP. |
 
-## How a file is assigned to a table rule
+### Input modes
 
-The wrapper uses the following order:
+- `AUTO`: detects ZIP archives and standalone supported tables automatically.
+- `ARCHIVE`: requires at least one ZIP input and processes its contents.
+- `SINGLE_FILE`: requires exactly one standalone Excel/CSV/TSV/TXT table.
 
-1. `tableType`, when explicitly supplied for a standalone file.
-2. Filename matching against each table's `patterns`.
-3. Schema inference for a standalone file when the filename is not informative.
+## Automatic table assignment
 
-Schema inference compares the file's columns with all configured schemas and
-selects a table only when the best match is unambiguous. If two schemas are
-equally plausible, the wrapper reports a critical unmatched-file error instead
-of guessing. In that case, set `tableType` explicitly.
+For each file, the component:
 
-## How to fill `tables_config.json`
+1. checks the filename against each table's `patterns`;
+2. if there is no unique filename match, compares the file columns with the
+   configured table schemas;
+3. assigns the table only when the best schema match is unambiguous.
 
-The configuration file describes:
+When two schemas are equally plausible, the file is handled according to
+`unmatchedFiles`. Use descriptive patterns and sufficiently different column
+schemas to avoid ambiguity.
 
-1. how Excel and delimited files must be read;
-2. how each table type is identified; and
-3. which validation rules must be applied to each column.
+# How to fill `tables_config.json`
 
-The recommended structure is:
+The configuration contains two sections:
 
 ```json
 {
-  "version": 2,
   "defaults": {
     "...": "options shared by all tables"
   },
@@ -126,19 +92,10 @@ The recommended structure is:
 }
 ```
 
-### 1. General structure
+- `defaults` contains common reader, cleaning and warning settings.
+- `tables` contains one definition for every supported table type.
 
-| Property | Purpose |
-|---|---|
-| `version` | Configuration format version. Use `2`. |
-| `defaults` | Reader, cleaning and warning options shared by all tables. |
-| `tables` | List of the table types that can be validated. |
-
----
-
-### 2. Supported input formats
-
-Use `supported_extensions` to specify which tabular files are accepted:
+## Supported extensions
 
 ```json
 "supported_extensions": [
@@ -151,17 +108,11 @@ Use `supported_extensions` to specify which tabular files are accepted:
 ]
 ```
 
-- `.xlsx`, `.xlsm` and `.xls` are read as Excel workbooks.
-- `.csv`, `.tsv` and `.txt` are read as delimited text tables.
-- Excel macros are not executed.
+Excel macros are not executed.
 
----
+## Reader settings
 
-### 3. Reader settings
-
-Reader settings are defined under `defaults.reader`.
-
-#### Excel
+### Excel
 
 ```json
 "excel": {
@@ -169,21 +120,13 @@ Reader settings are defined under `defaults.reader`.
 }
 ```
 
-`sheet_name` is the worksheet to read. For example:
-
-```json
-"sheet_name": "Hoja1"
-```
-
-requires a worksheet called exactly `Hoja1`.
-
-To always read the first worksheet:
+The worksheet name must match exactly. To read the first worksheet, use:
 
 ```json
 "sheet_name": 0
 ```
 
-#### CSV
+### CSV
 
 ```json
 "csv": {
@@ -194,24 +137,24 @@ To always read the first worksheet:
 }
 ```
 
-| Property | Meaning | Common values |
+| Property | Meaning | Examples |
 |---|---|---|
-| `sep` | Column separator | `";"`, `","`, `"auto"` |
-| `decimal` | Decimal separator | `"."` or `","` |
-| `encoding` | Text encoding | `"utf-8-sig"`, `"utf-8"`, `"latin-1"` |
-| `quotechar` | Character enclosing text fields | `"\"` |
+| `sep` | Column separator | `;`, `,`, `|`, `auto` |
+| `decimal` | Decimal separator | `.` or `,` |
+| `encoding` | Text encoding | `utf-8-sig`, `utf-8`, `latin-1` |
+| `quotechar` | Character enclosing text values | `"` |
 
-A common European CSV uses:
+A common European CSV configuration is:
 
 ```json
 "sep": ";",
 "decimal": ","
 ```
 
-An explicit separator is preferable. Use `"sep": "auto"` only when the
-separator is unknown.
+Use an explicit separator when it is known. `"sep": "auto"` requests
+automatic delimiter detection.
 
-#### TSV and TXT
+### TSV and TXT
 
 ```json
 "tsv": {
@@ -226,9 +169,7 @@ separator is unknown.
 }
 ```
 
-`"\\t"` represents a tab character.
-
-A specific table can override the general reader settings:
+A table may override the general reader settings:
 
 ```json
 {
@@ -247,9 +188,7 @@ A specific table can override the general reader settings:
 }
 ```
 
----
-
-### 4. Missing values and automatic cleaning
+## Missing values and cleaning
 
 ```json
 "na_values": [
@@ -264,36 +203,46 @@ A specific table can override the general reader settings:
 ]
 ```
 
-All listed values are interpreted as missing data. Add other values only when
-they genuinely mean that the cell is empty.
+All listed values are treated as missing.
 
-The main cleaning options are:
-
-| Option | Recommended value | Behaviour |
+| Option | Recommended | Behaviour |
 |---|---:|---|
-| `strip_column_names` | `true` | Removes spaces before and after column names. |
-| `strip_string_values` | `true` | Removes spaces before and after text values. |
+| `strip_column_names` | `true` | Removes surrounding spaces from headers. |
+| `strip_string_values` | `true` | Removes surrounding spaces from text cells. |
 | `drop_completely_empty_rows` | `true` | Removes rows where every cell is empty. |
 | `drop_unnamed_empty_columns` | `true` | Removes empty columns such as `Unnamed: 12`. |
-| `warn_unexpected_columns` | `true` | Warns about columns not defined in the configuration. |
-| `warn_empty_optional_columns` | `true` | Warns when an optional column exists but is completely empty. |
-| `fail_if_no_files` | `false` | Allows a configured table type to be absent. |
-| `max_examples_per_rule` | `8` | Limits the examples displayed for each validation problem. |
+| `warn_unexpected_columns` | `true` | Warns about columns not defined in the schema. |
+| `warn_empty_optional_columns` | `true` | Warns when an optional column exists but is entirely empty. |
+| `fail_if_no_files` | `false` | Controls whether a missing table type is a critical error. |
+| `max_examples_per_rule` | `8` | Limits the invalid examples shown per rule. |
 
-The execution parameter `requireAllTableTypes=TRUE` requires every configured
-table type even when `fail_if_no_files` is `false`.
+`fail_if_no_files` can be defined globally or overridden per table:
 
----
+```json
+"defaults": {
+  "fail_if_no_files": false
+}
+```
 
-### 5. Defining a table type
+```json
+{
+  "type": "Anions",
+  "fail_if_no_files": true,
+  "patterns": ["*_ANIONS*"],
+  "columns": {}
+}
+```
 
-Each element of `tables` represents one kind of input table:
+In this example, `Anions` is required but other table types may be absent.
+
+## Defining a table
 
 ```json
 {
   "type": "Anions",
   "patterns": [
-    "*_ANIONS*"
+    "*_ANIONS*",
+    "*_ANION_RESULTS*"
   ],
   "columns": {
     "...": {}
@@ -301,26 +250,11 @@ Each element of `tables` represents one kind of input table:
 }
 ```
 
-#### `type`
+- `type` is a unique internal name shown in the reports.
+- `patterns` contains one or more filename patterns. `*` represents any
+  sequence of characters.
 
-A unique internal name used in reports and by the `tableType` execution
-parameter:
-
-```json
-"type": "Anions"
-```
-
-#### `patterns`
-
-Filename patterns used to identify the table:
-
-```json
-"patterns": [
-  "*_ANIONS*"
-]
-```
-
-This matches names such as:
+The pattern `*_ANIONS*` matches names such as:
 
 ```text
 ES02_ANIONS.xlsx
@@ -328,87 +262,9 @@ ES02_ANIONS.xlsx
 validated_ES02_ANIONS_results.xlsx
 ```
 
-Several alternatives may be supplied:
+A filename that does not match may still be assigned by its columns.
 
-```json
-"patterns": [
-  "*_ANIONS*",
-  "*_ANION_RESULTS*",
-  "*_ANIONES*"
-]
-```
-
-A file whose name does not match may still be assigned through schema inference
-by comparing its columns with the configured tables. Therefore, `patterns`
-provide the preferred identification method but are not an absolute filename
-restriction in the current implementation.
-
----
-
-### 6. Defining columns
-
-Columns are declared inside `columns`:
-
-```json
-"columns": {
-  "SampleID": {
-    "type": "object",
-    "required": true,
-    "nullable": false
-  }
-}
-```
-
-The configured name must match the input header after surrounding spaces have
-been removed.
-
-#### Supported types
-
-| Type | Use |
-|---|---|
-| `object` or `string` | Identifiers, names, codes, categories and comments |
-| `float` or `number` | Integer or decimal measurements |
-| `integer` or `int` | Whole numbers only |
-| `datetime` or `date` | Dates and date-times |
-| `boolean` or `bool` | Boolean or binary values |
-
-Examples:
-
-```json
-"SiteCode": {
-  "type": "object"
-},
-"pH": {
-  "type": "float"
-},
-"month": {
-  "type": "integer"
-},
-"StartDate": {
-  "type": "datetime",
-  "format": "%d/%m/%Y"
-}
-```
-
----
-
-### 7. Column presence and empty cells
-
-`required` and `nullable` control different things.
-
-```json
-"required": true
-```
-
-means that the column must exist.
-
-```json
-"nullable": false
-```
-
-means that the column cannot contain empty cells.
-
-The most common strict definition is:
+## Defining columns
 
 ```json
 "SampleID": {
@@ -418,26 +274,39 @@ The most common strict definition is:
 }
 ```
 
-This requires the column and requires a value in every row.
+The configured name must match the input header after surrounding spaces have
+been removed.
 
-The possible combinations are:
+### Supported types
+
+| Type | Use |
+|---|---|
+| `object` or `string` | Identifiers, names, categories and comments |
+| `float` or `number` | Integer or decimal measurements |
+| `integer` or `int` | Whole numbers only |
+| `datetime` or `date` | Dates and date-times |
+| `boolean` or `bool` | Boolean or binary values |
+
+### Required columns and empty cells
+
+`required` and `nullable` control different conditions:
 
 | Configuration | Meaning |
 |---|---|
-| `required: true`, `nullable: false` | Column must exist and every row must be filled. |
-| `required: true`, `nullable: true` | Column must exist but may contain empty cells. |
+| `required: true`, `nullable: false` | Column must exist and every row must contain a value. |
+| `required: true`, `nullable: true` | Column must exist but empty cells are allowed. |
 | `required: false`, `nullable: false` | Column may be absent, but if present it cannot contain empty cells. |
 | Neither property | Column is optional and empty cells are allowed. |
 
----
-
-### 8. Numeric limits
+### Numeric limits
 
 Strict limits produce critical errors:
 
 ```json
 "month": {
   "type": "integer",
+  "required": true,
+  "nullable": false,
   "min": 1,
   "max": 12
 }
@@ -449,81 +318,44 @@ An expected range produces a warning:
 "pH": {
   "type": "float",
   "min": 0,
-  "expected_range": [
-    0,
-    14
-  ]
+  "expected_range": [0, 14]
 }
 ```
 
-In this example:
+- `pH = -1` is a critical error because it violates `min`.
+- `pH = 15` is a warning because it is outside `expected_range`.
 
-- `pH = -1` is a critical error because it violates `min`;
-- `pH = 15` is a warning because it is outside `expected_range`;
-- `pH = 7` is valid.
-
-Use `min` and `max` for impossible or unacceptable values. Use
-`expected_range` for unusual values that should be reviewed without stopping
-the workflow.
-
----
-
-### 9. Allowed values
-
-Use `allowed_values` for categorical fields:
+### Allowed values
 
 ```json
 "Saturated(Y/N)": {
   "type": "object",
-  "allowed_values": [
-    "Y",
-    "N"
-  ],
+  "allowed_values": ["Y", "N"],
   "case_sensitive": false
 }
 ```
 
 With `case_sensitive: false`, `Y`, `N`, `y` and `n` are accepted.
 
-Numeric categories should preferably use a numeric type:
+Numeric categories should use a numeric type:
 
 ```json
-"medida": {
+"measure": {
   "type": "integer",
-  "allowed_values": [
-    10,
-    20,
-    30
-  ]
+  "allowed_values": [10, 20, 30]
 }
 ```
 
-`case_sensitive` has no effect on numeric columns.
-
----
-
-### 10. Date formats
-
-Use `format` to require one exact date format:
+### Dates
 
 ```json
 "StartDate": {
   "type": "datetime",
-  "format": "%d/%m/%Y"
+  "format": "%d/%m/%Y",
+  "required": true,
+  "nullable": false
 }
 ```
-
-Common date codes are:
-
-| Code | Meaning |
-|---|---|
-| `%d` | Day |
-| `%m` | Numeric month |
-| `%Y` | Four-digit year |
-| `%y` | Two-digit year |
-| `%H` | Hour |
-| `%M` | Minute |
-| `%S` | Second |
 
 Several formats can be accepted:
 
@@ -537,13 +369,10 @@ Several formats can be accepted:
 }
 ```
 
-Defining an exact format is safer than relying on automatic date parsing.
+Common codes are `%d` for day, `%m` for numeric month, `%Y` for four-digit
+year, `%H` for hour, `%M` for minute and `%S` for second.
 
----
-
-### 11. Regular expressions
-
-Use `regex` when a text field must follow a specific structure:
+### Regular expressions
 
 ```json
 "SiteCode": {
@@ -554,18 +383,12 @@ Use `regex` when a text field must follow a specific structure:
 }
 ```
 
-This accepts values such as `ES02` and `FR15`, but rejects `ES2`, `es02` and
-`SITE02`.
+This accepts `ES02` and `FR15`, but rejects `ES2`, `es02` and `SITE02`.
 
-The regular expression must match the complete non-empty cell value.
-
----
-
-### 12. Complete example
+## Complete configuration example
 
 ```json
 {
-  "version": 2,
   "defaults": {
     "supported_extensions": [
       ".xlsx",
@@ -582,12 +405,7 @@ The regular expression must match the complete non-empty cell value.
         "quotechar": "\""
       }
     },
-    "na_values": [
-      "",
-      "NA",
-      "N/A",
-      "null"
-    ],
+    "na_values": ["", "NA", "N/A", "null"],
     "strip_column_names": true,
     "strip_string_values": true,
     "drop_completely_empty_rows": true,
@@ -600,51 +418,38 @@ The regular expression must match the complete non-empty cell value.
   "tables": [
     {
       "type": "example",
-      "patterns": [
-        "*_EXAMPLE*"
-      ],
+      "patterns": ["*_EXAMPLE*"],
       "columns": {
-        "fecha": {
+        "date": {
           "type": "datetime",
           "format": "%d/%m/%Y",
           "required": true,
           "nullable": false
         },
-        "hola": {
+        "location": {
           "type": "object",
           "required": true,
           "nullable": false
         },
-        "altura": {
+        "height": {
           "type": "float",
           "required": true,
           "nullable": false,
           "min": 0
         },
-        "verdad": {
+        "status": {
           "type": "object",
-          "allowed_values": [
-            "Y",
-            "N",
-            "Quizas"
-          ],
+          "allowed_values": ["Y", "N", "Maybe"],
           "case_sensitive": false
         },
-        "medida": {
+        "measure": {
           "type": "integer",
-          "allowed_values": [
-            10,
-            20,
-            30
-          ]
+          "allowed_values": [10, 20, 30]
         },
         "pH": {
           "type": "float",
           "min": 0,
-          "expected_range": [
-            0,
-            14
-          ]
+          "expected_range": [0, 14]
         },
         "SiteCode": {
           "type": "object",
@@ -659,7 +464,7 @@ The regular expression must match the complete non-empty cell value.
 }
 ```
 
-### Quick reference for column rules
+## Column-rule quick reference
 
 | Rule | Meaning | Result when violated |
 |---|---|---|
@@ -673,60 +478,97 @@ The regular expression must match the complete non-empty cell value.
 | `regex` | Required text structure | Critical error |
 | `format`, `formats` | Accepted date format or formats | Critical error |
 
-### Recommended approach
-
-1. Use `required: true` and `nullable: false` for essential identifiers.
-2. Use `integer` for years, months and numeric codes.
-3. Use `float` for measurements and concentrations.
-4. Use strict `min` and `max` limits only for impossible values.
-5. Use `expected_range` for values that should be reviewed but not rejected.
-6. Use descriptive filename patterns to reduce ambiguous assignments.
-7. Test each configuration with a valid file and with deliberately invalid
-   examples such as missing columns, empty mandatory cells, invalid dates,
-   text in numeric columns and out-of-range values.
-
 ## Validation report
 
-The JSON report contains a global summary and one entry per table:
+`validation_report.json` contains a summary and one entry for every inspected
+file. Invalid-value messages include row numbers and a limited number of
+examples, controlled by `max_examples_per_rule`.
 
-```json
-{
-  "summary": {
-    "files_checked": 1,
-    "files_without_critical_errors": 1,
-    "critical_errors": 0,
-    "warnings": 4
-  },
-  "files": [
-    {
-      "file": "standalone/input_data.xlsx",
-      "table_type": "Anions",
-      "assignment_method": "schema inference ...",
-      "reader": {
-        "kind": "excel",
-        "sheet_name": "data"
-      },
-      "rows": 50,
-      "columns": 12,
-      "errors": [],
-      "warnings": [],
-      "valid": true
-    }
-  ]
-}
+## Example resources
+
+```text
+resources/example/
+├── data/                 # CSV + Excel standalone files
+├── data-1-template/      # one standalone Excel file
+└── data-zip-file/        # ZIP containing several Excel files
 ```
 
-For invalid values, messages include row numbers and a bounded number of example
-values. The limit is controlled by `max_examples_per_rule`.
+Each example contains:
+
+```text
+inputs/
+execution-parameters.json
+outputs/
+```
+
+## Local execution
+
+### Build
+
+```bash
+docker build -t lw-flexible-data-format-validation .
+```
+
+### Run a standalone file
+
+```bash
+mkdir -p local-output
+
+docker run --rm \
+  -v "$PWD/resources/example/data-1-template/inputs:/mnt/inputs:ro" \
+  -v "$PWD/local-output:/mnt/outputs" \
+  lw-flexible-data-format-validation \
+  --stopOnErrors TRUE \
+  --inputMode SINGLE_FILE \
+  --unmatchedFiles ERROR \
+  --outputPrefix validated_
+```
+
+### Run a ZIP
+
+```bash
+rm -rf local-output && mkdir -p local-output
+
+docker run --rm \
+  -v "$PWD/resources/example/data-zip-file/inputs:/mnt/inputs:ro" \
+  -v "$PWD/local-output:/mnt/outputs" \
+  lw-flexible-data-format-validation \
+  --stopOnErrors TRUE \
+  --inputMode AUTO \
+  --unmatchedFiles ERROR \
+  --outputPrefix validated_
+```
+
+## Unit test
+
+```bash
+bash validationUnitTest.sh
+```
+
+The test builds the image and checks:
+
+1. a ZIP containing 44 files;
+2. one extensionless Excel file, as mounted by Tesseract, assigned automatically to `Cations`;
+3. one CSV and one Excel file processed together in `AUTO` mode.
 
 ## Exit codes
 
-- `0`: execution completed and either no critical errors were found or
-  `stopOnErrors=FALSE` was used;
+- `0`: execution completed and no blocking condition remains, or critical
+  validation errors were allowed with `stopOnErrors=FALSE`;
 - `1`: critical validation errors were found with `stopOnErrors=TRUE`, or the
-  wrapper could not execute.
+  component could not execute.
 
-Even on exit code 1, the wrapper attempts to write the TXT report, JSON report
-and output ZIP before exiting.
+The component attempts to write the TXT report, JSON report and output ZIP even
+when it returns exit code 1.
 
+## Project files
+
+```text
+annotation.json
+Dockerfile
+requirements.txt
+data_format_validation.py
+validationUnitTest.sh
+README.md
+resources/example/
 ```
