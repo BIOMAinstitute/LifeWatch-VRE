@@ -196,10 +196,10 @@ To always read the first worksheet:
 
 | Property | Meaning | Common values |
 |---|---|---|
-| `sep` | Column separator | `";"`, `","`, `"|"`, `"auto"` |
+| `sep` | Column separator | `";"`, `","`, `"auto"` |
 | `decimal` | Decimal separator | `"."` or `","` |
 | `encoding` | Text encoding | `"utf-8-sig"`, `"utf-8"`, `"latin-1"` |
-| `quotechar` | Character enclosing text fields | `"\""` |
+| `quotechar` | Character enclosing text fields | `"\"` |
 
 A common European CSV uses:
 
@@ -685,14 +685,6 @@ The regular expression must match the complete non-empty cell value.
    examples such as missing columns, empty mandatory cells, invalid dates,
    text in numeric columns and out-of-range values.
 
-## Legacy configuration compatibility
-
-The original list-based format using `schema`, `critical_columns`,
-`optional_columns`, `no_empty`, `no_negatives`, `formats` and
-`expected_ranges` is still accepted. New configurations should use version 2
-because it keeps all rules for one column together and avoids contradictory
-lists.
-
 ## Validation report
 
 The JSON report contains a global summary and one entry per table:
@@ -727,71 +719,6 @@ The JSON report contains a global summary and one entry per table:
 For invalid values, messages include row numbers and a bounded number of example
 values. The limit is controlled by `max_examples_per_rule`.
 
-## Example resources
-
-Two executions are included:
-
-```text
-resources/example/data/
-  inputs/input_data              # the supplied multi-file ZIP, mounted as Bin
-  inputs/tables_config.json
-  execution-parameters.json
-
-resources/example/single-file/
-  inputs/input_data              # one supplied ANIONS workbook, mounted as Bin
-  inputs/tables_config.json
-  execution-parameters.json
-```
-
-The ZIP example intentionally contains some critical validation findings in the
-pH files because `StartDate` and `EndDate` are configured as non-nullable while
-those input columns are empty. This demonstrates `stopOnErrors`; it is not a
-reader or archive error.
-
-## Local execution
-
-### Build
-
-```bash
-docker build -t lw-flexible-data-format-validation:1.0.0 .
-```
-
-### ZIP example
-
-```bash
-mkdir -p local-output
-
-docker run --rm \
-  -v "$PWD/resources/example/data/inputs:/mnt/inputs:ro" \
-  -v "$PWD/local-output:/mnt/outputs" \
-  lw-flexible-data-format-validation:1.0.0 \
-  --stopOnErrors FALSE \
-  --inputMode AUTO \
-  --requireAllTableTypes TRUE \
-  --unmatchedFiles ERROR \
-  --outputPrefix validated_
-```
-
-`stopOnErrors` is set to `FALSE` in this manual command so that the known
-critical findings in the supplied pH test files do not make Docker return a
-failure status.
-
-### Standalone-file example
-
-```bash
-rm -rf local-output && mkdir -p local-output
-
-docker run --rm \
-  -v "$PWD/resources/example/single-file/inputs:/mnt/inputs:ro" \
-  -v "$PWD/local-output:/mnt/outputs" \
-  lw-flexible-data-format-validation:1.0.0 \
-  --stopOnErrors TRUE \
-  --inputMode SINGLE_FILE \
-  --requireAllTableTypes FALSE \
-  --unmatchedFiles ERROR \
-  --outputPrefix validated_
-```
-
 ## Exit codes
 
 - `0`: execution completed and either no critical errors were found or
@@ -802,15 +729,4 @@ docker run --rm \
 Even on exit code 1, the wrapper attempts to write the TXT report, JSON report
 and output ZIP before exiting.
 
-## Project files
-
-```text
-annotation.json
-Dockerfile
-requirements.txt
-data_format_validation.py
-validationUnitTest.sh
-README.md
-resources/example/data/
-resources/example/single-file/
 ```
