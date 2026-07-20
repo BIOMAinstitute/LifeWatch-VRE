@@ -501,56 +501,6 @@ execution-parameters.json
 outputs/
 ```
 
-## Local execution
-
-### Build
-
-```bash
-docker build -t lw-flexible-data-format-validation .
-```
-
-### Run a standalone file
-
-```bash
-mkdir -p local-output
-
-docker run --rm \
-  -v "$PWD/resources/example/data-1-template/inputs:/mnt/inputs:ro" \
-  -v "$PWD/local-output:/mnt/outputs" \
-  lw-flexible-data-format-validation \
-  --stopOnErrors TRUE \
-  --inputMode SINGLE_FILE \
-  --unmatchedFiles ERROR \
-  --outputPrefix validated_
-```
-
-### Run a ZIP
-
-```bash
-rm -rf local-output && mkdir -p local-output
-
-docker run --rm \
-  -v "$PWD/resources/example/data-zip-file/inputs:/mnt/inputs:ro" \
-  -v "$PWD/local-output:/mnt/outputs" \
-  lw-flexible-data-format-validation \
-  --stopOnErrors TRUE \
-  --inputMode AUTO \
-  --unmatchedFiles ERROR \
-  --outputPrefix validated_
-```
-
-## Unit test
-
-```bash
-bash validationUnitTest.sh
-```
-
-The test builds the image and checks:
-
-1. a ZIP containing 44 files;
-2. one extensionless Excel file, as mounted by Tesseract, assigned automatically to `Cations`;
-3. one CSV and one Excel file processed together in `AUTO` mode.
-
 ## Exit codes
 
 - `0`: execution completed and no blocking condition remains, or critical
@@ -561,14 +511,3 @@ The test builds the image and checks:
 The component attempts to write the TXT report, JSON report and output ZIP even
 when it returns exit code 1.
 
-## Project files
-
-```text
-annotation.json
-Dockerfile
-requirements.txt
-data_format_validation.py
-validationUnitTest.sh
-README.md
-resources/example/
-```
