@@ -63,11 +63,10 @@
       "citation": null
     }
   ],
-  "publicationDate": "2025-05-27",
+  "publicationDate": "2026-07-20",
   "author": "LifeWatch ERIC",
   "bugs": {
-    "email": "help@exampleorg.com",
-    "url": "https://www.tickets.exampleorg.com"
+    "email": "jtorrens@unav.es"
   },
   "citation": null,
   "testPath": "transformationUnitTest.sh",

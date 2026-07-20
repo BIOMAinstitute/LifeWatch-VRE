@@ -155,11 +155,10 @@
       "citation": null
     }
   ],
-  "publicationDate": "Thu, 16 July 2026 00:00:00 GMT",
+  "publicationDate": "2026-07-20",
   "author": "LifeWatch ERIC",
   "bugs": {
-    "email": "help@exampleorg.com",
-    "url": "https://www.tickets.exampleorg.com"
+    "email": "jtorrens@unav.es"
   },
   "citation": null,
   "testPath": "validationUnitTest.sh",
