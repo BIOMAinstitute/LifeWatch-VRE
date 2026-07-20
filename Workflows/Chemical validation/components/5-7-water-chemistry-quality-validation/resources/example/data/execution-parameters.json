@@ -1,0 +1,39 @@
+{
+  "parameters": [
+    {
+      "name": "param_ionsdiff_low_k",
+      "defaultValue": "20.0",
+      "value": "20.0"
+    },
+    {
+      "name": "param_ionsdiff_high_k",
+      "defaultValue": "10.0",
+      "value": "10.0"
+    },
+    {
+      "name": "param_conddiff_low_1",
+      "defaultValue": "30.0",
+      "value": "30.0"
+    },
+    {
+      "name": "param_conddiff_low_2",
+      "defaultValue": "20.0",
+      "value": "20.0"
+    },
+    {
+      "name": "param_conddiff_high",
+      "defaultValue": "10.0",
+      "value": "10.0"
+    },
+    {
+      "name": "param_ratio_nacl_low",
+      "defaultValue": "0.5",
+      "value": "0.5"
+    },
+    {
+      "name": "param_ratio_nacl_high",
+      "defaultValue": "1.5",
+      "value": "1.5"
+    }
+  ]
+}

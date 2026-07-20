@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+resources/example/data/outputs/*
+!resources/example/data/outputs/.gitignore

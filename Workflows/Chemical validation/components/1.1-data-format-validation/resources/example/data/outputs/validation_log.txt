@@ -1,0 +1,28 @@
+TABLE VALIDATION — 2026-07-20 07:29:53
+==============================================================================
+Input mode: AUTO
+Files checked: 2
+Files without critical errors: 2
+Critical errors: 0
+Warnings: 2
+==============================================================================
+
+INPUT PREPARATION
+• Prepared standalone file: example.csv -> example.csv (csv)
+• Prepared standalone file: example.xlsx -> example.xlsx (excel)
+------------------------------------------------------------------------------
+
+Table type: example
+File: input_data/example.csv
+Configuration assignment: filename pattern
+Reader: {'kind': 'csv', 'detected_kind': 'csv', 'sep': ';', 'decimal': '.', 'encoding': 'utf-8-sig', 'quotechar': '"'}
+Dimensions: 9 row(s) x 6 column(s)
+⚠️  Column 'pH' has 1 value(s) outside expected range [0, 14]: row 10: '15'
+------------------------------------------------------------------------------
+Table type: example
+File: input_data/example.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'Hoja1'}
+Dimensions: 9 row(s) x 6 column(s)
+⚠️  Column 'pH' has 1 value(s) outside expected range [0, 14]: row 10: 15
+------------------------------------------------------------------------------

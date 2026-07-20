@@ -1,0 +1,31 @@
+TABLE VALIDATION — 2026-07-17 12:16:46
+==============================================================================
+Input mode: AUTO
+Files checked: 1
+Files without critical errors: 1
+Critical errors: 0
+Warnings: 12
+==============================================================================
+
+INPUT PREPARATION
+• Prepared standalone file: 2025_01_FOREST_CATIONS.xlsx -> 2025_01_FOREST_CATIONS.xlsx (excel)
+------------------------------------------------------------------------------
+
+Table type: Cations
+File: input_data/2025_01_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------------------------

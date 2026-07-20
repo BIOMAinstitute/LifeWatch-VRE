@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-07-17T12:16:46",
+  "input_mode": "AUTO",
+  "summary": {
+    "files_checked": 1,
+    "files_without_critical_errors": 1,
+    "critical_errors": 0,
+    "warnings": 12
+  },
+  "input_preparation": [
+    "Prepared standalone file: 2025_01_FOREST_CATIONS.xlsx -> 2025_01_FOREST_CATIONS.xlsx (excel)"
+  ],
+  "configuration_warnings": [],
+  "files": [
+    {
+      "file": "input_data/2025_01_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty"
+      ],
+      "valid": true
+    }
+  ]
+}

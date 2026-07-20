@@ -1,0 +1,925 @@
+{
+  "generated_at": "2026-07-17T10:42:32",
+  "input_mode": "AUTO",
+  "summary": {
+    "files_checked": 44,
+    "files_without_critical_errors": 44,
+    "critical_errors": 0,
+    "warnings": 205
+  },
+  "input_preparation": [
+    "Extracted archive: input_data.zip"
+  ],
+  "configuration_warnings": [],
+  "files": [
+    {
+      "file": "input_data/2025_01_FOREST_AMMONIUM.xlsx",
+      "table_type": "Ammonium",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 9,
+      "errors": [],
+      "warnings": [
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_01_FOREST_ANIONS.xlsx",
+      "table_type": "Anions",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 12,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'PO4(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_01_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_01_FOREST_DOC_TN.xlsx",
+      "table_type": "DocTN",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "table_type": "phWeighted",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 180,
+      "columns": 20,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'EndDate' is completely empty",
+        "Optional column 'Tare(g)' is completely empty",
+        "Optional column 'Tare+Sample(g)' is completely empty",
+        "Optional column 'sampler_radius' is completely empty",
+        "Optional column 'Saturated(Y/N)' is completely empty",
+        "Optional column 'Temperature(ºC)' is completely empty",
+        "Optional column 'DO(%)' is completely empty",
+        "Optional column 'DO(ppm)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_02_FOREST_AMMONIUM.xlsx",
+      "table_type": "Ammonium",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 9,
+      "errors": [],
+      "warnings": [
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_02_FOREST_ANIONS.xlsx",
+      "table_type": "Anions",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 12,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'PO4(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_02_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_02_FOREST_DOC_TN.xlsx",
+      "table_type": "DocTN",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "table_type": "phWeighted",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 180,
+      "columns": 20,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'EndDate' is completely empty",
+        "Optional column 'Tare(g)' is completely empty",
+        "Optional column 'Tare+Sample(g)' is completely empty",
+        "Optional column 'sampler_radius' is completely empty",
+        "Optional column 'Saturated(Y/N)' is completely empty",
+        "Optional column 'Temperature(ºC)' is completely empty",
+        "Optional column 'DO(%)' is completely empty",
+        "Optional column 'DO(ppm)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_03_FOREST_AMMONIUM.xlsx",
+      "table_type": "Ammonium",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 9,
+      "errors": [],
+      "warnings": [
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_03_FOREST_ANIONS.xlsx",
+      "table_type": "Anions",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 12,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'PO4(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_03_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_03_FOREST_DOC_TN.xlsx",
+      "table_type": "DocTN",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "table_type": "phWeighted",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 180,
+      "columns": 20,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'EndDate' is completely empty",
+        "Optional column 'Tare(g)' is completely empty",
+        "Optional column 'Tare+Sample(g)' is completely empty",
+        "Optional column 'sampler_radius' is completely empty",
+        "Optional column 'Saturated(Y/N)' is completely empty",
+        "Optional column 'Temperature(ºC)' is completely empty",
+        "Optional column 'DO(%)' is completely empty",
+        "Optional column 'DO(ppm)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_04_FOREST_AMMONIUM.xlsx",
+      "table_type": "Ammonium",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 9,
+      "errors": [],
+      "warnings": [
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_04_FOREST_ANIONS.xlsx",
+      "table_type": "Anions",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 12,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'PO4(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_04_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_04_FOREST_DOC_TN.xlsx",
+      "table_type": "DocTN",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "table_type": "phWeighted",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 180,
+      "columns": 20,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'EndDate' is completely empty",
+        "Optional column 'Tare(g)' is completely empty",
+        "Optional column 'Tare+Sample(g)' is completely empty",
+        "Optional column 'sampler_radius' is completely empty",
+        "Optional column 'Saturated(Y/N)' is completely empty",
+        "Optional column 'Temperature(ºC)' is completely empty",
+        "Optional column 'DO(%)' is completely empty",
+        "Optional column 'DO(ppm)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_05_FOREST_AMMONIUM.xlsx",
+      "table_type": "Ammonium",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 9,
+      "errors": [],
+      "warnings": [
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_05_FOREST_ANIONS.xlsx",
+      "table_type": "Anions",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 12,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'PO4(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_05_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_05_FOREST_DOC_TN.xlsx",
+      "table_type": "DocTN",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "table_type": "phWeighted",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 180,
+      "columns": 20,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'EndDate' is completely empty",
+        "Optional column 'Tare(g)' is completely empty",
+        "Optional column 'Tare+Sample(g)' is completely empty",
+        "Optional column 'sampler_radius' is completely empty",
+        "Optional column 'Saturated(Y/N)' is completely empty",
+        "Optional column 'Temperature(ºC)' is completely empty",
+        "Optional column 'DO(%)' is completely empty",
+        "Optional column 'DO(ppm)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_06_FOREST_AMMONIUM.xlsx",
+      "table_type": "Ammonium",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 9,
+      "errors": [],
+      "warnings": [
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_06_FOREST_ANIONS.xlsx",
+      "table_type": "Anions",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 12,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'PO4(mg/l)' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_06_FOREST_CATIONS.xlsx",
+      "table_type": "Cations",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 25,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'AS(mg/l)' is completely empty",
+        "Optional column 'CD(mg/l)' is completely empty",
+        "Optional column 'CR(mg/l)' is completely empty",
+        "Optional column 'CU(mg/l)' is completely empty",
+        "Optional column 'CO(mg/l)' is completely empty",
+        "Optional column 'NI(mg/l)' is completely empty",
+        "Optional column 'PB(mg/l)' is completely empty",
+        "Optional column 'ZN(mg/l)' is completely empty",
+        "Optional column 'P(mg/l)' is completely empty",
+        "Optional column 'S(mg/l)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_06_FOREST_DOC_TN.xlsx",
+      "table_type": "DocTN",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 50,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "table_type": "phWeighted",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 340,
+      "columns": 20,
+      "errors": [],
+      "warnings": [
+        "Unexpected column(s): ['month', 'year']",
+        "Optional column 'StartDate' is completely empty",
+        "Optional column 'EndDate' is completely empty",
+        "Optional column 'Tare(g)' is completely empty",
+        "Optional column 'Tare+Sample(g)' is completely empty",
+        "Optional column 'sampler_radius' is completely empty",
+        "Optional column 'Saturated(Y/N)' is completely empty",
+        "Optional column 'Temperature(ºC)' is completely empty",
+        "Optional column 'DO(%)' is completely empty",
+        "Optional column 'DO(ppm)' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_05.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 1041,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_06.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 301,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_07.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 258,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_10.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 237,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_102.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 988,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_11.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 187,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_115.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 668,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_22.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 520,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_25.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 246,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_26.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 342,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_30.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 819,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_33.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 485,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_37.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 292,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/2025_ALKALINITY_54.xlsx",
+      "table_type": "Alkalinity",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "data"
+      },
+      "rows": 375,
+      "columns": 10,
+      "errors": [],
+      "warnings": [
+        "Optional column 'Comments' is completely empty"
+      ],
+      "valid": true
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "name": "WaterChemistryPreprocessing",
+  "label": "Water Chemistry Preprocessing",
+  "description": "Runs three sequential water-chemistry processing stages in one component: transformation of validated Excel templates into site-level CSV files, application of laboratory limits of quantification (LOQ/2 substitution), and conversion of recognised analytes to mg/l, µg/l and µeq/l. The three scientific scripts remain separate and are coordinated internally.",
+  "type": "DataProcessing",
+  "dockerImage": "lw-water-chemistry-preprocessing",
+  "parameters": [
+    {
+      "name": "param_WeightedConductivity",
+      "label": "LOQ Weighted Conductivity (µS/cm)",
+      "description": "Limit of quantification for weighted conductivity, in µS/cm.",
+      "defaultValue": "3.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_NH4N",
+      "label": "LOQ NH4-N (mg/L)",
+      "description": "Limit of quantification for ammonium nitrogen (NH4-N), in mg/L.",
+      "defaultValue": "0.04",
+      "type": "Float"
+    },
+    {
+      "name": "param_NO3",
+      "label": "LOQ NO3 (mg/L)",
+      "description": "Limit of quantification for nitrate (NO3), in mg/L.",
+      "defaultValue": "0.05",
+      "type": "Float"
+    },
+    {
+      "name": "param_SO4",
+      "label": "LOQ SO4 (mg/L)",
+      "description": "Limit of quantification for sulphate (SO4), in mg/L.",
+      "defaultValue": "0.1",
+      "type": "Float"
+    },
+    {
+      "name": "param_CL",
+      "label": "LOQ Cl (mg/L)",
+      "description": "Limit of quantification for chloride (Cl), in mg/L.",
+      "defaultValue": "0.05",
+      "type": "Float"
+    },
+    {
+      "name": "param_AS",
+      "label": "LOQ As (mg/L)",
+      "description": "Limit of quantification for arsenic (As), in mg/L.",
+      "defaultValue": "0.000025",
+      "type": "Float"
+    },
+    {
+      "name": "param_CD",
+      "label": "LOQ Cd (mg/L)",
+      "description": "Limit of quantification for cadmium (Cd), in mg/L.",
+      "defaultValue": "0.000008",
+      "type": "Float"
+    },
+    {
+      "name": "param_CR",
+      "label": "LOQ Cr (mg/L)",
+      "description": "Limit of quantification for chromium (Cr), in mg/L.",
+      "defaultValue": "0.000037",
+      "type": "Float"
+    },
+    {
+      "name": "param_CU",
+      "label": "LOQ Cu (mg/L)",
+      "description": "Limit of quantification for copper (Cu), in mg/L.",
+      "defaultValue": "0.000062",
+      "type": "Float"
+    },
+    {
+      "name": "param_CO",
+      "label": "LOQ Co (mg/L)",
+      "description": "Limit of quantification for cobalt (Co), in mg/L.",
+      "defaultValue": "0.00001",
+      "type": "Float"
+    },
+    {
+      "name": "param_NI",
+      "label": "LOQ Ni (mg/L)",
+      "description": "Limit of quantification for nickel (Ni), in mg/L.",
+      "defaultValue": "0.000073",
+      "type": "Float"
+    },
+    {
+      "name": "param_PB",
+      "label": "LOQ Pb (mg/L)",
+      "description": "Limit of quantification for lead (Pb), in mg/L.",
+      "defaultValue": "0.000011",
+      "type": "Float"
+    },
+    {
+      "name": "param_ZN",
+      "label": "LOQ Zn (mg/L)",
+      "description": "Limit of quantification for zinc (Zn), in mg/L.",
+      "defaultValue": "0.000049",
+      "type": "Float"
+    },
+    {
+      "name": "param_P",
+      "label": "LOQ P (mg/L)",
+      "description": "Limit of quantification for phosphorus (P), in mg/L.",
+      "defaultValue": "0.016603",
+      "type": "Float"
+    },
+    {
+      "name": "param_S",
+      "label": "LOQ S (mg/L)",
+      "description": "Limit of quantification for sulphur (S), in mg/L.",
+      "defaultValue": "0.5",
+      "type": "Float"
+    },
+    {
+      "name": "param_CA",
+      "label": "LOQ Ca (mg/L)",
+      "description": "Limit of quantification for calcium (Ca), in mg/L.",
+      "defaultValue": "0.15",
+      "type": "Float"
+    },
+    {
+      "name": "param_K",
+      "label": "LOQ K (mg/L)",
+      "description": "Limit of quantification for potassium (K), in mg/L.",
+      "defaultValue": "0.15",
+      "type": "Float"
+    },
+    {
+      "name": "param_MG",
+      "label": "LOQ Mg (mg/L)",
+      "description": "Limit of quantification for magnesium (Mg), in mg/L.",
+      "defaultValue": "0.03",
+      "type": "Float"
+    },
+    {
+      "name": "param_NA",
+      "label": "LOQ Na (mg/L)",
+      "description": "Limit of quantification for sodium (Na), in mg/L.",
+      "defaultValue": "0.04",
+      "type": "Float"
+    },
+    {
+      "name": "param_AL",
+      "label": "LOQ Al (mg/L)",
+      "description": "Limit of quantification for aluminium (Al), in mg/L.",
+      "defaultValue": "0.01",
+      "type": "Float"
+    },
+    {
+      "name": "param_FE",
+      "label": "LOQ Fe (mg/L)",
+      "description": "Limit of quantification for iron (Fe), in mg/L.",
+      "defaultValue": "0.005",
+      "type": "Float"
+    },
+    {
+      "name": "param_MN",
+      "label": "LOQ Mn (mg/L)",
+      "description": "Limit of quantification for manganese (Mn), in mg/L.",
+      "defaultValue": "0.005",
+      "type": "Float"
+    },
+    {
+      "name": "param_DOC",
+      "label": "LOQ DOC (mg/L)",
+      "description": "Limit of quantification for dissolved organic carbon (DOC), in mg/L.",
+      "defaultValue": "0.5",
+      "type": "Float"
+    },
+    {
+      "name": "param_TN",
+      "label": "LOQ TN (mg/L)",
+      "description": "Limit of quantification for total nitrogen (TN), in mg/L.",
+      "defaultValue": "0.1",
+      "type": "Float"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Validated water chemistry data ZIP",
+      "path": "/mnt/inputs/validated_data.zip",
+      "description": "ZIP produced by the data-format validation component. It may contain the validated Excel templates directly or under an input_data folder."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Zip",
+      "name": "output-data",
+      "label": "Preprocessed water chemistry data ZIP",
+      "path": "/mnt/outputs/water_chemical_data_level1_units.zip",
+      "description": "Final tab-separated CSV files after data transformation, LOQ substitution and unit expansion."
+    },
+    {
+      "type": "Text",
+      "name": "loq-log",
+      "label": "LOQ substitution log",
+      "path": "/mnt/outputs/loq_substitutions.log",
+      "description": "Tab-separated traceability log containing each value replaced by LOQ / 2."
+    },
+    {
+      "type": "Text",
+      "name": "pipeline-log",
+      "label": "Pipeline execution log",
+      "path": "/mnt/outputs/pipeline_execution.log",
+      "description": "Execution messages grouped by the three internal processing stages."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 1536,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 20
+  },
+  "tags": [
+    "water chemistry",
+    "transformation",
+    "LOQ",
+    "unit conversion",
+    "ICP-Forests",
+    "lifewatch"
+  ],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "Eric Gazoni, Charlie Clark",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2026-07-17",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "pipelineUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

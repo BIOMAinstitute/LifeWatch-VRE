@@ -1,0 +1,10 @@
+{
+  "parameters": [
+    {"name": "stopOnErrors", "defaultValue": "TRUE", "value": "TRUE"},
+    {"name": "inputMode", "defaultValue": "AUTO", "value": "SINGLE_FILE"},
+    {"name": "tableType", "defaultValue": "", "value": ""},
+    {"name": "requireAllTableTypes", "defaultValue": "FALSE", "value": "FALSE"},
+    {"name": "unmatchedFiles", "defaultValue": "ERROR", "value": "ERROR"},
+    {"name": "outputPrefix", "defaultValue": "validated_", "value": "validated_"}
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-07-20T07:29:53",
+  "input_mode": "AUTO",
+  "summary": {
+    "files_checked": 2,
+    "files_without_critical_errors": 2,
+    "critical_errors": 0,
+    "warnings": 2
+  },
+  "input_preparation": [
+    "Prepared standalone file: example.csv -> example.csv (csv)",
+    "Prepared standalone file: example.xlsx -> example.xlsx (excel)"
+  ],
+  "configuration_warnings": [],
+  "files": [
+    {
+      "file": "input_data/example.csv",
+      "table_type": "example",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "csv",
+        "detected_kind": "csv",
+        "sep": ";",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      },
+      "rows": 9,
+      "columns": 6,
+      "errors": [],
+      "warnings": [
+        "Column 'pH' has 1 value(s) outside expected range [0, 14]: row 10: '15'"
+      ],
+      "valid": true
+    },
+    {
+      "file": "input_data/example.xlsx",
+      "table_type": "example",
+      "assignment_method": "filename pattern",
+      "reader": {
+        "kind": "excel",
+        "detected_kind": "excel",
+        "sheet_name": "Hoja1"
+      },
+      "rows": 9,
+      "columns": 6,
+      "errors": [],
+      "warnings": [
+        "Column 'pH' has 1 value(s) outside expected range [0, 14]: row 10: 15"
+      ],
+      "valid": true
+    }
+  ]
+}

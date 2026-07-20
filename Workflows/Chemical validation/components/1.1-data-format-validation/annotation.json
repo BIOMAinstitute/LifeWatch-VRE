@@ -1,0 +1,163 @@
+{
+  "name": "FlexibleDataFormatValidation",
+  "label": "Flexible data format validation",
+  "description": "Validates a standalone Excel/CSV table or a ZIP containing multiple Excel, CSV, TSV or delimited TXT files against a JSON configuration. Produces human-readable and machine-readable validation reports plus a ZIP containing the inspected data files.",
+  "type": "DataAnalysing",
+  "dockerImage": "lw-flexible-data-format-validation",
+  "parameters": [
+    {
+      "name": "stopOnErrors",
+      "label": "Stop workflow on critical errors",
+      "description": "When TRUE, the wrapper exits with code 1 when any critical validation error is found. When FALSE, reports are generated and the workflow continues.",
+      "defaultValue": "TRUE",
+      "type": "Boolean"
+    },
+    {
+      "name": "inputMode",
+      "label": "Input mode",
+      "description": "AUTO detects whether the data input is a ZIP archive or a standalone table. ARCHIVE requires a ZIP. SINGLE_FILE requires one standalone Excel/CSV/TSV/TXT file.",
+      "defaultValue": "AUTO",
+      "type": "String",
+      "optionList": [
+        {"value": "AUTO", "label": "Automatic detection"},
+        {"value": "ARCHIVE", "label": "ZIP archive"},
+        {"value": "SINGLE_FILE", "label": "Standalone table"}
+      ]
+    },
+    {
+      "name": "tableType",
+      "label": "Forced table type",
+      "description": "Optional configuration type to use for a standalone file when its filename and columns do not identify a unique table rule. Leave empty for automatic assignment.",
+      "defaultValue": "",
+      "type": "String"
+    },
+    {
+      "name": "requireAllTableTypes",
+      "label": "Require every configured table type",
+      "description": "When TRUE, every table type defined in the configuration must have at least one associated input file. Normally keep FALSE when validating a single standalone table.",
+      "defaultValue": "FALSE",
+      "type": "Boolean"
+    },
+    {
+      "name": "unmatchedFiles",
+      "label": "Unmatched file policy",
+      "description": "Action when a supported file cannot be associated with any configured table type.",
+      "defaultValue": "ERROR",
+      "type": "String",
+      "optionList": [
+        {"value": "ERROR", "label": "Critical error"},
+        {"value": "WARNING", "label": "Warning only"},
+        {"value": "IGNORE", "label": "Ignore file"}
+      ]
+    },
+    {
+      "name": "outputPrefix",
+      "label": "Output filename prefix",
+      "description": "Prefix added to every inspected filename inside the output ZIP.",
+      "defaultValue": "validated_",
+      "type": "String"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "Bin",
+      "name": "input-data",
+      "label": "Data file or data ZIP",
+      "path": "/mnt/inputs/input_data",
+      "description": "Either one standalone Excel/CSV/TSV/TXT file or a ZIP containing any number and mixture of those formats. Use ZIP when several files must be supplied."
+    },
+    {
+      "type": "Json",
+      "name": "input-config",
+      "label": "Validation configuration",
+      "path": "/mnt/inputs/tables_config.json",
+      "description": "JSON configuration defining filename patterns, reader settings, columns, data types, required values, ranges, allowed values and regular expressions."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Text",
+      "name": "output-log",
+      "label": "Validation log",
+      "path": "/mnt/outputs/level0/validation_log.txt",
+      "description": "Human-readable report listing critical errors, warnings, reader settings and rule assignment for every inspected file."
+    },
+    {
+      "type": "Json",
+      "name": "output-report",
+      "label": "Validation report JSON",
+      "path": "/mnt/outputs/level0/validation_report.json",
+      "description": "Machine-readable validation summary and per-file results."
+    },
+    {
+      "type": "Zip",
+      "name": "output-data",
+      "label": "Inspected data ZIP",
+      "path": "/mnt/outputs/level0/validated_data.zip",
+      "description": "ZIP containing the supplied table files with the configured output prefix. The files are not modified; validation status is reported separately."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 1024,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 5
+  },
+  "tags": [
+    "validation",
+    "excel",
+    "csv",
+    "data quality",
+    "schema",
+    "lifewatch"
+  ],
+  "license": "GPL-3.0-only",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF-2.0",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "openpyxl contributors",
+      "citation": null
+    },
+    {
+      "name": "xlrd",
+      "license": "BSD-3-Clause",
+      "version": "2.0.1",
+      "author": "xlrd contributors",
+      "citation": null
+    }
+  ],
+  "publicationDate": "Thu, 16 July 2026 00:00:00 GMT",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "validationUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

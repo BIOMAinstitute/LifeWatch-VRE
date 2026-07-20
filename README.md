@@ -279,7 +279,6 @@ Two external files are required by multiple workflows and must be maintained and
 | Nicolás Goyena | BIOMA — University of Navarra | Data scientist |
 
 **Collaborating institutions:**  
-Confederación Hidrográfica del Júcar (CHJ) — data and site access  
 Ministry for Ecological Transition and the Demographic Challenge (MITECO) — national ICP coordination  
 LifeWatch ERIC — platform infrastructure and technical support
 
@@ -290,7 +289,5 @@ LifeWatch ERIC — platform infrastructure and technical support
 - **ICP Forests** programme manual: <https://www.icp-forests.org/pdf/manual.pdf>
 - **ICP Integrated Monitoring** manual: <https://www.syke.fi/nature/icpim>
 - Gran, G. (1952). Determination of the equivalence point in potentiometric titrations. Part II. *Analyst*, 77(920), 661–671.
-- Davies, C.W. (1962). *Ion Association*. Butterworths, London.
-- Kohlrausch, F. (1876). Ueber das Leitvermögen der Elektrolyte. *Annalen der Physik*, 237(9), 1–14.
 - **LifeWatch ERIC** VRE: <https://www.lifewatch.eu>
 - **CLRTAP** protocols: <https://unece.org/environment-policy/air/clrtap>

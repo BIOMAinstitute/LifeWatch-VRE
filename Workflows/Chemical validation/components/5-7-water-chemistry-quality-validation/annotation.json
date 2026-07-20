@@ -1,0 +1,195 @@
+{
+  "name": "WaterChemistryQualityReportPipeline",
+  "label": "Water Chemistry Quality Validation and Reporting",
+  "description": "Runs three sequential stages in one component: physicochemical quality validation of unit-transformed water chemistry data, generation of the validation PDF and Excel review files, and selection/aggregation of the final dataset for ICP reporting. The three scientific scripts remain separate and are coordinated internally.",
+  "type": "DataAnalysing",
+  "dockerImage": "lw-water-chemistry-quality-report",
+  "parameters": [
+    {
+      "name": "param_ionsdiff_low_k",
+      "label": "Ion balance limit — low conductivity (µS/cm <= 20)",
+      "description": "Maximum allowed absolute ion-balance difference for samples with WeightedConductivity <= 20 µS/cm.",
+      "defaultValue": "20.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_ionsdiff_high_k",
+      "label": "Ion balance limit — high conductivity (µS/cm > 20)",
+      "description": "Maximum allowed absolute ion-balance difference for samples with WeightedConductivity > 20 µS/cm.",
+      "defaultValue": "10.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_low_1",
+      "label": "Conductivity difference limit — very low conductivity (µS/cm <= 10)",
+      "description": "Maximum allowed conductivity difference for samples with WeightedConductivity <= 10 µS/cm.",
+      "defaultValue": "30.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_low_2",
+      "label": "Conductivity difference limit — low conductivity (µS/cm 10–20)",
+      "description": "Maximum allowed conductivity difference for samples with WeightedConductivity between 10 and 20 µS/cm.",
+      "defaultValue": "20.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_high",
+      "label": "Conductivity difference limit — high conductivity (µS/cm > 20)",
+      "description": "Maximum allowed conductivity difference for samples with WeightedConductivity > 20 µS/cm.",
+      "defaultValue": "10.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_ratio_nacl_low",
+      "label": "Na/Cl ratio lower bound",
+      "description": "Minimum acceptable Na/Cl ratio on a µeq/l basis.",
+      "defaultValue": "0.5",
+      "type": "Float"
+    },
+    {
+      "name": "param_ratio_nacl_high",
+      "label": "Na/Cl ratio upper bound",
+      "description": "Maximum acceptable Na/Cl ratio on a µeq/l basis.",
+      "defaultValue": "1.5",
+      "type": "Float"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Unit-transformed water chemistry data ZIP",
+      "path": "/mnt/inputs/water_chemical_data_level1_units.zip",
+      "description": "ZIP produced by the combined preprocessing component (steps 2–4), containing tab-separated site/subprogram CSV files with mg/l, µg/l and µeq/l representations."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "input-samples",
+      "label": "Samples information file",
+      "path": "/mnt/inputs/samplesInfo.xlsx",
+      "description": "Excel file used by all three internal stages. It must include SampleID and should include SamplingTypology; ICP_Program, Instrument, ID_PostgreSQL, SiteCode and SiteName are used when available."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Zip",
+      "name": "output-alldata",
+      "label": "Merged allData ZIP",
+      "path": "/mnt/outputs/water_chemical_data_level2_alldata.zip",
+      "description": "One merged pre-validation CSV per SiteCode."
+    },
+    {
+      "type": "Zip",
+      "name": "output-validated",
+      "label": "Chemically validated data ZIP",
+      "path": "/mnt/outputs/water_chemical_data_level2_validated.zip",
+      "description": "One validated CSV per SiteCode with chemical quality indicators and FINAL_VALIDATION."
+    },
+    {
+      "type": "Bin",
+      "name": "output-pdf",
+      "label": "Validation report PDF",
+      "path": "/mnt/outputs/validation_report.pdf",
+      "description": "Multi-page PDF summary and detailed validation report."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-repeat",
+      "label": "Samples to repeat",
+      "path": "/mnt/outputs/Samples2Repeat.xlsx",
+      "description": "Samples whose final validation result is NO."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-all",
+      "label": "All validated data",
+      "path": "/mnt/outputs/All_Validated_Data.xlsx",
+      "description": "All samples and validation results used as the internal input to the final-selection stage."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-final",
+      "label": "Final report data",
+      "path": "/mnt/outputs/Final_Data.xlsx",
+      "description": "Selected and monthly aggregated data ready for ICP reporting and database ingestion."
+    },
+    {
+      "type": "Text",
+      "name": "pipeline-log",
+      "label": "Pipeline execution log",
+      "path": "/mnt/outputs/pipeline_execution.log",
+      "description": "Execution messages grouped by the three internal stages."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 2048,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 30
+  },
+  "tags": [
+    "water chemistry",
+    "quality validation",
+    "report",
+    "ICP-Forests",
+    "final data",
+    "lifewatch"
+  ],
+  "license": "GPL v3",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "OpenPyXL contributors",
+      "citation": null
+    },
+    {
+      "name": "matplotlib",
+      "license": "PSF-based",
+      "version": "3.9.0",
+      "author": "Matplotlib Development Team",
+      "citation": null
+    },
+    {
+      "name": "fpdf2",
+      "license": "LGPL-3.0",
+      "version": "2.7.9",
+      "author": "fpdf2 contributors",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2026-07-17",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "pipelineUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

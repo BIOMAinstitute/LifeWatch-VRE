@@ -1,0 +1,450 @@
+{
+  "version": 2,
+  "defaults": {
+    "supported_extensions": [
+      ".xlsx",
+      ".xlsm",
+      ".xls",
+      ".csv",
+      ".tsv",
+      ".txt"
+    ],
+    "reader": {
+      "excel": {
+        "sheet_name": "data"
+      },
+      "csv": {
+        "sep": ";",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      },
+      "tsv": {
+        "sep": "\\t",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      },
+      "txt": {
+        "sep": ";",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      }
+    },
+    "na_values": [
+      "",
+      "n.a",
+      "n.a.",
+      "NA",
+      "N/A",
+      "na",
+      "NaN",
+      "null",
+      "NULL"
+    ],
+    "strip_column_names": true,
+    "strip_string_values": true,
+    "drop_completely_empty_rows": true,
+    "drop_unnamed_empty_columns": true,
+    "warn_unexpected_columns": true,
+    "warn_empty_optional_columns": true,
+    "fail_if_no_files": false,
+    "max_examples_per_rule": 8
+  },
+  "tables": [
+    {
+      "type": "phWeighted",
+      "patterns": [
+        "*_pH_COND_WEIGHTED_RAW*"
+      ],
+      "columns": {
+        "StartDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y",
+          "required": false,
+          "nullable": true
+        },
+        "EndDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y",
+          "required": false,
+          "nullable": true
+        },
+        "SiteCode": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteName": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "CollectorID": {
+          "type": "object"
+        },
+        "Group": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SampleID": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "Tare(g)": {
+          "type": "float",
+          "min": 0
+        },
+        "Tare+Sample(g)": {
+          "type": "float",
+          "min": 0
+        },
+        "VolumeCollector(ml)": {
+          "type": "float",
+          "min": 0
+        },
+        "sampler_radius": {
+          "type": "float",
+          "min": 0
+        },
+        "Saturated(Y/N)": {
+          "type": "object",
+          "allowed_values": [
+            "Y",
+            "N"
+          ],
+          "case_sensitive": false
+        },
+        "Conductivity(µS/cm)": {
+          "type": "float",
+          "min": 0
+        },
+        "Temperature(ºC)": {
+          "type": "float"
+        },
+        "pH": {
+          "type": "float",
+          "min": 0,
+          "expected_range": [
+            0,
+            14
+          ]
+        },
+        "DO(%)": {
+          "type": "float",
+          "min": 0
+        },
+        "DO(ppm)": {
+          "type": "float",
+          "min": 0
+        },
+        "Comments": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "Alkalinity",
+      "patterns": [
+        "*_ALKALINITY*"
+      ],
+      "columns": {
+        "SampleID": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteCode": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteName": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "Comments": {
+          "type": "object"
+        },
+        "year": {
+          "type": "integer",
+          "required": true,
+          "nullable": false
+        },
+        "month": {
+          "type": "integer",
+          "required": true,
+          "nullable": false,
+          "min": 1,
+          "max": 12
+        },
+        "pH": {
+          "type": "float",
+          "min": 0,
+          "expected_range": [
+            0,
+            14
+          ]
+        },
+        "HCLVolume(ml)": {
+          "type": "float",
+          "min": 0
+        },
+        "HCL(mol/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "SamplingVolume(ml)": {
+          "type": "float",
+          "required": true,
+          "nullable": false,
+          "min": 0
+        }
+      }
+    },
+    {
+      "type": "Ammonium",
+      "patterns": [
+        "*_AMMONIUM*"
+      ],
+      "columns": {
+        "EndDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "StartDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "SiteCode": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteName": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SampleID": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "year": {
+          "type": "integer"
+        },
+        "month": {
+          "type": "integer",
+          "min": 1,
+          "max": 12
+        },
+        "NH4N(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "Comments": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "Anions",
+      "patterns": [
+        "*_ANIONS*"
+      ],
+      "columns": {
+        "EndDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "StartDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "SiteCode": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteName": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SampleID": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "CL(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "NO3(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "SO4(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "PO4(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "Comments": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "Cations",
+      "patterns": [
+        "*_CATIONS*"
+      ],
+      "columns": {
+        "EndDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "StartDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "SiteCode": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteName": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SampleID": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "CA(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "MG(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "NA(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "K(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "AL(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "FE(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "MN(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "AS(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "CD(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "CR(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "CU(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "CO(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "NI(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "PB(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "ZN(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "P(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "S(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "Comments": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "DocTN",
+      "patterns": [
+        "*_DOC_TN*"
+      ],
+      "columns": {
+        "EndDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "StartDate": {
+          "type": "datetime",
+          "format": "%d/%m/%Y"
+        },
+        "SiteCode": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SiteName": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "SampleID": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "DOC(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "TN(mg/l)": {
+          "type": "float",
+          "min": 0
+        },
+        "Comments": {
+          "type": "object"
+        }
+      }
+    }
+  ]
+}
