@@ -1,4 +1,4 @@
-# Water Chemistry Preprocessing — combined components 2, 3 and 4
+# Water Chemistry Preprocessing
 
 This component executes the original water-chemistry components **2, 3 and 4** sequentially while keeping their scientific logic in three separate scripts.
 
@@ -18,13 +18,13 @@ The final output, water_chemical_data_preprocessed.zip, contains the standardise
 Validated Excel templates
         │
         ▼
-2. Water chemical data transformation
+1. Water chemical data transformation
         │  water_chemical_data_transformed.zip
         ▼
-3. Laboratory LOQ application
+2. Laboratory LOQ application
         │  water_chemical_data_transformed_loq.zip
         ▼
-4. Water chemistry unit transformation
+3. Water chemistry unit transformation
         │
         ▼
 water_chemical_data_preprocessed.zip
