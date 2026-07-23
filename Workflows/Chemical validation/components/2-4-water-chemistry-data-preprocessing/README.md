@@ -29,6 +29,21 @@ Validated Excel templates
         ▼
 water_chemical_data_preprocessed.zip
 ```
+## Main utilities
+
+This component provides the main preprocessing operations required to convert raw laboratory results into harmonised chemical datasets ready for quality assessment. Its principal utilities include:
+
+* calculation of volume-weighted pH and conductivity values when several analytical records or collection volumes must be combined;
+* calculation of alkalinity from the titration measurements, including HCl concentration, acid volume and analysed sample volume;
+* integration of results from the different laboratory templates, including ammonium, anions, cations, dissolved organic carbon and total nitrogen;
+* application of laboratory limits of quantification and recording of all substituted values;
+* conversion of the original analytical concentrations into the standard units required by the workflow;
+* calculation of derived ionic concentrations used in subsequent checks, such as ion balance, measured-versus-calculated conductivity and the Na/Cl ratio;
+* generation of consistently named and structured chemical tables that can be processed automatically by the following quality-validation component.
+
+These operations reduce the need for manual calculations, ensure consistent treatment across sites and sampling periods, and provide a reproducible starting point for the chemical quality-control procedure.
+
+It is not necessary to provide all analytical templates in every execution. The component processes only the available data: for example, it can calculate alkalinity from an alkalinity template, calculate weighted pH and conductivity from the corresponding template, or perform unit conversions only for the analytical datasets supplied. Therefore, users should include only the completed templates relevant to the analyses or transformations they need.
 
 ## Internal structure
 
