@@ -1,14 +1,1876 @@
-WATER CHEMISTRY PREPROCESSING — 2026-07-17 12:18:25
+WATER CHEMISTRY PREPROCESSING — 2026-07-23 07:14:25
 Input ZIP: /mnt/inputs/validated_data.zip
 
 ==============================================================================
 STEP 2 — WATER CHEMICAL DATA TRANSFORMATION
 ==============================================================================
 Input ZIP extracted to /tmp/water_chemistry_preprocessing/step2_transformation/extracted_input
-No ALKALINITY files found.
-No pH_COND_WEIGHTED_RAW files found.
-No files found for subprogram: AMMONIUM
-No files found for subprogram: ANIONS
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/102_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/11_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/115_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/25_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/26_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/30_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/33_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_ALKALINITY.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/11_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/25_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/26_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/30_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/33_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/102_WATER_pH_COND_WEIGHTED_RAW.csv
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+/app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
+  datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/115_WATER_pH_COND_WEIGHTED_RAW.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/11_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/25_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/26_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/30_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/33_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/102_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/115_WATER_AMMONIUM.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/11_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/25_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/26_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/30_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/33_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/102_WATER_ANIONS.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/115_WATER_ANIONS.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_CATIONS.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_CATIONS.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_CATIONS.csv
@@ -23,28 +1885,111 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATE
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_CATIONS.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/102_WATER_CATIONS.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/115_WATER_CATIONS.csv
-No files found for subprogram: DOC_TN
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/11_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/25_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/26_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/30_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/33_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/102_WATER_DOC_TN.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/115_WATER_DOC_TN.csv
 Output ZIP written to /tmp/water_chemistry_preprocessing/step2_transformation/water_chemical_data_level1.zip
 
 ==============================================================================
 STEP 3 — LABORATORY QUANTIFICATION LIMIT APPLICATION
 ==============================================================================
 Input ZIP extracted to /tmp/water_chemistry_preprocessing/step3_loq/extracted_input
+Processed: 102_WATER_ALKALINITY.csv
+Processed: 102_WATER_AMMONIUM.csv
+Processed: 102_WATER_ANIONS.csv
 Processed: 102_WATER_CATIONS.csv
+Processed: 102_WATER_DOC_TN.csv
+Processed: 102_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 10_WATER_ALKALINITY.csv
+Processed: 10_WATER_AMMONIUM.csv
+Processed: 10_WATER_ANIONS.csv
 Processed: 10_WATER_CATIONS.csv
+Processed: 10_WATER_DOC_TN.csv
+Processed: 10_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 115_WATER_ALKALINITY.csv
+Processed: 115_WATER_AMMONIUM.csv
+Processed: 115_WATER_ANIONS.csv
 Processed: 115_WATER_CATIONS.csv
+Processed: 115_WATER_DOC_TN.csv
+Processed: 115_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 11_WATER_ALKALINITY.csv
+Processed: 11_WATER_AMMONIUM.csv
+Processed: 11_WATER_ANIONS.csv
 Processed: 11_WATER_CATIONS.csv
+Processed: 11_WATER_DOC_TN.csv
+Processed: 11_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 22_WATER_ALKALINITY.csv
+Processed: 22_WATER_AMMONIUM.csv
+Processed: 22_WATER_ANIONS.csv
 Processed: 22_WATER_CATIONS.csv
+Processed: 22_WATER_DOC_TN.csv
+Processed: 22_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 25_WATER_ALKALINITY.csv
+Processed: 25_WATER_AMMONIUM.csv
+Processed: 25_WATER_ANIONS.csv
 Processed: 25_WATER_CATIONS.csv
+Processed: 25_WATER_DOC_TN.csv
+Processed: 25_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 26_WATER_ALKALINITY.csv
+Processed: 26_WATER_AMMONIUM.csv
+Processed: 26_WATER_ANIONS.csv
 Processed: 26_WATER_CATIONS.csv
+Processed: 26_WATER_DOC_TN.csv
+Processed: 26_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 30_WATER_ALKALINITY.csv
+Processed: 30_WATER_AMMONIUM.csv
+Processed: 30_WATER_ANIONS.csv
 Processed: 30_WATER_CATIONS.csv
+Processed: 30_WATER_DOC_TN.csv
+Processed: 30_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 33_WATER_ALKALINITY.csv
+Processed: 33_WATER_AMMONIUM.csv
+Processed: 33_WATER_ANIONS.csv
 Processed: 33_WATER_CATIONS.csv
+Processed: 33_WATER_DOC_TN.csv
+Processed: 33_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 37_WATER_ALKALINITY.csv
+Processed: 37_WATER_AMMONIUM.csv
+Processed: 37_WATER_ANIONS.csv
 Processed: 37_WATER_CATIONS.csv
+Processed: 37_WATER_DOC_TN.csv
+Processed: 37_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 54_WATER_ALKALINITY.csv
+Processed: 54_WATER_AMMONIUM.csv
+Processed: 54_WATER_ANIONS.csv
 Processed: 54_WATER_CATIONS.csv
+Processed: 54_WATER_DOC_TN.csv
+Processed: 54_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 5_WATER_ALKALINITY.csv
+Processed: 5_WATER_AMMONIUM.csv
+Processed: 5_WATER_ANIONS.csv
 Processed: 5_WATER_CATIONS.csv
+Processed: 5_WATER_DOC_TN.csv
+Processed: 5_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 6_WATER_ALKALINITY.csv
+Processed: 6_WATER_AMMONIUM.csv
+Processed: 6_WATER_ANIONS.csv
 Processed: 6_WATER_CATIONS.csv
+Processed: 6_WATER_DOC_TN.csv
+Processed: 6_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 7_WATER_ALKALINITY.csv
+Processed: 7_WATER_AMMONIUM.csv
+Processed: 7_WATER_ANIONS.csv
 Processed: 7_WATER_CATIONS.csv
-LOQ application complete. Total substitutions: 96
+Processed: 7_WATER_DOC_TN.csv
+Processed: 7_WATER_pH_COND_WEIGHTED_RAW.csv
+LOQ application complete. Total substitutions: 488
 Substitution log written to /tmp/water_chemistry_preprocessing/step3_loq/level1_loq/loq_substitutions.log
 Output ZIP written to /tmp/water_chemistry_preprocessing/step3_loq/water_chemical_data_level1_loq.zip
 
@@ -52,20 +1997,90 @@ Output ZIP written to /tmp/water_chemistry_preprocessing/step3_loq/water_chemica
 STEP 4 — WATER CHEMISTRY UNIT TRANSFORMATION
 ==============================================================================
 Input ZIP extracted to /tmp/water_chemistry_preprocessing/step4_units/extracted_input
+Processed: 102_WATER_ALKALINITY.csv
+Processed: 102_WATER_AMMONIUM.csv
+Processed: 102_WATER_ANIONS.csv
 Processed: 102_WATER_CATIONS.csv
+Processed: 102_WATER_DOC_TN.csv
+Processed: 102_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 10_WATER_ALKALINITY.csv
+Processed: 10_WATER_AMMONIUM.csv
+Processed: 10_WATER_ANIONS.csv
 Processed: 10_WATER_CATIONS.csv
+Processed: 10_WATER_DOC_TN.csv
+Processed: 10_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 115_WATER_ALKALINITY.csv
+Processed: 115_WATER_AMMONIUM.csv
+Processed: 115_WATER_ANIONS.csv
 Processed: 115_WATER_CATIONS.csv
+Processed: 115_WATER_DOC_TN.csv
+Processed: 115_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 11_WATER_ALKALINITY.csv
+Processed: 11_WATER_AMMONIUM.csv
+Processed: 11_WATER_ANIONS.csv
 Processed: 11_WATER_CATIONS.csv
+Processed: 11_WATER_DOC_TN.csv
+Processed: 11_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 22_WATER_ALKALINITY.csv
+Processed: 22_WATER_AMMONIUM.csv
+Processed: 22_WATER_ANIONS.csv
 Processed: 22_WATER_CATIONS.csv
+Processed: 22_WATER_DOC_TN.csv
+Processed: 22_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 25_WATER_ALKALINITY.csv
+Processed: 25_WATER_AMMONIUM.csv
+Processed: 25_WATER_ANIONS.csv
 Processed: 25_WATER_CATIONS.csv
+Processed: 25_WATER_DOC_TN.csv
+Processed: 25_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 26_WATER_ALKALINITY.csv
+Processed: 26_WATER_AMMONIUM.csv
+Processed: 26_WATER_ANIONS.csv
 Processed: 26_WATER_CATIONS.csv
+Processed: 26_WATER_DOC_TN.csv
+Processed: 26_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 30_WATER_ALKALINITY.csv
+Processed: 30_WATER_AMMONIUM.csv
+Processed: 30_WATER_ANIONS.csv
 Processed: 30_WATER_CATIONS.csv
+Processed: 30_WATER_DOC_TN.csv
+Processed: 30_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 33_WATER_ALKALINITY.csv
+Processed: 33_WATER_AMMONIUM.csv
+Processed: 33_WATER_ANIONS.csv
 Processed: 33_WATER_CATIONS.csv
+Processed: 33_WATER_DOC_TN.csv
+Processed: 33_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 37_WATER_ALKALINITY.csv
+Processed: 37_WATER_AMMONIUM.csv
+Processed: 37_WATER_ANIONS.csv
 Processed: 37_WATER_CATIONS.csv
+Processed: 37_WATER_DOC_TN.csv
+Processed: 37_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 54_WATER_ALKALINITY.csv
+Processed: 54_WATER_AMMONIUM.csv
+Processed: 54_WATER_ANIONS.csv
 Processed: 54_WATER_CATIONS.csv
+Processed: 54_WATER_DOC_TN.csv
+Processed: 54_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 5_WATER_ALKALINITY.csv
+Processed: 5_WATER_AMMONIUM.csv
+Processed: 5_WATER_ANIONS.csv
 Processed: 5_WATER_CATIONS.csv
+Processed: 5_WATER_DOC_TN.csv
+Processed: 5_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 6_WATER_ALKALINITY.csv
+Processed: 6_WATER_AMMONIUM.csv
+Processed: 6_WATER_ANIONS.csv
 Processed: 6_WATER_CATIONS.csv
+Processed: 6_WATER_DOC_TN.csv
+Processed: 6_WATER_pH_COND_WEIGHTED_RAW.csv
+Processed: 7_WATER_ALKALINITY.csv
+Processed: 7_WATER_AMMONIUM.csv
+Processed: 7_WATER_ANIONS.csv
 Processed: 7_WATER_CATIONS.csv
+Processed: 7_WATER_DOC_TN.csv
+Processed: 7_WATER_pH_COND_WEIGHTED_RAW.csv
 Output ZIP written to /mnt/outputs/water_chemical_data_level1_units.zip
 
 Pipeline completed successfully.

@@ -1,6 +1,6 @@
 {
-  "name": "WaterChemistryPreprocessing",
-  "label": "Water Chemistry Preprocessing",
+  "name": "WaterChemistryDataProcessing",
+  "label": "Water Chemistry Data Processing",
   "description": "Runs three sequential water-chemistry processing stages in one component: transformation of validated Excel templates into site-level CSV files, application of laboratory limits of quantification (LOQ/2 substitution), and conversion of recognised analytes to mg/l, µg/l and µeq/l. The three scientific scripts remain separate and are coordinated internally.",
   "type": "DataProcessing",
   "dockerImage": "lw-water-chemistry-preprocessing",
