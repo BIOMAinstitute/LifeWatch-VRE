@@ -37,9 +37,8 @@ This component provides the main preprocessing operations required to convert ra
 * calculation of alkalinity from the titration measurements, including HCl concentration, acid volume and analysed sample volume;
 * integration of results from the different laboratory templates, including ammonium, anions, cations, dissolved organic carbon and total nitrogen;
 * application of laboratory limits of quantification and recording of all substituted values;
-* conversion of the original analytical concentrations into the standard units required by the workflow;
-* calculation of derived ionic concentrations used in subsequent checks, such as ion balance, measured-versus-calculated conductivity and the Na/Cl ratio;
-* generation of consistently named and structured chemical tables that can be processed automatically by the following quality-validation component.
+* conversion of the original analytical concentrations into the standard units required by the workflow; mg/l, ug/l and ueq/l
+
 
 These operations reduce the need for manual calculations, ensure consistent treatment across sites and sampling periods, and provide a reproducible starting point for the chemical quality-control procedure.
 
