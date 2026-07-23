@@ -50,11 +50,11 @@ args = parser.parse_args()
 # Paths — Tesseract mounts inputs at /mnt/inputs, outputs at /mnt/outputs
 # ------------------------------------------------------------
 input_zip_path = os.environ.get(
-    "INPUT_ZIP_PATH", "/mnt/inputs/water_chemical_data_level1_loq.zip"
+    "INPUT_ZIP_PATH", "/mnt/inputs/water_chemical_data_transformed_loq.zip"
 )
 output_dir = os.environ.get("OUTPUT_DIR", "/mnt/outputs/level1_units")
 output_zip_path = os.environ.get(
-    "OUTPUT_ZIP_PATH", "/mnt/outputs/water_chemical_data_level1_units.zip"
+    "OUTPUT_ZIP_PATH", "/mnt/outputs/water_chemical_data_preprocessed.zip"
 )
 os.makedirs(output_dir, exist_ok=True)
 

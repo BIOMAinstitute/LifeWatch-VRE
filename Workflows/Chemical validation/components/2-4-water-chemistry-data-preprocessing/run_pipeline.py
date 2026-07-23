@@ -23,7 +23,7 @@ OUTPUT_ROOT = Path("/mnt/outputs")
 WORK_ROOT = Path("/tmp/water_chemistry_preprocessing")
 SCRIPT_ROOT = Path(__file__).resolve().parent / "scripts"
 
-FINAL_ZIP = OUTPUT_ROOT / "water_chemical_data_level1_units.zip"
+FINAL_ZIP = OUTPUT_ROOT / "water_chemical_data_preprocessed.zip"
 FINAL_LOQ_LOG = OUTPUT_ROOT / "loq_substitutions.log"
 PIPELINE_LOG = OUTPUT_ROOT / "pipeline_execution.log"
 
@@ -81,7 +81,9 @@ def locate_input_zip() -> Path:
     zip_candidates = [
         path
         for path in sorted(INPUT_ROOT.rglob("*"))
-        if path.is_file() and zipfile.is_zipfile(path)
+        if path.is_file()
+        and path.suffix.casefold() == ".zip"
+        and zipfile.is_zipfile(path)
     ]
     if len(zip_candidates) == 1:
         return zip_candidates[0]
@@ -155,8 +157,8 @@ def main() -> int:
     for directory in (step2_root, step3_root, step4_root):
         directory.mkdir(parents=True, exist_ok=True)
 
-    step2_zip = step2_root / "water_chemical_data_level1.zip"
-    step3_zip = step3_root / "water_chemical_data_level1_loq.zip"
+    step2_zip = step2_root / "water_chemical_data_transformed.zip"
+    step3_zip = step3_root / "water_chemical_data_transformed_loq.zip"
     step3_log = step3_root / "level1_loq" / "loq_substitutions.log"
 
     with PIPELINE_LOG.open("w", encoding="utf-8") as log:

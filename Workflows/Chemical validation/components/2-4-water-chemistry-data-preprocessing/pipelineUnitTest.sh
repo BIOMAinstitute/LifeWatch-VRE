@@ -22,7 +22,7 @@ from pathlib import Path
 from zipfile import ZipFile
 
 output = Path(sys.argv[1])
-final_zip = output / "water_chemical_data_level1_units.zip"
+final_zip = output / "water_chemical_data_preprocessed.zip"
 loq_log = output / "loq_substitutions.log"
 pipeline_log = output / "pipeline_execution.log"
 

@@ -27,7 +27,7 @@ InputDataFormatValidation  →  WaterChemicalDataTransformation  →  LoqApplica
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| output-data | Zip | `/mnt/outputs/water_chemical_data_level1.zip` | ZIP of tab-separated CSV files, one per SiteCode per subprogram. |
+| output-data | Zip | `/mnt/outputs/water_chemical_data_transformed.zip` | ZIP of tab-separated CSV files, one per SiteCode per subprogram. |
 
 ## Parameters
 
@@ -246,7 +246,7 @@ becomes `05PS INT_REP` in the output CSV.
 ```
 
 All CSVs are tab-separated (`\t`) and include a header row.
-They are bundled into `water_chemical_data_level1.zip`.
+They are bundled into `water_chemical_data_transformed.zip`.
 
 ---
 

@@ -346,7 +346,7 @@ for subprogram in SUBPROGRAMS:
 # ============================================================
 # PACKAGE OUTPUT FILES INTO ZIP
 # ============================================================
-output_zip_path = os.environ.get("OUTPUT_ZIP_PATH", "/mnt/outputs/water_chemical_data_level1.zip")
+output_zip_path = os.environ.get("OUTPUT_ZIP_PATH", "/mnt/outputs/water_chemical_data_transformed.zip")
 with zipfile.ZipFile(output_zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zout:
     for fpath in Path(output_dir).glob("*"):
         zout.write(fpath, fpath.name)

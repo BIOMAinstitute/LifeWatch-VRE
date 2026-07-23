@@ -28,13 +28,13 @@ LoqApplication  →  UnitTransformation  →  WaterChemistryValidation
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| input-data | Zip | `/mnt/inputs/water_chemical_data_level1_loq.zip` | ZIP of tab-separated CSV files from component 3. |
+| input-data | Zip | `/mnt/inputs/water_chemical_data_transformed_loq.zip` | ZIP of tab-separated CSV files from component 3. |
 
 ## Outputs
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| output-data | Zip | `/mnt/outputs/water_chemical_data_level1_units.zip` | Same CSV files with three unit columns added per recognised analyte. |
+| output-data | Zip | `/mnt/outputs/water_chemical_data_preprocessed.zip` | Same CSV files with three unit columns added per recognised analyte. |
 
 ## Parameters
 

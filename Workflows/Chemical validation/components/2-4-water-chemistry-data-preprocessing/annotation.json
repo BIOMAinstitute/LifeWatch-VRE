@@ -188,8 +188,8 @@
       "type": "Zip",
       "name": "output-data",
       "label": "Preprocessed water chemistry data ZIP",
-      "path": "/mnt/outputs/water_chemical_data_level1_units.zip",
-      "description": "Final tab-separated CSV files after data transformation, LOQ substitution and unit expansion."
+      "path": "/mnt/outputs/water_chemical_data_preprocessed.zip",
+      "description": "Final tab-separated CSV files after data transformation, LOQ substitution and unit transformation."
     },
     {
       "type": "Text",

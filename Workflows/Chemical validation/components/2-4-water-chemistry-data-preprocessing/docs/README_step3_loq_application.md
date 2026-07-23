@@ -20,13 +20,13 @@ WaterChemicalDataTransformation  →  LoqApplication  →  UnitTransformation
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| input-data | Zip | `/mnt/inputs/water_chemical_data_level1.zip` | ZIP of tab-separated CSV files from component 2. |
+| input-data | Zip | `/mnt/inputs/water_chemical_data_transformed.zip` | ZIP of tab-separated CSV files from component 2. |
 
 ## Outputs
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| output-data | Zip | `/mnt/outputs/water_chemical_data_level1_loq.zip` | Same CSV files with LOQ substitutions applied. |
+| output-data | Zip | `/mnt/outputs/water_chemical_data_transformed_loq.zip` | Same CSV files with LOQ substitutions applied. |
 | output-log | Text | `/mnt/outputs/level1_loq/loq_substitutions.log` | Tab-separated traceability log: FILE, ROW, COLUMN, ORIGINAL_VALUE, LOQ, REPLACED_BY. |
 
 ---

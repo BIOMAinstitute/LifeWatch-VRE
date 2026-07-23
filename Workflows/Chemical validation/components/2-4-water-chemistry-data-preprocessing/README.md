@@ -7,15 +7,15 @@ Validated Excel templates
         │
         ▼
 2. Water chemical data transformation
-        │  water_chemical_data_level1.zip
+        │  water_chemical_data_transformed.zip
         ▼
 3. Laboratory LOQ application
-        │  water_chemical_data_level1_loq.zip
+        │  water_chemical_data_transformed_loq.zip
         ▼
 4. Water chemistry unit transformation
         │
         ▼
-water_chemical_data_level1_units.zip
+water_chemical_data_preprocessed.zip
 ```
 
 ## Internal structure
@@ -38,7 +38,7 @@ water_chemical_data_level1_units.zip
 └── resources/example/data/
     ├── execution-parameters.json
     ├── inputs/validated_data.zip
-    └── outputs/expected_water_chemical_data_level1_units.zip
+    └── outputs/water_chemical_data_preprocessed.zip
 ```
 
 `run_pipeline.py` is only an orchestrator. It creates temporary directories, runs each original script, passes the intermediate ZIP to the next stage, forwards the LOQ parameters and publishes the final outputs.
@@ -57,13 +57,15 @@ The processing formulas and dataframe transformations were not reorganised or re
 |---|---|---|
 | `input-data` | Zip | `/mnt/inputs/validated_data.zip` |
 
+`validated_data.zip` is the internal mount path declared by the component. The original file outside Docker or Tesseract may have any name. When running Docker manually, either mount it to this path or place one uniquely identifiable `.zip` file anywhere under `/mnt/inputs`.
+
 The ZIP may contain the validated workbooks directly or under `input_data/`. File identification continues to use the original keywords: `ALKALINITY`, `PH_COND_WEIGHTED_RAW`, `AMMONIUM`, `ANIONS`, `CATIONS` and `DOC_TN`.
 
 ## Outputs
 
 | Name | Type | Path |
 |---|---|---|
-| Final preprocessed data | Zip | `/mnt/outputs/water_chemical_data_level1_units.zip` |
+| Final preprocessed data | Zip | `/mnt/outputs/water_chemical_data_preprocessed.zip` |
 | LOQ substitution log | Text | `/mnt/outputs/loq_substitutions.log` |
 | Pipeline execution log | Text | `/mnt/outputs/pipeline_execution.log` |
 
