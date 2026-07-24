@@ -34,15 +34,29 @@ water_chemical_data_preprocessed.zip
 This component provides the main preprocessing operations required to convert raw laboratory results into harmonised chemical datasets ready for quality assessment. Its principal utilities include:
 
 * calculation of volume-weighted pH and conductivity values when several analytical records or collection volumes must be combined;
-* calculation of alkalinity from the titration measurements, including HCl concentration, acid volume and analysed sample volume;
+* calculation of alkalinity from the titration measurements, including HCl concentration, acid volume and analysed sample volume -> GRAN METHOD;
 * integration of results from the different laboratory templates, including ammonium, anions, cations, dissolved organic carbon and total nitrogen;
 * application of laboratory limits of quantification and recording of all substituted values;
-* conversion of the original analytical concentrations into the standard units required by the workflow; mg/l, ug/l and ueq/l
+* conversion of the original analytical concentrations into the standard units; mg/l, ug/l and ueq/l
 
 
 These operations reduce the need for manual calculations, ensure consistent treatment across sites and sampling periods, and provide a reproducible starting point for the chemical quality-control procedure.
 
 It is not necessary to provide all analytical templates in every execution. The component processes only the available data: for example, it can calculate alkalinity from an alkalinity template, calculate weighted pH and conductivity from the corresponding template, or perform unit conversions only for the analytical datasets supplied. Therefore, users should include only the completed templates relevant to the analyses or transformations they need.
+
+---
+
+## How replicate (REP) files are handled
+
+If a filename contains `_REP` (case-insensitive), the string `_REP` is
+appended to every `SampleID` in that file. This distinguishes replicate
+measurements from originals in the output CSVs, while keeping them in the
+same dataset for subsequent steps.
+
+Example: a sample `05PS INT` in file `2025_01_FOREST_AMMONIUM_REP.xlsx`
+becomes `05PS INT_REP` in the output CSV.
+
+---
 
 ## Internal structure
 
@@ -67,15 +81,7 @@ It is not necessary to provide all analytical templates in every execution. The 
     └── outputs/water_chemical_data_preprocessed.zip
 ```
 
-`run_pipeline.py` is only an orchestrator. It creates temporary directories, runs each original script, passes the intermediate ZIP to the next stage, forwards the LOQ parameters and publishes the final outputs.
-
-## Changes made to the original scripts
-
-The processing formulas and dataframe transformations were not reorganised or rewritten. Only these integration changes were made:
-
-1. Input, output and extraction paths may be supplied through environment variables. Their original paths remain the defaults, so each script can still be used independently.
-2. Component 2 now searches recursively within the extracted ZIP. This is required because the format-validation component stores the workbooks under an `input_data/` directory.
-3. Intermediate files are written under `/tmp/water_chemistry_preprocessing` and are not exposed as component outputs.
+`run_pipeline.py` is only an orchestrator. It creates temporary directories, runs each original script (in scripts folder), passes the intermediate ZIP to the next stage, forwards the LOQ parameters and publishes the final outputs.
 
 ## Input
 
@@ -99,7 +105,7 @@ The final ZIP contains the same tab-separated CSV files that were produced by th
 
 ## Parameters
 
-The component exposes the same 24 LOQ parameters as the former component 3. Their names and default values have been preserved exactly. Components 2 and 4 did not have user parameters.
+The component has 24 LOQ parameters.
 
 For every configured analyte, values below its LOQ are replaced with `LOQ / 2`. Every replacement is recorded in `loq_substitutions.log`.
 
@@ -216,7 +222,7 @@ columns and the values researchers record in each one.
 This template is different from the others: **measurements are recorded per
 individual collector** (one row per bottle/collector), not per composite sample.
 Multiple collectors that belong to the same composite sample share the same
-`SampleID` and `Group` value. The transformation step (Component 2) computes
+`SampleID` and `Group` value. The transformation step computes
 the volume-weighted average across collectors to produce one row per sample.
 
 | Column | Type | Required | Unit | Description |
@@ -251,7 +257,7 @@ the volume-weighted average across collectors to produce one row per sample.
 This template is also different: **each sample has multiple rows**, one per
 titration step. Successive small volumes of HCl are added to the sample while
 recording pH. These rows are later used together to compute alkalinity via the
-Gran method (Component 2). All rows belonging to the same sample share the
+Gran method. All rows belonging to the same sample share the
 same `SampleID`.
 
 | Column | Type | Required | Unit | Description |

@@ -72,8 +72,7 @@ found and prints a message. The three transformation types are:
 
 **What it does:**
 
-The alkalinity template contains multiple titration rows per sample (see
-Component 1 README for the template structure). Each row records the pH
+The alkalinity template contains multiple titration rows per sample (see principal README for the template structure). Each row records the pH
 measured after adding a cumulative volume of HCl to the sample. The
 transformation uses these rows to compute alkalinity in µeq/l following
 the **Gran method** (Gran, 1952), which is the recommended approach for
@@ -112,7 +111,7 @@ low-alkalinity waters.
 `AlkalinityICPForests(µeq/l)`
 
 **Reuse note:** This transformation can be used standalone for any dataset
-that follows the ALKALINITY template structure described in Component 1.
+that follows the ALKALINITY template structure described in principal README.
 If your ZIP contains only ALKALINITY files, only this transformation will
 run and you will get one CSV per SiteCode with the computed alkalinity values.
 
@@ -126,7 +125,7 @@ run and you will get one CSV per SiteCode with the computed alkalinity values.
 **What it does:**
 
 The pH/conductivity template has multiple rows per composite sample — one row
-per individual collector (bottle) before mixing (see Component 1 README).
+per individual collector (bottle) before mixing (see README).
 Collectors belonging to the same composite sample share the same `SampleID`.
 The transformation aggregates these individual measurements into a single
 representative value per sample per month.

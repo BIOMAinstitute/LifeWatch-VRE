@@ -152,7 +152,7 @@ calculations such as ionic balance and weighted means.
 
 The component accepts any ZIP containing tab-separated (``\t``) CSV files where
 column names follow the ``{ELEMENT}(unit)`` convention. This is exactly the
-format produced by Component 2. Below is the structure of each CSV type with
+format produced by Step 1. Below is the structure of each CSV type with
 the columns that will be checked against the LOQ.
 
 ### AMMONIUM CSV
