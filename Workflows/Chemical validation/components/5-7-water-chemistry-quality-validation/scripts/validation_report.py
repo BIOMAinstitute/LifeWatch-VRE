@@ -1164,6 +1164,11 @@ def generate_pdf_report(df_final, sampling_ty, chart_paths, output_path):
 # EXCEL EXPORT
 # ============================================================
 
+# Optional hydrological fields are not calculated by this component. They are
+# exported only when they already exist in the validated CSV data, allowing a
+# future template to pass them through to All_Validated_Data.xlsx.
+OPTIONAL_PASSTHROUGH_COLUMNS = ["q", "hg", "f", "cnr", "sio2", "ALL"]
+
 EXPORT_COLUMNS = [
     "SampleID", "SiteCode", "SiteName", "Type", "year", "month",
     "StartDate", "EndDate",
@@ -1177,6 +1182,7 @@ EXPORT_COLUMNS = [
     "NING(mg/l)", "NDON(mg/l)",
     "WeightedpH", "WeightedConductivity(µS/cm)", "Temperature(ºC)",
     "Volume(ml)", "Precip(l/m2)", "AlkalinityICPForests(µeq/l)",
+    *OPTIONAL_PASSTHROUGH_COLUMNS,
     "Metals_SW(µeq/l)", "Org-(µeq/l)", "SumAnions(µeq/l)",
     "+Org(µeq/l)", "H(µeq/l)", "SumCations(µeq/l)",
     "sC - sA IonsDiff.%", "sC - sA QualityIonsBalance",

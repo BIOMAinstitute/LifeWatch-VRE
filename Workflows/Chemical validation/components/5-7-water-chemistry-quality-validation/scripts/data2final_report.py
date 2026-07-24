@@ -13,7 +13,8 @@ aggregation rules. The subprogram is inferred from SamplingTypology before
 additional database-oriented fields are derived. Final_Data retains one canonical
 representation for dates (StartDate/EndDate), precipitation (Precip(l/m2)) and
 alkalinity (AlkalinityICPForests(µeq/l)); database-specific renaming is deferred
-to the database-loading step.
+to the database-loading step. Optional hydrological fields are preserved when
+they already exist in the validated input and are otherwise created empty.
 """
 
 from __future__ import annotations
@@ -40,6 +41,10 @@ input_samples_path = os.environ.get(
 )
 output_path = os.environ.get("OUTPUT_PATH", "/mnt/outputs/Final_Data.xlsx")
 
+# These fields are not calculated by this component. They are carried through
+# from All_Validated_Data.xlsx when supplied by a future validated template.
+OPTIONAL_PASSTHROUGH_COLUMNS = ["q", "hg", "f", "cnr", "sio2", "ALL"]
+
 
 def clean_sample_id(series: pd.Series) -> pd.Series:
     """Normalise SampleID: uppercase and remove spaces/separators."""
@@ -62,6 +67,14 @@ def first_non_empty(values: Iterable) -> str:
         if not is_empty(value):
             return str(value).strip()
     return ""
+
+
+def first_non_empty_value(values: Iterable):
+    """Return the first supplied value without converting its data type."""
+    for value in values:
+        if not is_empty(value):
+            return value
+    return pd.NA
 
 
 def remove_all_spaces(value) -> str:
@@ -208,6 +221,7 @@ for column in [
     "CR(mg/l)", "CU(mg/l)", "CO(mg/l)", "MO(mg/l)", "NI(mg/l)",
     "PB(mg/l)", "ZN(mg/l)", "P(mg/l)", "S(mg/l)", "NING(mg/l)",
     "NDON(mg/l)", "Temperature(ºC)", "Volume(ml)", "Precip(l/m2)",
+    *OPTIONAL_PASSTHROUGH_COLUMNS,
 ]:
     if column not in df.columns:
         df[column] = pd.NA
@@ -298,6 +312,7 @@ for column in [
     "SiteCode", "SiteName", "year", "month", "SamplingTypology",
     "Instrument", "ICP_Program", "DerivedSubprogram", "ID_PostgreSQL",
     "StartDate", "EndDate", "Temperature(ºC)", "Volume(ml)", "Precip(l/m2)",
+    *OPTIONAL_PASSTHROUGH_COLUMNS,
 ]:
     if column not in selected.columns:
         selected[column] = pd.NA
@@ -324,6 +339,9 @@ for _, group in selected.groupby(GROUP_COLUMNS, dropna=False, sort=False):
         "Volume(ml)": sum_numeric(group, "Volume(ml)"),
         "Precip(l/m2)": sum_numeric(group, "Precip(l/m2)"),
     }
+    for column in OPTIONAL_PASSTHROUGH_COLUMNS:
+        row[column] = first_non_empty_value(group[column])
+
     row["SampleID"] = build_final_sample_id(
         row["SiteCode"], row["SamplingTypology"], row["Instrument"]
     )
@@ -348,7 +366,7 @@ required_derived_inputs = [
     "PO4P(mg/l)", "S(mg/l)", "SO4S(mg/l)", "ICP_Program",
     "DerivedSubprogram", "SamplingTypology", "Instrument", "Volume(ml)",
     "Precip(l/m2)", "Temperature(ºC)", "StartDate", "EndDate",
-] + ANALYTICAL_COLUMNS
+] + ANALYTICAL_COLUMNS + OPTIONAL_PASSTHROUGH_COLUMNS
 for column in required_derived_inputs:
     if column not in aggregated.columns:
         aggregated[column] = pd.Series(dtype="object")
@@ -392,8 +410,12 @@ aggregated["TEMP (oC)"] = aggregated["Temperature(ºC)"].where(
 aggregated["NDON (mg/l)"] = aggregated["NDON(mg/l)"]
 aggregated["NING (mg/l)"] = aggregated["NING(mg/l)"]
 
-for column in ["q", "hg", "f", "cnr", "sio2", "ALL"]:
-    aggregated[column] = pd.NA
+# Preserve optional hydrological values when they reached the validated input.
+# When no current template supplies a field, keep the stable Final_Data schema by
+# adding only the missing column as empty. Existing values are never overwritten.
+for column in OPTIONAL_PASSTHROUGH_COLUMNS:
+    if column not in aggregated.columns:
+        aggregated[column] = pd.NA
 
 deposition_sources = {
     "Deposition K (kg/ha)": "K(mg/l)",
@@ -441,6 +463,7 @@ for column in [
     "DerivedSubprogram", "Temperature(ºC)", "Precip(l/m2)",
     "P(mg/l)", "PO4P(mg/l)", "S(mg/l)", "SO4S(mg/l)",
     "Volume(ml)", "NING(mg/l)", "NDON(mg/l)",
+    *OPTIONAL_PASSTHROUGH_COLUMNS,
 ]:
     available = aggregated[column].notna().sum() if column in aggregated.columns else 0
     print(f"  {column}: {available}/{len(aggregated)} non-empty")

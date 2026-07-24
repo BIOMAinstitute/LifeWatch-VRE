@@ -166,10 +166,14 @@ PATTERNS = {
     ],
 }
 
-# Metadata that must be preserved from the source templates.
-# They are collected independently because the same dates may be present in
-# several analytical files and should not become duplicated during merging.
+# Columns that must be preserved independently from the analytical groups.
+# StartDate and EndDate are current metadata fields. The hydrological fields
+# are optional forward-compatible inputs: when a future validated template
+# provides them, their values are passed through without being calculated or
+# overwritten by this component.
 METADATA_COLUMNS = ['StartDate', 'EndDate']
+OPTIONAL_PASSTHROUGH_COLUMNS = ['q', 'hg', 'f', 'cnr', 'sio2', 'ALL']
+PRESERVED_COLUMNS = METADATA_COLUMNS + OPTIONAL_PASSTHROUGH_COLUMNS
 
 # Final column order for the merged allData output
 FINAL_COLUMNS = [
@@ -190,6 +194,7 @@ FINAL_COLUMNS = [
     'H(µeq/l)', 'WeightedConductivity(µS/cm)',
     'Temperature(ºC)', 'Volume(ml)', 'Precip(l/m2)', 'WeightedpH',
     'AlkalinityICPForests(µeq/l)',
+    'q', 'hg', 'f', 'cnr', 'sio2', 'ALL',
 ]
 
 # ============================================================
@@ -263,9 +268,9 @@ def merge_csv_files(input_dir, code):
     File matching: filename must start with exactly <code>_ to avoid
     partial matches (e.g. code '5' matching '50_...').
     Each file is matched to a subprogram via PATTERNS keys in its name.
-    Analytical columns are merged on the identity columns. StartDate and
-    EndDate are collected separately and coalesced so they are preserved
-    without producing duplicated _x/_y columns.
+    Analytical columns are merged on the identity columns. Dates and optional
+    hydrological pass-through fields are collected separately and coalesced so
+    they are preserved without producing duplicated _x/_y columns.
     """
     all_data = pd.DataFrame()
     metadata_frames = []
@@ -287,8 +292,10 @@ def merge_csv_files(input_dir, code):
             data_cols = [c for c in df.columns if c not in id_cols]
             df = df[df[data_cols].notna().sum(axis=1) > 0]
 
-            # Collect dates independently from all analytical files.
-            metadata_cols = [c for c in id_cols + METADATA_COLUMNS if c in df.columns]
+            # Collect dates and optional hydrological fields independently from
+            # all analytical files. This allows future templates to provide them
+            # without changing the scientific validation calculations.
+            metadata_cols = [c for c in id_cols + PRESERVED_COLUMNS if c in df.columns]
             if len(metadata_cols) > len(id_cols):
                 metadata_frames.append(df[metadata_cols].copy())
 
@@ -307,20 +314,28 @@ def merge_csv_files(input_dir, code):
     if all_data.empty:
         return all_data
 
-    # Coalesce StartDate and EndDate across all source files.
+    # Coalesce dates and optional pass-through fields across source files.
+    # No new hydrological value is calculated here: the first non-empty source
+    # value for each sample is preserved.
     if metadata_frames:
         metadata = pd.concat(metadata_frames, ignore_index=True)
         metadata['SampleID'] = metadata['SampleID'].apply(clean_id)
-        for col in METADATA_COLUMNS:
+        for col in PRESERVED_COLUMNS:
             if col not in metadata.columns:
                 metadata[col] = np.nan
+
+        def first_non_empty(series):
+            values = series.dropna()
+            if values.empty:
+                return np.nan
+            non_blank = values[values.astype(str).str.strip() != '']
+            return non_blank.iloc[0] if not non_blank.empty else np.nan
+
+        aggregation = {column: first_non_empty for column in PRESERVED_COLUMNS}
         metadata = (
-            metadata[id_cols + METADATA_COLUMNS]
+            metadata[id_cols + PRESERVED_COLUMNS]
             .groupby(id_cols, dropna=False, as_index=False)
-            .agg({
-                'StartDate': lambda s: s.dropna().iloc[0] if not s.dropna().empty else np.nan,
-                'EndDate': lambda s: s.dropna().iloc[0] if not s.dropna().empty else np.nan,
-            })
+            .agg(aggregation)
         )
         all_data = all_data.merge(metadata, on=id_cols, how='left')
 
