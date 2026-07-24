@@ -59,32 +59,32 @@
     {
       "type": "Zip",
       "name": "input-data",
-      "label": "Unit-transformed water chemistry data ZIP",
-      "path": "/mnt/inputs/water_chemical_data_level1_units.zip",
-      "description": "ZIP produced by the combined preprocessing component (steps 2–4), containing tab-separated site/subprogram CSV files with mg/l, µg/l and µeq/l representations."
+      "label": "Preprocessed water chemistry data ZIP",
+      "path": "/mnt/inputs/water_chemical_data_preprocessed.zip",
+      "description": "ZIP produced by the combined preprocessing component (steps 2–4), containing tab-separated site/subprogram CSV files with harmonised mg/l, µg/l and µeq/l representations."
     },
     {
       "type": "TabularDataSet",
       "name": "input-samples",
       "label": "Samples information file",
       "path": "/mnt/inputs/samplesInfo.xlsx",
-      "description": "Excel file used by all three internal stages. It must include SampleID and should include SamplingTypology; ICP_Program, Instrument, ID_PostgreSQL, SiteCode and SiteName are used when available."
+      "description": "Excel metadata file used by all three internal stages. It must include SampleID and should include SamplingTypology. ICP_Program, Instrument, ID_PostgreSQL and a dedicated subprogram column are used when available; SamplingTypology is not treated as subprogram."
     }
   ],
   "outputs": [
     {
       "type": "Zip",
       "name": "output-alldata",
-      "label": "Merged allData ZIP",
-      "path": "/mnt/outputs/water_chemical_data_level2_alldata.zip",
-      "description": "One merged pre-validation CSV per SiteCode."
+      "label": "Calculated allData ZIP",
+      "path": "/mnt/outputs/water_chemical_alldata_calculated.zip",
+      "description": "One merged CSV per SiteCode containing the calculated chemical variables before the quality-validation indicator columns are appended."
     },
     {
       "type": "Zip",
       "name": "output-validated",
-      "label": "Chemically validated data ZIP",
-      "path": "/mnt/outputs/water_chemical_data_level2_validated.zip",
-      "description": "One validated CSV per SiteCode with chemical quality indicators and FINAL_VALIDATION."
+      "label": "Validated allData ZIP",
+      "path": "/mnt/outputs/water_chemical_alldata_validated.zip",
+      "description": "One CSV per SiteCode containing calculated chemical variables, chemical quality indicators and FINAL_VALIDATION."
     },
     {
       "type": "Bin",
@@ -105,14 +105,14 @@
       "name": "output-all",
       "label": "All validated data",
       "path": "/mnt/outputs/All_Validated_Data.xlsx",
-      "description": "All samples and validation results used as the internal input to the final-selection stage."
+      "description": "All sample-level validation results, preserving dates, major ions, PO4P, trace metals, P, S, NING and NDON for final selection."
     },
     {
       "type": "TabularDataSet",
       "name": "output-final",
       "label": "Final report data",
       "path": "/mnt/outputs/Final_Data.xlsx",
-      "description": "Selected and monthly aggregated data ready for ICP reporting and database ingestion."
+      "description": "Selected monthly records enriched with programme metadata, totals, soil-water volume, deposition estimates and database-compatible fields."
     },
     {
       "type": "Text",
@@ -138,7 +138,7 @@
     "lifewatch"
   ],
   "license": "GPL v3",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "dependencies": [
     {
       "name": "python",
@@ -183,7 +183,7 @@
       "citation": null
     }
   ],
-  "publicationDate": "2026-07-17",
+  "publicationDate": "2026-07-24",
   "author": "LifeWatch ERIC",
   "bugs": {
     "email": "help@exampleorg.com",

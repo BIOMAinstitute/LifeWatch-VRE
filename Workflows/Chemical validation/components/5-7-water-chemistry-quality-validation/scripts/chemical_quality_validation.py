@@ -75,12 +75,12 @@ args = parser.parse_args()
 # ------------------------------------------------------------
 # Paths — Tesseract mounts inputs at /mnt/inputs, outputs at /mnt/outputs
 # ------------------------------------------------------------
-input_zip_path        = os.environ.get("INPUT_ZIP_PATH", "/mnt/inputs/water_chemical_data_level1_units.zip")
+input_zip_path        = os.environ.get("INPUT_ZIP_PATH", "/mnt/inputs/water_chemical_data_preprocessed.zip")
 input_samples_path    = os.environ.get("INPUT_SAMPLES_PATH", "/mnt/inputs/samplesInfo.xlsx")
 output_alldata_dir    = os.environ.get("OUTPUT_ALLDATA_DIR", "/mnt/outputs/level2_alldata")
 output_validated_dir  = os.environ.get("OUTPUT_VALIDATED_DIR", "/mnt/outputs/level2_validated")
-output_alldata_zip    = os.environ.get("OUTPUT_ALLDATA_ZIP", "/mnt/outputs/water_chemical_data_level2_alldata.zip")
-output_validated_zip  = os.environ.get("OUTPUT_VALIDATED_ZIP", "/mnt/outputs/water_chemical_data_level2_validated.zip")
+output_alldata_zip    = os.environ.get("OUTPUT_ALLDATA_ZIP", "/mnt/outputs/water_chemical_alldata_calculated.zip")
+output_validated_zip  = os.environ.get("OUTPUT_VALIDATED_ZIP", "/mnt/outputs/water_chemical_alldata_validated.zip")
 
 os.makedirs(output_alldata_dir,   exist_ok=True)
 os.makedirs(output_validated_dir, exist_ok=True)
@@ -158,7 +158,7 @@ PATTERNS = {
     "pH_COND": [
         'SampleID', 'SiteCode', 'SiteName', 'year', 'month',
         'H(µeq/l)', 'WeightedConductivity(µS/cm)',
-        'Volume(ml)', 'Precip(l/m2)', 'WeightedpH',
+        'Temperature(ºC)', 'Volume(ml)', 'Precip(l/m2)', 'WeightedpH',
     ],
     "ALKALINITY": [
         'SampleID', 'SiteCode', 'SiteName', 'year', 'month',
@@ -166,9 +166,15 @@ PATTERNS = {
     ],
 }
 
+# Metadata that must be preserved from the source templates.
+# They are collected independently because the same dates may be present in
+# several analytical files and should not become duplicated during merging.
+METADATA_COLUMNS = ['StartDate', 'EndDate']
+
 # Final column order for the merged allData output
 FINAL_COLUMNS = [
     'SampleID', 'SiteCode', 'SiteName', 'year', 'month',
+    'StartDate', 'EndDate',
     'CL(µeq/l)', 'CL(mg/l)', 'SO4S(µeq/l)', 'SO4S(mg/l)',
     'NO3N(µeq/l)', 'NO3N(mg/l)', 'PO4P(µeq/l)', 'PO4P(mg/l)',
     'CA(µeq/l)', 'CA(mg/l)', 'MG(µeq/l)', 'MG(mg/l)',
@@ -182,7 +188,7 @@ FINAL_COLUMNS = [
     'P(µeq/l)',  'P(mg/l)',  'S(µeq/l)',  'S(mg/l)',
     'NH4N(µeq/l)', 'NH4N(mg/l)', 'TN(mg/l)', 'DOC(mg/l)',
     'H(µeq/l)', 'WeightedConductivity(µS/cm)',
-    'Volume(ml)', 'Precip(l/m2)', 'WeightedpH',
+    'Temperature(ºC)', 'Volume(ml)', 'Precip(l/m2)', 'WeightedpH',
     'AlkalinityICPForests(µeq/l)',
 ]
 
@@ -257,15 +263,18 @@ def merge_csv_files(input_dir, code):
     File matching: filename must start with exactly <code>_ to avoid
     partial matches (e.g. code '5' matching '50_...').
     Each file is matched to a subprogram via PATTERNS keys in its name.
-    Only the columns listed in PATTERNS are kept, then an outer join
-    is performed on the identity columns (SampleID, SiteCode, SiteName,
-    year, month).
+    Analytical columns are merged on the identity columns. StartDate and
+    EndDate are collected separately and coalesced so they are preserved
+    without producing duplicated _x/_y columns.
     """
     all_data = pd.DataFrame()
+    metadata_frames = []
     files = [
         f for f in os.listdir(input_dir)
         if f.split('_', 1)[0] == code and f.endswith(".csv")
     ]
+
+    id_cols = ['SampleID', 'SiteCode', 'SiteName', 'year', 'month']
 
     for archivo in files:
         for key, columns in PATTERNS.items():
@@ -274,13 +283,18 @@ def merge_csv_files(input_dir, code):
 
             df = pd.read_csv(os.path.join(input_dir, archivo), sep="\t")
 
-            # Drop rows that have no data beyond the identity columns
-            id_cols  = ['SampleID', 'SiteCode', 'SiteName', 'year', 'month']
+            # Drop rows that have no analytical or metadata data beyond identity.
             data_cols = [c for c in df.columns if c not in id_cols]
             df = df[df[data_cols].notna().sum(axis=1) > 0]
 
-            # Keep only the columns defined for this subprogram
-            df = df[[c for c in columns if c in df.columns]]
+            # Collect dates independently from all analytical files.
+            metadata_cols = [c for c in id_cols + METADATA_COLUMNS if c in df.columns]
+            if len(metadata_cols) > len(id_cols):
+                metadata_frames.append(df[metadata_cols].copy())
+
+            # Keep only the columns defined for this analytical group.
+            keep_cols = [c for c in columns if c in df.columns]
+            df = df[keep_cols]
             df = df.drop_duplicates(subset=id_cols)
             df['SampleID'] = df['SampleID'].apply(clean_id)
 
@@ -290,10 +304,28 @@ def merge_csv_files(input_dir, code):
                 all_data = pd.merge(all_data, df, on=id_cols, how="outer")
             break
 
-    if not all_data.empty:
-        all_data = all_data.reindex(columns=FINAL_COLUMNS)
-        all_data = all_data.sort_values(by=["year", "month"]).reset_index(drop=True)
+    if all_data.empty:
+        return all_data
 
+    # Coalesce StartDate and EndDate across all source files.
+    if metadata_frames:
+        metadata = pd.concat(metadata_frames, ignore_index=True)
+        metadata['SampleID'] = metadata['SampleID'].apply(clean_id)
+        for col in METADATA_COLUMNS:
+            if col not in metadata.columns:
+                metadata[col] = np.nan
+        metadata = (
+            metadata[id_cols + METADATA_COLUMNS]
+            .groupby(id_cols, dropna=False, as_index=False)
+            .agg({
+                'StartDate': lambda s: s.dropna().iloc[0] if not s.dropna().empty else np.nan,
+                'EndDate': lambda s: s.dropna().iloc[0] if not s.dropna().empty else np.nan,
+            })
+        )
+        all_data = all_data.merge(metadata, on=id_cols, how='left')
+
+    all_data = all_data.reindex(columns=FINAL_COLUMNS)
+    all_data = all_data.sort_values(by=["year", "month"]).reset_index(drop=True)
     return all_data
 
 
@@ -343,7 +375,7 @@ def validate_chemistry(df, limits):
     Computes all chemical quality indicators and adds them as new columns.
 
     Columns added (see module docstring for full list):
-      Metals_SW(µeq/l), NDON(mg/l), Quality_NDON,
+      Metals_SW(µeq/l), NING(mg/l), NDON(mg/l), Quality_NDON,
       Org-(µeq/l), SumAnions(µeq/l), +Org(µeq/l), SumCations(µeq/l),
       sC - sA IonsDiff.%, IonsDiff.Limit(%), IonsDiff.OverLimit.pp,
       IonsDiff.OverLimit.relative%, sC - sA QualityIonsBalance,
@@ -376,7 +408,8 @@ def validate_chemistry(df, limits):
     # ----------------------------------------------------------
     ndon_cols = ['TN(mg/l)', 'NO3N(mg/l)', 'NH4N(mg/l)']
     df = ensure_columns(df, ndon_cols, to_numeric=True)
-    df['NDON(mg/l)']    = df['TN(mg/l)'] - (df['NO3N(mg/l)'] + df['NH4N(mg/l)'])
+    df['NING(mg/l)']    = df['NO3N(mg/l)'] + df['NH4N(mg/l)']
+    df['NDON(mg/l)']    = df['TN(mg/l)'] - df['NING(mg/l)']
     df['Quality_NDON']  = np.where(
         df[ndon_cols].isna().any(axis=1), 'incomplete', 'ok'
     )

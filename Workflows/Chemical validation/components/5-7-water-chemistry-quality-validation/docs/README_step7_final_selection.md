@@ -329,11 +329,13 @@ The resulting output contains a single row for that site and month, representing
 
 ## Notes
 
-- The output always contains the full fixed set of 36 chemistry columns
-  regardless of which subprograms were measured. Missing subprogram columns
-  appear as empty cells in the output Excel file.
-- Metadata columns from `samplesInfo.xlsx` (`ICP_Program`, `SamplingTypology`,
-  `Instrument`, `ID_PostgreSQL`) are not included in the final output column
-  set — they are only used internally during the merge step and then dropped.
-  If you need these columns in the output, the script would need to be modified.
+- The output has a fixed schema containing the chemistry variables, dates,
+  programme metadata, totals, deposition fields and database-compatible empty
+  hydrological columns. Variables not supplied by the workflow remain empty.
+- `program` is taken from `ICP_Program`. `subprogram` is populated only from a
+  dedicated subprogram column in `samplesInfo.xlsx`; it is not inferred from
+  `SamplingTypology`. `lis_tip` is populated from `Instrument` for soil-water
+  (`SW`) samples.
+- Different sampling typologies and instruments from the same site and month
+  remain separate during monthly aggregation.
 - The output file has a single sheet named `Datos`.

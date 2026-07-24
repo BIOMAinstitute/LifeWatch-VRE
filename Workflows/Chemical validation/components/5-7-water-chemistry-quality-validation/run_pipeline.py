@@ -22,13 +22,23 @@ OUTPUT_ROOT = Path("/mnt/outputs")
 WORK_ROOT = Path("/tmp/water_chemistry_quality_report")
 SCRIPT_ROOT = Path(__file__).resolve().parent / "scripts"
 
-OUTPUT_ALLDATA_ZIP = OUTPUT_ROOT / "water_chemical_data_level2_alldata.zip"
-OUTPUT_VALIDATED_ZIP = OUTPUT_ROOT / "water_chemical_data_level2_validated.zip"
+OUTPUT_ALLDATA_ZIP = OUTPUT_ROOT / "water_chemical_alldata_calculated.zip"
+OUTPUT_VALIDATED_ZIP = OUTPUT_ROOT / "water_chemical_alldata_validated.zip"
 OUTPUT_PDF = OUTPUT_ROOT / "validation_report.pdf"
 OUTPUT_REPEAT = OUTPUT_ROOT / "Samples2Repeat.xlsx"
 OUTPUT_ALL = OUTPUT_ROOT / "All_Validated_Data.xlsx"
 OUTPUT_FINAL = OUTPUT_ROOT / "Final_Data.xlsx"
 PIPELINE_LOG = OUTPUT_ROOT / "pipeline_execution.log"
+
+PUBLIC_OUTPUTS = (
+    OUTPUT_ALLDATA_ZIP,
+    OUTPUT_VALIDATED_ZIP,
+    OUTPUT_PDF,
+    OUTPUT_REPEAT,
+    OUTPUT_ALL,
+    OUTPUT_FINAL,
+    PIPELINE_LOG,
+)
 
 QUALITY_PARAMETERS: list[tuple[str, float]] = [
     ("param_ionsdiff_low_k", 20.0),
@@ -87,7 +97,10 @@ def is_data_zip(path: Path) -> bool:
 
 def locate_units_zip() -> Path:
     preferred = [
+        INPUT_ROOT / "water_chemical_data_preprocessed.zip",
+        # Backward-compatible name used by older preprocessing components.
         INPUT_ROOT / "water_chemical_data_level1_units.zip",
+        # Generic extensionless mount sometimes used for Bin inputs.
         INPUT_ROOT / "input_data",
     ]
 
@@ -180,8 +193,30 @@ def require_file(path: Path, label: str) -> None:
         raise RuntimeError(f"{label} was not generated correctly: {path}")
 
 
+def validate_parameters(args: argparse.Namespace) -> None:
+    for name, _ in QUALITY_PARAMETERS:
+        value = float(getattr(args, name))
+        if value < 0:
+            raise ValueError(f"{name} must be greater than or equal to 0")
+
+    if args.param_ratio_nacl_low > args.param_ratio_nacl_high:
+        raise ValueError(
+            "param_ratio_nacl_low must be less than or equal to "
+            "param_ratio_nacl_high"
+        )
+
+
+def clear_previous_outputs() -> None:
+    OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
+    for path in PUBLIC_OUTPUTS:
+        if path.exists():
+            path.unlink()
+
+
 def main() -> int:
     args = parse_args()
+    clear_previous_outputs()
+    validate_parameters(args)
     input_zip = locate_units_zip()
     samples_file = locate_samples_file()
 
@@ -261,14 +296,9 @@ def main() -> int:
 
         write_log_line(log, "")
         write_log_line(log, "Pipeline completed successfully.")
-        for output in (
-            OUTPUT_ALLDATA_ZIP,
-            OUTPUT_VALIDATED_ZIP,
-            OUTPUT_PDF,
-            OUTPUT_REPEAT,
-            OUTPUT_ALL,
-            OUTPUT_FINAL,
-        ):
+        for output in PUBLIC_OUTPUTS:
+            if output == PIPELINE_LOG:
+                continue
             write_log_line(log, f"Output: {output}")
 
     return 0

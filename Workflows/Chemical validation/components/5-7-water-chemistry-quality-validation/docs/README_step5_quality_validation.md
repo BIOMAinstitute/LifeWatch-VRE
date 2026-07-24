@@ -16,7 +16,7 @@ to derive all chemical quality indicators.
 ## Workflow position
 
 ```
-UnitTransformation  →  WaterChemistryValidation  →  WaterChemistryValidationReport
+DataProcessing  →  WaterChemistryValidation  →  WaterChemistryValidationReport
 ```
 
 ---
@@ -25,7 +25,7 @@ UnitTransformation  →  WaterChemistryValidation  →  WaterChemistryValidation
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| input-data | Zip | `/mnt/inputs/water_chemical_data_level1_units.zip` | ZIP of tab-separated CSV files with all three unit representations per analyte (mg/l, µg/l, µeq/l), as produced by component 4. One CSV per SiteCode per subprogram. |
+| input-data | Zip | `/mnt/inputs/water_chemical_data_preprocessed.zip` | ZIP of tab-separated CSV files with all three unit representations per analyte (mg/l, µg/l, µeq/l), as produced by component 4. One CSV per SiteCode per subprogram. |
 | input-samples | Text | `/mnt/inputs/samplesInfo.xlsx` | Excel file mapping each SampleID to its SamplingTypology and programme metadata. If not provided, all typology-dependent checks are skipped. |
 
 ### Input CSV format
@@ -93,8 +93,8 @@ collection method but does not change the validation rules.
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| output-alldata | Zip | `/mnt/outputs/water_chemical_data_level2_alldata.zip` | One merged CSV per SiteCode with all subprograms joined into a single wide table (pre-validation, no quality indicator columns). |
-| output-validated | Zip | `/mnt/outputs/water_chemical_data_level2_validated.zip` | Same CSV per SiteCode with all 14 quality indicator sets appended and the `FINAL_VALIDATION` flag per sample. |
+| output-alldata | Zip | `/mnt/outputs/water_chemical_alldata_calculated.zip` | One merged CSV per SiteCode with all subprograms joined into a single wide table (pre-validation, no quality indicator columns). |
+| output-validated | Zip | `/mnt/outputs/water_chemical_alldata_validated.zip` | Same CSV per SiteCode with all 14 quality indicator sets appended and the `FINAL_VALIDATION` flag per sample. |
 
 ---
 
@@ -202,12 +202,13 @@ column is NaN.
 
 ---
 
-### Check 2 — Dissolved organic nitrogen (NDON)
+### Check 2 — Inorganic and dissolved organic nitrogen
 
-**Output columns:** `NDON(mg/l)`, `Quality_NDON`
+**Output columns:** `NING(mg/l)`, `NDON(mg/l)`, `Quality_NDON`
 
 ```
-NDON(mg/l) = TN(mg/l) - (NO3N(mg/l) + NH4N(mg/l))
+NING(mg/l) = NO3N(mg/l) + NH4N(mg/l)
+NDON(mg/l) = TN(mg/l) - NING(mg/l)
 ```
 
 NDON (Non-ionic Dissolved Organic Nitrogen) represents the organic nitrogen

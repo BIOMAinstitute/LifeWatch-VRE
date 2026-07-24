@@ -1,76 +1,48 @@
 # -*- coding: utf-8 -*-
-# ------------------------------------------------------------
-# DATA TO FINAL REPORT
-# ------------------------------------------------------------
-# This script selects the best available measurement per sample
-# per month to produce the final dataset for ICP reporting and
-# database ingestion.
-#
-# Selection logic (evaluated per base SampleID / year / month):
-#   1. NOREP passes validation (VAL = SI)  -> keep NOREP
-#   2. NOREP fails, REP passes             -> keep REP
-#   3. NOREP fails, REP also fails         -> keep NOREP
-#      (only when a REP exists; having both means the sample
-#       was repeated deliberately and must be reported)
-#   4. NOREP fails, no REP exists          -> discard
-#
-# After selecting the final valid/representative row, the script
-# aggregates samples that belong to the same SiteCode, SiteName,
-# year and month.
-#
-# Aggregation logic:
-#   - Concentrations, conductivity, alkalinity and H+:
-#       weighted mean by Volume(ml)
-#   - WeightedpH:
-#       convert pH to [H+], weight by Volume(ml), convert back to pH
-#   - Volume(ml):
-#       direct sum
-#   - Precip(l/m2):
-#       direct sum
-#   - SampleID:
-#       SiteCode_SamplingTypology_Instrument
-#       spaces removed from SamplingTypology
-#       Instrument only added if not empty
-#
-# Input:  All_Validated_Data.xlsx (from WaterChemistryValidationReport)
-#         samplesInfo.xlsx  (SampleID -> ICP_Program, Instrument, etc.)
-# Output: Final_Data.xlsx  (one row per sample/site per month, final columns only)
-# ------------------------------------------------------------
+"""Select final monthly water-chemistry records and prepare database fields.
 
-# ============================================================
-# IMPORTS
-# ============================================================
+Selection logic per base SampleID/year/month is preserved:
+  1. Keep NOREP when it passes validation.
+  2. Otherwise keep REP when it passes.
+  3. If both NOREP and REP fail, keep NOREP when a REP exists.
+  4. If NOREP fails and no REP exists, discard it.
 
-import os
+Selected records with the same site, sampling typology, instrument, programme,
+derived subprogram, year and month are combined using the existing volume-weighted
+aggregation rules. The subprogram is inferred from SamplingTypology before
+additional database-oriented fields are derived. Final_Data retains one canonical
+representation for dates (StartDate/EndDate), precipitation (Precip(l/m2)) and
+alkalinity (AlkalinityICPForests(µeq/l)); database-specific renaming is deferred
+to the database-loading step.
+"""
+
+from __future__ import annotations
+
 import argparse
-import numpy as np
-import pandas as pd
-import openpyxl
+import os
+from pathlib import Path
+from typing import Iterable
 
-# ------------------------------------------------------------
-# CLI argument parsing (Tesseract wrapper convention)
-# No user-configurable parameters: selection logic is fixed.
-# ------------------------------------------------------------
+import numpy as np
+import openpyxl
+import pandas as pd
 
 parser = argparse.ArgumentParser(description="Data to Final Report wrapper")
-args = parser.parse_args()
+parser.parse_args()
 
 print(f"openpyxl version: {openpyxl.__version__}")
 
-# ------------------------------------------------------------
-# Paths — Tesseract mounts inputs at /mnt/inputs, outputs at /mnt/outputs
-# ------------------------------------------------------------
+input_data_path = os.environ.get(
+    "INPUT_DATA_PATH", "/mnt/inputs/All_Validated_Data.xlsx"
+)
+input_samples_path = os.environ.get(
+    "INPUT_SAMPLES_PATH", "/mnt/inputs/samplesInfo.xlsx"
+)
+output_path = os.environ.get("OUTPUT_PATH", "/mnt/outputs/Final_Data.xlsx")
 
-input_data_path    = os.environ.get("INPUT_DATA_PATH", "/mnt/inputs/All_Validated_Data.xlsx")
-input_samples_path = os.environ.get("INPUT_SAMPLES_PATH", "/mnt/inputs/samplesInfo.xlsx")
-output_path        = os.environ.get("OUTPUT_PATH", "/mnt/outputs/Final_Data.xlsx")
 
-# ============================================================
-# HELPER
-# ============================================================
-
-def clean_sample_id(series):
-    """Normalise SampleID: uppercase, strip whitespace and separators."""
+def clean_sample_id(series: pd.Series) -> pd.Series:
+    """Normalise SampleID: uppercase and remove spaces/separators."""
     return (
         series.astype(str)
         .str.upper()
@@ -79,363 +51,446 @@ def clean_sample_id(series):
     )
 
 
-def is_empty(x):
-    """Return True for empty-like values."""
-    if pd.isna(x):
+def is_empty(value) -> bool:
+    if pd.isna(value):
         return True
+    return str(value).strip().lower() in ("", "nan", "none", "nat")
 
-    return str(x).strip().lower() in ("", "nan", "none", "nat")
 
-
-def first_non_empty(series):
-    """Return first non-empty value from a Series or list."""
-    for x in series:
-        if not is_empty(x):
-            return str(x).strip()
-
+def first_non_empty(values: Iterable) -> str:
+    for value in values:
+        if not is_empty(value):
+            return str(value).strip()
     return ""
 
 
-def remove_all_spaces(x):
-    """Remove all spaces from a value."""
-    if is_empty(x):
+def remove_all_spaces(value) -> str:
+    if is_empty(value):
         return ""
+    return "".join(str(value).strip().split())
 
-    return "".join(str(x).strip().split())
 
-
-def build_final_sample_id(site_code, sampling_typology, instrument):
-    """
-    Build final SampleID as:
-
-        SiteCode_SamplingTypology_Instrument
-
-    SamplingTypology spaces are removed.
-    Instrument is added only if it is not empty.
-    """
-    site_code = first_non_empty([site_code])
-    sampling_typology = remove_all_spaces(sampling_typology)
+def build_final_sample_id(site_code, sampling_typology, instrument) -> str:
+    parts = [
+        first_non_empty([site_code]),
+        remove_all_spaces(sampling_typology),
+    ]
     instrument = remove_all_spaces(instrument)
-
-    parts = [site_code, sampling_typology]
-
     if instrument:
         parts.append(instrument)
+    return "_".join(part for part in parts if part)
 
-    return "_".join([p for p in parts if p])
 
+def derive_subprogram(sampling_typology) -> str:
+    """Derive the ICP subprogram code from SamplingTypology.
 
-def weighted_mean_by_volume(g, value_col, volume_col="Volume(ml)"):
+    Mapping requested for the workflow:
+      * values containing THR -> TF
+      * values containing BOF -> PC
+      * values containing RW  -> RW
+      * values containing SF  -> SF
+      * values containing SW  -> SW
+
+    An empty string is returned when no configured marker is present.
     """
-    Weighted mean using Volume(ml) as weight.
+    if is_empty(sampling_typology):
+        return ""
 
-    Used for concentrations, conductivity, alkalinity, H+, etc.
-    """
-    values = pd.to_numeric(g[value_col], errors="coerce")
-    weights = pd.to_numeric(g[volume_col], errors="coerce")
+    value = str(sampling_typology).strip().upper()
+    mapping = (
+        ("THR", "TF"),
+        ("BOF", "PC"),
+        ("RW", "RW"),
+        ("SF", "SF"),
+        ("SW", "SW"),
+    )
+    for marker, subprogram in mapping:
+        if marker in value:
+            return subprogram
+    return ""
 
+
+def weighted_mean_by_volume(
+    group: pd.DataFrame,
+    value_col: str,
+    volume_col: str = "Volume(ml)",
+):
+    values = pd.to_numeric(group[value_col], errors="coerce")
+    weights = pd.to_numeric(group[volume_col], errors="coerce")
     mask = values.notna() & weights.notna() & (weights > 0)
-
     if not mask.any():
-        return pd.NA
-
+        available = values.dropna()
+        return available.iloc[0] if not available.empty else pd.NA
     denominator = weights[mask].sum()
-
     if denominator == 0:
         return pd.NA
-
     return (values[mask] * weights[mask]).sum() / denominator
 
 
-def weighted_ph_by_volume(g, ph_col="WeightedpH", volume_col="Volume(ml)"):
-    """
-    Correct pH aggregation.
-
-    pH is logarithmic, so it cannot be averaged directly.
-
-    Steps:
-      1. Convert pH to [H+]
-      2. Calculate weighted mean of [H+] by volume
-      3. Convert final [H+] back to pH
-    """
-    ph = pd.to_numeric(g[ph_col], errors="coerce")
-    weights = pd.to_numeric(g[volume_col], errors="coerce")
-
+def weighted_ph_by_volume(
+    group: pd.DataFrame,
+    ph_col: str = "WeightedpH",
+    volume_col: str = "Volume(ml)",
+):
+    ph = pd.to_numeric(group[ph_col], errors="coerce")
+    weights = pd.to_numeric(group[volume_col], errors="coerce")
     mask = ph.notna() & weights.notna() & (weights > 0)
-
     if not mask.any():
-        return pd.NA
-
+        available = ph.dropna()
+        return available.iloc[0] if not available.empty else pd.NA
     denominator = weights[mask].sum()
-
     if denominator == 0:
         return pd.NA
-
     h_final = (np.power(10.0, -ph[mask]) * weights[mask]).sum() / denominator
-
-    if pd.isna(h_final) or h_final <= 0:
-        return pd.NA
-
-    return -np.log10(h_final)
+    return -np.log10(h_final) if pd.notna(h_final) and h_final > 0 else pd.NA
 
 
-def sum_numeric(g, col):
-    """Sum numeric values, preserving NA if all values are missing."""
-    return pd.to_numeric(g[col], errors="coerce").sum(min_count=1)
+def sum_numeric(group: pd.DataFrame, column: str):
+    return pd.to_numeric(group[column], errors="coerce").sum(min_count=1)
 
 
-def aggregate_same_site_month(g, final_columns):
-    """
-    Aggregate one SiteCode / SiteName / year / month group.
-
-    If there is only one row, values are kept as they are, but SampleID
-    is regenerated using the new naming rule.
-
-    If there is more than one row, values are combined using the
-    weighted aggregation rules.
-    """
-    row0 = g.iloc[0].copy()
-
-    site_code = first_non_empty(g["SiteCode"]) if "SiteCode" in g.columns else ""
-    site_name = first_non_empty(g["SiteName"]) if "SiteName" in g.columns else ""
-
-    sampling_typology = (
-        first_non_empty(g["SamplingTypology"])
-        if "SamplingTypology" in g.columns
-        else ""
-    )
-
-    instrument = (
-        first_non_empty(g["Instrument"])
-        if "Instrument" in g.columns
-        else ""
-    )
-
-    # If there is only one row, keep analytical values exactly as they are,
-    # but regenerate SampleID with the final naming rule.
-    if len(g) == 1:
-        row0["SampleID"] = build_final_sample_id(
-            site_code,
-            sampling_typology,
-            instrument
-        )
-
-        return row0.reindex(final_columns)
-
-    out = {col: pd.NA for col in final_columns}
-
-    out["SampleID"] = build_final_sample_id(
-        site_code,
-        sampling_typology,
-        instrument
-    )
-
-    out["SiteCode"] = site_code
-    out["SiteName"] = site_name
-    out["year"] = row0["year"]
-    out["month"] = row0["month"]
-
-    for col in final_columns:
-        if col in ["SampleID", "SiteCode", "SiteName", "year", "month"]:
+def parse_dates(values: pd.Series) -> pd.Series:
+    """Parse Excel dates plus the two formats used by the templates."""
+    parsed_values = []
+    for value in values:
+        if pd.isna(value):
+            parsed_values.append(pd.NaT)
             continue
-
-        if col not in g.columns:
+        if isinstance(value, (pd.Timestamp, np.datetime64)):
+            parsed_values.append(pd.to_datetime(value, errors="coerce"))
             continue
-
-        if col in ["Volume(ml)", "Precip(l/m2)"]:
-            out[col] = sum_numeric(g, col)
-
-        elif col == "WeightedpH":
-            out[col] = weighted_ph_by_volume(g, col)
-
-        else:
-            out[col] = weighted_mean_by_volume(g, col)
-
-    return pd.Series(out).reindex(final_columns)
+        parsed = pd.NaT
+        for date_format in ("%Y-%m-%d", "%d/%m/%Y", "%Y-%m-%d %H:%M:%S"):
+            parsed = pd.to_datetime(value, format=date_format, errors="coerce")
+            if not pd.isna(parsed):
+                break
+        if pd.isna(parsed):
+            parsed = pd.to_datetime(value, errors="coerce")
+        parsed_values.append(parsed)
+    return pd.Series(parsed_values, index=values.index)
 
 
-# ============================================================
-# LOAD DATA
-# ============================================================
+def min_date(values: pd.Series):
+    parsed = parse_dates(values).dropna()
+    return parsed.min() if not parsed.empty else pd.NaT
+
+
+def max_date(values: pd.Series):
+    parsed = parse_dates(values).dropna()
+    return parsed.max() if not parsed.empty else pd.NaT
+
+
+def numeric_sum_preserve_na(*series: pd.Series) -> pd.Series:
+    frame = pd.concat(
+        [pd.to_numeric(s, errors="coerce") for s in series], axis=1
+    )
+    return frame.sum(axis=1, min_count=1)
+
+
+def deposition(concentration: pd.Series, precipitation: pd.Series) -> pd.Series:
+    """kg/ha = concentration (mg/L) × precipitation (mm=L/m²) × 0.01."""
+    concentration = pd.to_numeric(concentration, errors="coerce")
+    precipitation = pd.to_numeric(precipitation, errors="coerce")
+    return concentration * precipitation * 0.01
+
 
 df = pd.read_excel(input_data_path)
-sampling_ty = pd.read_excel(input_samples_path)
+samples_info = pd.read_excel(input_samples_path)
 
-print(f"Loaded {len(df)} rows from allFinalData.xlsx")
-print(f"Loaded {len(sampling_ty)} rows from samplesInfo.xlsx")
+print(f"Loaded {len(df)} rows from All_Validated_Data.xlsx")
+print(f"Loaded {len(samples_info)} rows from samplesInfo.xlsx")
 
-# ============================================================
-# CLEAN AND MERGE
-# ============================================================
+if "SampleID" not in df.columns or "SampleID" not in samples_info.columns:
+    raise RuntimeError("Both inputs must contain a SampleID column")
+
+for column in [
+    "StartDate", "EndDate", "PO4P(mg/l)", "AS(mg/l)", "CD(mg/l)",
+    "CR(mg/l)", "CU(mg/l)", "CO(mg/l)", "MO(mg/l)", "NI(mg/l)",
+    "PB(mg/l)", "ZN(mg/l)", "P(mg/l)", "S(mg/l)", "NING(mg/l)",
+    "NDON(mg/l)", "Temperature(ºC)", "Volume(ml)", "Precip(l/m2)",
+]:
+    if column not in df.columns:
+        df[column] = pd.NA
+
+samples_info = samples_info.copy()
+samples_info["SampleID_clean"] = clean_sample_id(samples_info["SampleID"])
+
+
+def first_existing_column(frame: pd.DataFrame, candidates: list[str]) -> str | None:
+    lookup = {str(column).casefold(): column for column in frame.columns}
+    for candidate in candidates:
+        if candidate.casefold() in lookup:
+            return lookup[candidate.casefold()]
+    return None
+
+
+metadata_sources = {
+    "ICP_Program": ["ICP_Program", "program"],
+    "SamplingTypology": ["SamplingTypology"],
+    "Instrument": ["Instrument"],
+    "ID_PostgreSQL": ["ID_PostgreSQL", "id_site"],
+}
+
+metadata = samples_info[["SampleID_clean"]].copy()
+for canonical, candidates in metadata_sources.items():
+    source = first_existing_column(samples_info, candidates)
+    metadata[canonical] = samples_info[source] if source else pd.NA
+
+metadata = metadata.drop_duplicates(subset=["SampleID_clean"], keep="first")
 
 df["SampleID_clean"] = clean_sample_id(df["SampleID"])
-sampling_ty["SampleID_clean"] = clean_sample_id(sampling_ty["SampleID"])
+df = df.merge(metadata, on="SampleID_clean", how="left", validate="many_to_one")
+df["DerivedSubprogram"] = df["SamplingTypology"].map(derive_subprogram)
 
-# Bring in programme/instrument/DB metadata from samplesInfo
-merge_cols = [
-    c for c in [
-        "SampleID_clean",
-        "ICP_Program",
-        "SamplingTypology",
-        "Instrument",
-        "ID_PostgreSQL"
-    ]
-    if c in sampling_ty.columns
-]
-
-df = df.merge(
-    sampling_ty[merge_cols],
-    on="SampleID_clean",
-    how="left"
+matched_metadata = df["SamplingTypology"].notna().sum()
+print(
+    f"Metadata matched for {matched_metadata}/{len(df)} rows "
+    f"using normalised SampleID"
 )
-
-# ============================================================
-# DETECT REPLICATES
-# ============================================================
+subprogram_counts = df["DerivedSubprogram"].replace("", pd.NA).value_counts(dropna=False)
+print("Derived subprogram counts before selection:")
+for code, count in subprogram_counts.items():
+    label = "<unmapped>" if pd.isna(code) else str(code)
+    print(f"  {label}: {count}")
 
 df["is_rep"] = df["SampleID_clean"].str.contains(r"REP$", na=False)
 df["base_id"] = df["SampleID_clean"].str.replace(r"REP$", "", regex=True)
-
-# ============================================================
-# NORMALISE VALIDATION FLAG
-# ============================================================
-
 df["VAL_bool"] = df["VAL"].astype(str).str.upper().str.strip().eq("SI")
 
-# ============================================================
-# SELECTION LOGIC
-# ============================================================
-# For each unique (base_id, year, month) group apply the four
-# rules described in the module docstring above.
-# ============================================================
+selected_rows = []
+for _, group in df.groupby(["base_id", "year", "month"], dropna=False):
+    normal = group[~group["is_rep"]]
+    repeat = group[group["is_rep"]]
 
-result_rows = []
-
-for _, g in df.groupby(["base_id", "year", "month"], dropna=False):
-    normal = g[~g["is_rep"]]
-    rep = g[g["is_rep"]]
-
-    # Rule 1: NOREP passes -> keep NOREP
-    normal_si = normal[normal["VAL_bool"]]
-
-    if not normal_si.empty:
-        result_rows.append(normal_si.iloc[0])
+    normal_ok = normal[normal["VAL_bool"]]
+    if not normal_ok.empty:
+        selected_rows.append(normal_ok.iloc[0])
         continue
 
-    # Rule 2: NOREP fails, REP passes -> keep REP
-    rep_si = rep[rep["VAL_bool"]]
-
-    if not rep_si.empty:
-        result_rows.append(rep_si.iloc[0])
+    repeat_ok = repeat[repeat["VAL_bool"]]
+    if not repeat_ok.empty:
+        selected_rows.append(repeat_ok.iloc[0])
         continue
 
-    # Rule 3: both NOREP and REP fail -> keep NOREP
-    # Only when a REP exists.
-    if not normal.empty and not rep.empty:
-        result_rows.append(normal.iloc[0])
-        continue
+    if not normal.empty and not repeat.empty:
+        selected_rows.append(normal.iloc[0])
 
-    # Rule 4: NOREP fails, no REP -> discard
-    # Do nothing.
+print(f"Rows selected after filtering: {len(selected_rows)}")
+selected = pd.DataFrame(selected_rows).reset_index(drop=True)
 
-print(f"Rows selected after filtering: {len(result_rows)}")
-
-# ============================================================
-# BUILD FINAL TABLE
-# ============================================================
-
-tabla_final = pd.DataFrame(result_rows).reset_index(drop=True)
-
-FINAL_COLUMNS = [
-    "SampleID", "SiteCode", "SiteName", "year", "month",
+ANALYTICAL_COLUMNS = [
     "CL(mg/l)", "SO4S(mg/l)", "NO3N(mg/l)", "PO4P(mg/l)",
     "CA(mg/l)", "MG(mg/l)", "NA(mg/l)", "K(mg/l)",
     "AL(mg/l)", "FE(mg/l)", "MN(mg/l)",
     "AS(mg/l)", "CD(mg/l)", "CR(mg/l)", "CU(mg/l)", "CO(mg/l)",
     "MO(mg/l)", "NI(mg/l)", "PB(mg/l)", "ZN(mg/l)",
-    "P(mg/l)", "S(mg/l)",
-    "NH4N(mg/l)", "TN(mg/l)", "DOC(mg/l)",
-    "H(µeq/l)", "WeightedConductivity(µS/cm)",
-    "Volume(ml)", "Precip(l/m2)", "WeightedpH",
+    "P(mg/l)", "S(mg/l)", "NH4N(mg/l)", "TN(mg/l)", "DOC(mg/l)",
+    "NING(mg/l)", "NDON(mg/l)", "H(µeq/l)",
+    "WeightedConductivity(µS/cm)", "Temperature(ºC)", "WeightedpH",
     "AlkalinityICPForests(µeq/l)",
 ]
 
-# Keep auxiliary columns needed for the new SampleID.
-# These columns come from samplesInfo.xlsx and will not be exported.
-AUX_COLUMNS = [
-    "SamplingTypology",
-    "Instrument"
+for column in ANALYTICAL_COLUMNS:
+    if column not in selected.columns:
+        selected[column] = pd.NA
+
+for column in [
+    "SiteCode", "SiteName", "year", "month", "SamplingTypology",
+    "Instrument", "ICP_Program", "DerivedSubprogram", "ID_PostgreSQL",
+    "StartDate", "EndDate", "Temperature(ºC)", "Volume(ml)", "Precip(l/m2)",
+]:
+    if column not in selected.columns:
+        selected[column] = pd.NA
+
+GROUP_COLUMNS = [
+    "SiteCode", "SiteName", "year", "month", "ICP_Program",
+    "SamplingTypology", "Instrument", "DerivedSubprogram", "ID_PostgreSQL",
 ]
 
-working_columns = FINAL_COLUMNS + [
-    c for c in AUX_COLUMNS
-    if c in tabla_final.columns and c not in FINAL_COLUMNS
-]
-
-tabla_final = tabla_final.reindex(columns=working_columns)
-
-# ============================================================
-# WEIGHTED AGGREGATION BY SITE / YEAR / MONTH
-# ============================================================
-# If several selected samples have the same SiteCode, SiteName,
-# year and month, they are combined into one representative sample.
-#
-# Aggregation rules:
-#   - Concentrations:
-#       weighted mean by Volume(ml)
-#   - Conductivity:
-#       weighted mean by Volume(ml)
-#   - Alkalinity:
-#       weighted mean by Volume(ml)
-#   - H(µeq/l):
-#       weighted mean by Volume(ml)
-#   - WeightedpH:
-#       convert pH to H+, weight by Volume(ml), convert back to pH
-#   - Volume(ml):
-#       direct sum
-#   - Precip(l/m2):
-#       direct sum
-#   - SampleID:
-#       SiteCode_SamplingTypology_Instrument
-# ============================================================
-
-GROUP_COLS = [
-    "SiteCode",
-    "SiteName",
-    "year",
-    "month"
-]
-
-rows_before_aggregation = len(tabla_final)
-
-aggregated_rows = []
-
-for _, g in tabla_final.groupby(GROUP_COLS, dropna=False, sort=False):
-    aggregated_rows.append(
-        aggregate_same_site_month(
-            g=g,
-            final_columns=FINAL_COLUMNS
-        )
+aggregated_rows: list[dict] = []
+for _, group in selected.groupby(GROUP_COLUMNS, dropna=False, sort=False):
+    row: dict = {
+        "SiteCode": first_non_empty(group["SiteCode"]),
+        "SiteName": first_non_empty(group["SiteName"]),
+        "year": group.iloc[0]["year"],
+        "month": group.iloc[0]["month"],
+        "ICP_Program": first_non_empty(group["ICP_Program"]),
+        "SamplingTypology": first_non_empty(group["SamplingTypology"]),
+        "Instrument": first_non_empty(group["Instrument"]),
+        "DerivedSubprogram": first_non_empty(group["DerivedSubprogram"]),
+        "ID_PostgreSQL": first_non_empty(group["ID_PostgreSQL"]),
+        "StartDate": min_date(group["StartDate"]),
+        "EndDate": max_date(group["EndDate"]),
+        "Volume(ml)": sum_numeric(group, "Volume(ml)"),
+        "Precip(l/m2)": sum_numeric(group, "Precip(l/m2)"),
+    }
+    row["SampleID"] = build_final_sample_id(
+        row["SiteCode"], row["SamplingTypology"], row["Instrument"]
     )
 
-tabla_final = pd.DataFrame(aggregated_rows).reindex(columns=FINAL_COLUMNS)
+    for column in ANALYTICAL_COLUMNS:
+        if column == "WeightedpH":
+            row[column] = weighted_ph_by_volume(group, column)
+        else:
+            row[column] = weighted_mean_by_volume(group, column)
 
+    aggregated_rows.append(row)
+
+aggregated = pd.DataFrame(aggregated_rows)
 print(
-    f"Rows after weighted aggregation: {len(tabla_final)} "
-    f"(from {rows_before_aggregation} selected rows)"
+    f"Rows after sampling-unit/month aggregation: {len(aggregated)} "
+    f"(from {len(selected)} selected rows)"
 )
 
-# ============================================================
-# EXPORT
-# ============================================================
+# Keep the output schema stable even when no sample survives selection.
+required_derived_inputs = [
+    "NH4N(mg/l)", "NO3N(mg/l)", "TN(mg/l)", "P(mg/l)",
+    "PO4P(mg/l)", "S(mg/l)", "SO4S(mg/l)", "ICP_Program",
+    "DerivedSubprogram", "SamplingTypology", "Instrument", "Volume(ml)",
+    "Precip(l/m2)", "Temperature(ºC)", "StartDate", "EndDate",
+] + ANALYTICAL_COLUMNS
+for column in required_derived_inputs:
+    if column not in aggregated.columns:
+        aggregated[column] = pd.Series(dtype="object")
 
-tabla_final.to_excel(
-    output_path,
-    index=False,
-    sheet_name="Datos"
+aggregated["NING(mg/l)"] = numeric_sum_preserve_na(
+    aggregated["NH4N(mg/l)"], aggregated["NO3N(mg/l)"]
+)
+aggregated["NDON(mg/l)"] = (
+    pd.to_numeric(aggregated["TN(mg/l)"], errors="coerce")
+    - pd.to_numeric(aggregated["NING(mg/l)"], errors="coerce")
 )
 
+aggregated["PTOT (mg/l)"] = numeric_sum_preserve_na(
+    aggregated["P(mg/l)"], aggregated["PO4P(mg/l)"]
+)
+aggregated["STOT (mg/l)"] = numeric_sum_preserve_na(
+    aggregated["S(mg/l)"], aggregated["SO4S(mg/l)"]
+)
+
+aggregated["program"] = aggregated["ICP_Program"]
+aggregated["subprogram"] = aggregated["DerivedSubprogram"]
+
+is_soil_water = aggregated["SamplingTypology"].astype(str).str.contains(
+    "SW", case=False, na=False
+)
+aggregated["lis_tip"] = aggregated["Instrument"].where(is_soil_water, pd.NA)
+
+# VOL is the same collected-sample volume represented by Volume(ml).
+# It is retained for every sample type whenever a volume is available.
+aggregated["VOL (ml)"] = aggregated["Volume(ml)"]
+
+# Temperature is reported in the database only for runoff-water (RW) rows.
+subprogram_code = (
+    aggregated["subprogram"].astype("string").str.strip().str.upper()
+)
+is_runoff_water = subprogram_code.eq("RW")
+aggregated["TEMP (oC)"] = aggregated["Temperature(ºC)"].where(
+    is_runoff_water, pd.NA
+)
+
+aggregated["NDON (mg/l)"] = aggregated["NDON(mg/l)"]
+aggregated["NING (mg/l)"] = aggregated["NING(mg/l)"]
+
+for column in ["q", "hg", "f", "cnr", "sio2", "ALL"]:
+    aggregated[column] = pd.NA
+
+deposition_sources = {
+    "Deposition K (kg/ha)": "K(mg/l)",
+    "Deposition Ca (kg/ha)": "CA(mg/l)",
+    "Deposition Mg (kg/ha)": "MG(mg/l)",
+    "Deposition Na (kg/ha)": "NA(mg/l)",
+    "Deposition NH4N (kg/ha)": "NH4N(mg/l)",
+    "Deposition Cl (kg/ha)": "CL(mg/l)",
+    "Deposition NO3N (kg/ha)": "NO3N(mg/l)",
+    "Deposition SO4S (kg/ha)": "SO4S(mg/l)",
+    "Deposition NTOT (kg/ha)": "TN(mg/l)",
+    "Deposition DOC (kg/ha)": "DOC(mg/l)",
+    "Deposition Al (kg/ha)": "AL(mg/l)",
+    "Deposition Mn (kg/ha)": "MN(mg/l)",
+    "Deposition Fe (kg/ha)": "FE(mg/l)",
+    "Deposition NDON (kg/ha)": "NDON (mg/l)",
+    "Deposition NING (kg/ha)": "NING (mg/l)",
+    "Deposition As (kg/ha)": "AS(mg/l)",
+    "Deposition Cd (kg/ha)": "CD(mg/l)",
+    "Deposition Cr (kg/ha)": "CR(mg/l)",
+    "Deposition Cu (kg/ha)": "CU(mg/l)",
+    "Deposition Mo (kg/ha)": "MO(mg/l)",
+    "Deposition Ni (kg/ha)": "NI(mg/l)",
+    "Deposition Pb (kg/ha)": "PB(mg/l)",
+    "Deposition Zn (kg/ha)": "ZN(mg/l)",
+    "Deposition PO4P (kg/ha)": "PO4P(mg/l)",
+    "Deposition PTOT (kg/ha)": "PTOT (mg/l)",
+    "Deposition STOT (kg/ha)": "STOT (mg/l)",
+}
+# Stemflow (SF) and runoff water (RW) require specific flow/area data.
+# Therefore, the generic concentration × precipitation deposition formula is
+# deliberately not applied to those subprogrammes.
+skip_generic_deposition = subprogram_code.isin({"SF", "RW"})
+for output_column, source_column in deposition_sources.items():
+    calculated = deposition(
+        aggregated[source_column], aggregated["Precip(l/m2)"]
+    )
+    aggregated[output_column] = calculated.where(
+        ~skip_generic_deposition, pd.NA
+    )
+
+
+print("Final-data source availability:")
+for column in [
+    "DerivedSubprogram", "Temperature(ºC)", "Precip(l/m2)",
+    "P(mg/l)", "PO4P(mg/l)", "S(mg/l)", "SO4S(mg/l)",
+    "Volume(ml)", "NING(mg/l)", "NDON(mg/l)",
+]:
+    available = aggregated[column].notna().sum() if column in aggregated.columns else 0
+    print(f"  {column}: {available}/{len(aggregated)} non-empty")
+
+final_subprogram_counts = aggregated["subprogram"].replace("", pd.NA).value_counts(dropna=False)
+print("Final subprogram counts:")
+for code, count in final_subprogram_counts.items():
+    label = "<unmapped>" if pd.isna(code) else str(code)
+    print(f"  {label}: {count}")
+
+OUTPUT_COLUMNS = [
+    "SampleID", "SiteCode", "SiteName", "year", "month",
+    "StartDate", "EndDate",
+    "program", "subprogram", "lis_tip", "ID_PostgreSQL",
+    "CL(mg/l)", "SO4S(mg/l)", "NO3N(mg/l)", "PO4P(mg/l)",
+    "CA(mg/l)", "MG(mg/l)", "NA(mg/l)", "K(mg/l)",
+    "AL(mg/l)", "FE(mg/l)", "MN(mg/l)",
+    "AS(mg/l)", "CD(mg/l)", "CR(mg/l)", "CU(mg/l)", "CO(mg/l)",
+    "MO(mg/l)", "NI(mg/l)", "PB(mg/l)", "ZN(mg/l)",
+    "P(mg/l)", "S(mg/l)", "PTOT (mg/l)", "STOT (mg/l)",
+    "NH4N(mg/l)", "TN(mg/l)", "DOC(mg/l)",
+    "NING (mg/l)", "NDON (mg/l)",
+    "H(µeq/l)", "WeightedConductivity(µS/cm)",
+    "Volume(ml)", "VOL (ml)", "Precip(l/m2)",
+    "WeightedpH", "AlkalinityICPForests(µeq/l)",
+    "TEMP (oC)", "q", "hg", "f", "cnr", "sio2", "ALL",
+    "Deposition K (kg/ha)", "Deposition Ca (kg/ha)",
+    "Deposition Mg (kg/ha)", "Deposition Na (kg/ha)",
+    "Deposition NH4N (kg/ha)", "Deposition Cl (kg/ha)",
+    "Deposition NO3N (kg/ha)", "Deposition SO4S (kg/ha)",
+    "Deposition NTOT (kg/ha)",
+    "Deposition DOC (kg/ha)", "Deposition Al (kg/ha)",
+    "Deposition Mn (kg/ha)", "Deposition Fe (kg/ha)",
+    "Deposition NDON (kg/ha)", "Deposition NING (kg/ha)",
+    "Deposition As (kg/ha)", "Deposition Cd (kg/ha)",
+    "Deposition Cr (kg/ha)", "Deposition Cu (kg/ha)",
+    "Deposition Mo (kg/ha)", "Deposition Ni (kg/ha)",
+    "Deposition Pb (kg/ha)", "Deposition Zn (kg/ha)",
+    "Deposition PO4P (kg/ha)", "Deposition PTOT (kg/ha)",
+    "Deposition STOT (kg/ha)",
+]
+
+for column in OUTPUT_COLUMNS:
+    if column not in aggregated.columns:
+        aggregated[column] = pd.NA
+
+output = aggregated.reindex(columns=OUTPUT_COLUMNS)
+Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+output.to_excel(output_path, index=False, sheet_name="Datos")
 print(
-    f"Output saved: {output_path}  "
-    f"({len(tabla_final)} rows, {len(tabla_final.columns)} columns)"
+    f"Output saved: {output_path} "
+    f"({len(output)} rows, {len(output.columns)} columns)"
 )

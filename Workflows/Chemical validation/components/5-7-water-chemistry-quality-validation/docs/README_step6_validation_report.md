@@ -21,7 +21,7 @@ WaterChemistryValidation  →  WaterChemistryValidationReport  →  Data2FinalRe
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| input-data | Zip | `/mnt/inputs/water_chemical_data_level2_validated.zip` | ZIP of validated tab-separated CSV files from component 5. One CSV per SiteCode. |
+| input-data | Zip | `/mnt/inputs/water_chemical_alldata_validated.zip` | ZIP of validated tab-separated CSV files from component 5. One CSV per SiteCode. |
 | input-samples | Text | `/mnt/inputs/samplesInfo.xlsx` | SampleID → SamplingTypology mapping. Used to fill typology for REP samples and to define the sample sort order in report tables. |
 
 ### Required columns in the validated CSVs
@@ -159,8 +159,11 @@ set, drawn from the validated CSV. Key columns included:
 
 ```
 SampleID, SiteCode, SiteName, Type (SamplingTypology), year, month,
-CL(mg/l), SO4S(mg/l), NO3N(mg/l), CA(mg/l), MG(mg/l), NA(mg/l), K(mg/l),
-AL(mg/l), FE(mg/l), MN(mg/l), NH4N(mg/l), TN(mg/l), DOC(mg/l),
+StartDate, EndDate, CL(mg/l), SO4S(mg/l), NO3N(mg/l), PO4P(mg/l),
+CA(mg/l), MG(mg/l), NA(mg/l), K(mg/l), AL(mg/l), FE(mg/l), MN(mg/l),
+AS(mg/l), CD(mg/l), CR(mg/l), CU(mg/l), CO(mg/l), MO(mg/l), NI(mg/l),
+PB(mg/l), ZN(mg/l), P(mg/l), S(mg/l), NH4N(mg/l), TN(mg/l), DOC(mg/l),
+NING(mg/l), NDON(mg/l),
 WeightedpH, WeightedConductivity(µS/cm), Volume(ml), Precip(l/m2),
 AlkalinityICPForests(µeq/l), Metals_SW(µeq/l), NDON(mg/l), Org-(µeq/l),
 SumAnions(µeq/l), +Org(µeq/l), H(µeq/l), SumCations(µeq/l),

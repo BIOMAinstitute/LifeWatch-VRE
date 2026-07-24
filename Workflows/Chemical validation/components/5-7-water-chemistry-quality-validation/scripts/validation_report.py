@@ -59,7 +59,7 @@ args = parser.parse_args()
 # ------------------------------------------------------------
 # Paths - Tesseract mounts inputs at /mnt/inputs, outputs at /mnt/outputs
 # ------------------------------------------------------------
-input_zip_path     = os.environ.get("INPUT_ZIP_PATH", "/mnt/inputs/water_chemical_data_level2_validated.zip")
+input_zip_path     = os.environ.get("INPUT_ZIP_PATH", "/mnt/inputs/water_chemical_alldata_validated.zip")
 input_samples_path = os.environ.get("INPUT_SAMPLES_PATH", "/mnt/inputs/samplesInfo.xlsx")
 output_pdf_path    = os.environ.get("OUTPUT_PDF_PATH", "/mnt/outputs/validation_report.pdf")
 output_repeat_path = os.environ.get("OUTPUT_REPEAT_PATH", "/mnt/outputs/Samples2Repeat.xlsx")
@@ -1166,13 +1166,20 @@ def generate_pdf_report(df_final, sampling_ty, chart_paths, output_path):
 
 EXPORT_COLUMNS = [
     "SampleID", "SiteCode", "SiteName", "Type", "year", "month",
-    "CL(mg/l)", "SO4S(mg/l)", "NO3N(mg/l)", "CA(mg/l)", "MG(mg/l)",
-    "NA(mg/l)", "K(mg/l)", "AL(mg/l)", "FE(mg/l)", "MN(mg/l)",
-    "NH4N(mg/l)", "TN(mg/l)", "DOC(mg/l)", "WeightedpH",
-    "WeightedConductivity(µS/cm)", "Volume(ml)", "Precip(l/m2)",
-    "AlkalinityICPForests(µeq/l)", "Metals_SW(µeq/l)", "NDON(mg/l)",
-    "Org-(µeq/l)", "SumAnions(µeq/l)", "+Org(µeq/l)", "H(µeq/l)",
-    "SumCations(µeq/l)", "sC - sA IonsDiff.%", "sC - sA QualityIonsBalance",
+    "StartDate", "EndDate",
+    "CL(mg/l)", "SO4S(mg/l)", "NO3N(mg/l)", "PO4P(mg/l)",
+    "CA(mg/l)", "MG(mg/l)", "NA(mg/l)", "K(mg/l)",
+    "AL(mg/l)", "FE(mg/l)", "MN(mg/l)",
+    "AS(mg/l)", "CD(mg/l)", "CR(mg/l)", "CU(mg/l)", "CO(mg/l)",
+    "MO(mg/l)", "NI(mg/l)", "PB(mg/l)", "ZN(mg/l)",
+    "P(mg/l)", "S(mg/l)",
+    "NH4N(mg/l)", "TN(mg/l)", "DOC(mg/l)",
+    "NING(mg/l)", "NDON(mg/l)",
+    "WeightedpH", "WeightedConductivity(µS/cm)", "Temperature(ºC)",
+    "Volume(ml)", "Precip(l/m2)", "AlkalinityICPForests(µeq/l)",
+    "Metals_SW(µeq/l)", "Org-(µeq/l)", "SumAnions(µeq/l)",
+    "+Org(µeq/l)", "H(µeq/l)", "SumCations(µeq/l)",
+    "sC - sA IonsDiff.%", "sC - sA QualityIonsBalance",
     "sC - sA - Org- IonsDiff.%", "IonsDiffOrg.Limit(%)",
     "IonsDiffOrg.OverLimit.pp", "IonsDiffOrg.OverLimit.relative%",
     "RatioNa/Cl", "ConductivityCalculatedWithoutCorrection(µS/cm)",
@@ -1180,6 +1187,7 @@ EXPORT_COLUMNS = [
     "ConductivityCalculatedCorrected(µS/cm)", "Cond. Diff.%Cc-Xm",
     "Ions balance Org", "Ratio Na/Cl", "Conductivity", "OrgN", "VAL",
 ]
+
 
 
 def export_excel(df, sampling_ty, output_path, filter_val=None):
