@@ -1,5 +1,5 @@
 {
-  "name": "WaterChemistryQualityReportPipeline",
+  "name": "WaterChemistryQualityValidation",
   "label": "Water Chemistry Quality Validation and Reporting",
   "description": "Runs three sequential stages in one component: physicochemical quality validation of unit-transformed water chemistry data, generation of the validation PDF and Excel review files, and selection/aggregation of the final dataset for ICP reporting. The three scientific scripts remain separate and are coordinated internally.",
   "type": "DataAnalysing",
