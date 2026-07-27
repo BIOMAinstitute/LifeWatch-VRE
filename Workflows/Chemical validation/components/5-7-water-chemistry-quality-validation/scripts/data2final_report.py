@@ -7,14 +7,15 @@ Selection logic per base SampleID/year/month is preserved:
   3. If both NOREP and REP fail, keep NOREP when a REP exists.
   4. If NOREP fails and no REP exists, discard it.
 
-Selected records with the same site, sampling typology, instrument, programme,
-derived subprogram, year and month are combined using the existing volume-weighted
-aggregation rules. The subprogram is inferred from SamplingTypology before
-additional database-oriented fields are derived. Final_Data retains one canonical
-representation for dates (StartDate/EndDate), precipitation (Precip(l/m2)) and
-alkalinity (AlkalinityICPForests(µeq/l)); database-specific renaming is deferred
-to the database-loading step. Optional hydrological fields are preserved when
-they already exist in the validated input and are otherwise created empty.
+Selected records are linked back to the canonical SampleID stored in
+samplesInfo.xlsx. The official SampleID is retained exactly as written there,
+including spaces and leading zeroes, and is included in the monthly aggregation
+key so that distinct sampling units are never merged accidentally. The subprogram
+is inferred from SamplingTypology before additional database-oriented fields are
+derived. Final_Data retains one canonical representation for dates
+(StartDate/EndDate), precipitation (Precip(l/m2)) and alkalinity
+(AlkalinityICPForests(µeq/l)); database-specific renaming is deferred to the
+database-loading step.
 """
 
 from __future__ import annotations
@@ -41,10 +42,6 @@ input_samples_path = os.environ.get(
 )
 output_path = os.environ.get("OUTPUT_PATH", "/mnt/outputs/Final_Data.xlsx")
 
-# These fields are not calculated by this component. They are carried through
-# from All_Validated_Data.xlsx when supplied by a future validated template.
-OPTIONAL_PASSTHROUGH_COLUMNS = ["q", "hg", "f", "cnr", "sio2", "ALL"]
-
 
 def clean_sample_id(series: pd.Series) -> pd.Series:
     """Normalise SampleID: uppercase and remove spaces/separators."""
@@ -67,31 +64,6 @@ def first_non_empty(values: Iterable) -> str:
         if not is_empty(value):
             return str(value).strip()
     return ""
-
-
-def first_non_empty_value(values: Iterable):
-    """Return the first supplied value without converting its data type."""
-    for value in values:
-        if not is_empty(value):
-            return value
-    return pd.NA
-
-
-def remove_all_spaces(value) -> str:
-    if is_empty(value):
-        return ""
-    return "".join(str(value).strip().split())
-
-
-def build_final_sample_id(site_code, sampling_typology, instrument) -> str:
-    parts = [
-        first_non_empty([site_code]),
-        remove_all_spaces(sampling_typology),
-    ]
-    instrument = remove_all_spaces(instrument)
-    if instrument:
-        parts.append(instrument)
-    return "_".join(part for part in parts if part)
 
 
 def derive_subprogram(sampling_typology) -> str:
@@ -221,13 +193,24 @@ for column in [
     "CR(mg/l)", "CU(mg/l)", "CO(mg/l)", "MO(mg/l)", "NI(mg/l)",
     "PB(mg/l)", "ZN(mg/l)", "P(mg/l)", "S(mg/l)", "NING(mg/l)",
     "NDON(mg/l)", "Temperature(ºC)", "Volume(ml)", "Precip(l/m2)",
-    *OPTIONAL_PASSTHROUGH_COLUMNS,
 ]:
     if column not in df.columns:
         df[column] = pd.NA
 
 samples_info = samples_info.copy()
-samples_info["SampleID_clean"] = clean_sample_id(samples_info["SampleID"])
+samples_info["OfficialSampleID"] = samples_info["SampleID"].astype("string").str.strip()
+samples_info = samples_info[
+    samples_info["OfficialSampleID"].notna()
+    & samples_info["OfficialSampleID"].ne("")
+].copy()
+samples_info["SampleID_clean"] = clean_sample_id(samples_info["OfficialSampleID"])
+samples_info["base_id"] = samples_info["SampleID_clean"].str.replace(
+    r"REP$", "", regex=True
+)
+# Prefer the canonical non-REP definition when samplesInfo contains both forms.
+samples_info["_metadata_is_rep"] = samples_info["SampleID_clean"].str.contains(
+    r"REP$", na=False
+)
 
 
 def first_existing_column(frame: pd.DataFrame, candidates: list[str]) -> str | None:
@@ -245,15 +228,20 @@ metadata_sources = {
     "ID_PostgreSQL": ["ID_PostgreSQL", "id_site"],
 }
 
-metadata = samples_info[["SampleID_clean"]].copy()
+metadata = samples_info[["base_id", "OfficialSampleID", "_metadata_is_rep"]].copy()
 for canonical, candidates in metadata_sources.items():
     source = first_existing_column(samples_info, candidates)
     metadata[canonical] = samples_info[source] if source else pd.NA
 
-metadata = metadata.drop_duplicates(subset=["SampleID_clean"], keep="first")
+metadata = (
+    metadata.sort_values("_metadata_is_rep", kind="stable")
+    .drop_duplicates(subset=["base_id"], keep="first")
+    .drop(columns=["_metadata_is_rep"])
+)
 
 df["SampleID_clean"] = clean_sample_id(df["SampleID"])
-df = df.merge(metadata, on="SampleID_clean", how="left", validate="many_to_one")
+df["base_id"] = df["SampleID_clean"].str.replace(r"REP$", "", regex=True)
+df = df.merge(metadata, on="base_id", how="left", validate="many_to_one")
 df["DerivedSubprogram"] = df["SamplingTypology"].map(derive_subprogram)
 
 matched_metadata = df["SamplingTypology"].notna().sum()
@@ -268,7 +256,6 @@ for code, count in subprogram_counts.items():
     print(f"  {label}: {count}")
 
 df["is_rep"] = df["SampleID_clean"].str.contains(r"REP$", na=False)
-df["base_id"] = df["SampleID_clean"].str.replace(r"REP$", "", regex=True)
 df["VAL_bool"] = df["VAL"].astype(str).str.upper().str.strip().eq("SI")
 
 selected_rows = []
@@ -292,6 +279,20 @@ for _, group in df.groupby(["base_id", "year", "month"], dropna=False):
 print(f"Rows selected after filtering: {len(selected_rows)}")
 selected = pd.DataFrame(selected_rows).reset_index(drop=True)
 
+if not selected.empty:
+    missing_official = (
+        selected["OfficialSampleID"].isna()
+        | selected["OfficialSampleID"].astype("string").str.strip().eq("")
+    )
+    if missing_official.any():
+        examples = sorted(
+            selected.loc[missing_official, "SampleID"].astype(str).unique().tolist()
+        )[:10]
+        raise RuntimeError(
+            "Selected analytical SampleIDs are missing from samplesInfo.xlsx: "
+            + ", ".join(examples)
+        )
+
 ANALYTICAL_COLUMNS = [
     "CL(mg/l)", "SO4S(mg/l)", "NO3N(mg/l)", "PO4P(mg/l)",
     "CA(mg/l)", "MG(mg/l)", "NA(mg/l)", "K(mg/l)",
@@ -311,20 +312,21 @@ for column in ANALYTICAL_COLUMNS:
 for column in [
     "SiteCode", "SiteName", "year", "month", "SamplingTypology",
     "Instrument", "ICP_Program", "DerivedSubprogram", "ID_PostgreSQL",
-    "StartDate", "EndDate", "Temperature(ºC)", "Volume(ml)", "Precip(l/m2)",
-    *OPTIONAL_PASSTHROUGH_COLUMNS,
+    "OfficialSampleID", "StartDate", "EndDate", "Temperature(ºC)",
+    "Volume(ml)", "Precip(l/m2)",
 ]:
     if column not in selected.columns:
         selected[column] = pd.NA
 
 GROUP_COLUMNS = [
-    "SiteCode", "SiteName", "year", "month", "ICP_Program",
+    "OfficialSampleID", "SiteCode", "SiteName", "year", "month", "ICP_Program",
     "SamplingTypology", "Instrument", "DerivedSubprogram", "ID_PostgreSQL",
 ]
 
 aggregated_rows: list[dict] = []
 for _, group in selected.groupby(GROUP_COLUMNS, dropna=False, sort=False):
     row: dict = {
+        "SampleID": first_non_empty(group["OfficialSampleID"]),
         "SiteCode": first_non_empty(group["SiteCode"]),
         "SiteName": first_non_empty(group["SiteName"]),
         "year": group.iloc[0]["year"],
@@ -339,13 +341,6 @@ for _, group in selected.groupby(GROUP_COLUMNS, dropna=False, sort=False):
         "Volume(ml)": sum_numeric(group, "Volume(ml)"),
         "Precip(l/m2)": sum_numeric(group, "Precip(l/m2)"),
     }
-    for column in OPTIONAL_PASSTHROUGH_COLUMNS:
-        row[column] = first_non_empty_value(group[column])
-
-    row["SampleID"] = build_final_sample_id(
-        row["SiteCode"], row["SamplingTypology"], row["Instrument"]
-    )
-
     for column in ANALYTICAL_COLUMNS:
         if column == "WeightedpH":
             row[column] = weighted_ph_by_volume(group, column)
@@ -366,7 +361,7 @@ required_derived_inputs = [
     "PO4P(mg/l)", "S(mg/l)", "SO4S(mg/l)", "ICP_Program",
     "DerivedSubprogram", "SamplingTypology", "Instrument", "Volume(ml)",
     "Precip(l/m2)", "Temperature(ºC)", "StartDate", "EndDate",
-] + ANALYTICAL_COLUMNS + OPTIONAL_PASSTHROUGH_COLUMNS
+] + ANALYTICAL_COLUMNS
 for column in required_derived_inputs:
     if column not in aggregated.columns:
         aggregated[column] = pd.Series(dtype="object")
@@ -409,13 +404,6 @@ aggregated["TEMP (oC)"] = aggregated["Temperature(ºC)"].where(
 
 aggregated["NDON (mg/l)"] = aggregated["NDON(mg/l)"]
 aggregated["NING (mg/l)"] = aggregated["NING(mg/l)"]
-
-# Preserve optional hydrological values when they reached the validated input.
-# When no current template supplies a field, keep the stable Final_Data schema by
-# adding only the missing column as empty. Existing values are never overwritten.
-for column in OPTIONAL_PASSTHROUGH_COLUMNS:
-    if column not in aggregated.columns:
-        aggregated[column] = pd.NA
 
 deposition_sources = {
     "Deposition K (kg/ha)": "K(mg/l)",
@@ -463,7 +451,6 @@ for column in [
     "DerivedSubprogram", "Temperature(ºC)", "Precip(l/m2)",
     "P(mg/l)", "PO4P(mg/l)", "S(mg/l)", "SO4S(mg/l)",
     "Volume(ml)", "NING(mg/l)", "NDON(mg/l)",
-    *OPTIONAL_PASSTHROUGH_COLUMNS,
 ]:
     available = aggregated[column].notna().sum() if column in aggregated.columns else 0
     print(f"  {column}: {available}/{len(aggregated)} non-empty")
@@ -489,7 +476,7 @@ OUTPUT_COLUMNS = [
     "H(µeq/l)", "WeightedConductivity(µS/cm)",
     "Volume(ml)", "VOL (ml)", "Precip(l/m2)",
     "WeightedpH", "AlkalinityICPForests(µeq/l)",
-    "TEMP (oC)", "q", "hg", "f", "cnr", "sio2", "ALL",
+    "TEMP (oC)",
     "Deposition K (kg/ha)", "Deposition Ca (kg/ha)",
     "Deposition Mg (kg/ha)", "Deposition Na (kg/ha)",
     "Deposition NH4N (kg/ha)", "Deposition Cl (kg/ha)",
