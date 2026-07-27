@@ -1,7 +1,5 @@
 # Water Chemistry Preprocessing
 
-This component executes the original water-chemistry components **2, 3 and 4** sequentially while keeping their scientific logic in three separate scripts.
-
 This component is the first data-processing step of the chemical validation workflow. It is designed to prepare laboratory results obtained from the routine chemical analysis of environmental samples collected in the field, particularly within long-term monitoring programmes such as ICP Forests and ICP Integrated Monitoring.
 
 Before running the component, the analytical results must be entered in the official templates without changing their structure, including worksheet names, column names, units and expected data formats. The completed templates must first be checked with the TabularDataValidator component, using the supplied tables_config.json configuration. This initial validation ensures that required columns are present, mandatory fields are completed, dates and numerical values use the correct format, and the files can be safely processed by the workflow.
@@ -15,7 +13,7 @@ Once the validated ZIP is provided as input, this preprocessing component execut
 The final output, water_chemical_data_preprocessed.zip, contains the standardised and preprocessed chemical datasets that will be used in the next stage of the workflow for sample-quality assessment, ion balance, conductivity comparison and other chemical quality checks.
 
 ```text
-Validated Excel templates
+Validated Excel templates with the TabularDataValidator component
         │
         ▼
 1. Water chemical data transformation
