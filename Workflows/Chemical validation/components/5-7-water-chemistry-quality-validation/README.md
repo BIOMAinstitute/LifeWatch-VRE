@@ -1,6 +1,6 @@
 # Water Chemistry Quality Validation and Reporting (steps 5–7)
 
-This component executes the original water-chemistry components **5, 6 and 7** sequentially while keeping their scientific logic in three separate scripts. It receives the preprocessed chemical data produced by the previous workflow component, calculates and applies the chemical quality criteria, generates the review report and selects the final monthly dataset for ICP reporting.
+This component receives the preprocessed chemical data produced by the previous workflow component, calculates and applies the chemical quality criteria, generates the review report and selects the final monthly dataset for ICP reporting.
 
 ## Internal sequence
 
@@ -29,15 +29,6 @@ water_chemical_data_preprocessed.zip
 - `/mnt/inputs/samplesInfo.xlsx`: sample metadata reused by the three stages.
 
 The original filename outside Docker does not matter when Tesseract mounts the selected input at the declared path. During manual testing, either mount the ZIP explicitly at `/mnt/inputs/water_chemical_data_preprocessed.zip` or mount an input directory containing a single `.zip`; the coordinator will also recognise the older `water_chemical_data_level1_units.zip` name for backward compatibility.
-
-
-### Canonical fields in `Final_Data.xlsx`
-
-To avoid duplicate representations, the final file retains only `StartDate` and
-`EndDate` for dates, `Precip(l/m2)` for precipitation, and
-`AlkalinityICPForests(µeq/l)` for alkalinity. Database-specific names such as
-`date_1`, `date_2` and `Precipitation (mm)` should be assigned during database
-loading. `Alkalinity (mg/l)` and `Deposition Alkalinity (kg/ha)` are not generated.
 
 ## Parameters
 
