@@ -1,4 +1,4 @@
-# Water Chemistry Quality Validation and Reporting (steps 5–7)
+# Water Chemistry Quality Validation and Reporting
 
 This component receives the preprocessed chemical data produced by the previous workflow component, calculates and applies the chemical quality criteria, generates the review report and selects the final monthly dataset for ICP reporting.
 
@@ -32,15 +32,19 @@ The original filename outside Docker does not matter when Tesseract mounts the s
 
 ## Parameters
 
+These parameters define the acceptance limits used by the chemical validation workflow. The ionic balance and conductivity-difference thresholds are applied according to the measured conductivity (WeightedConductivity), while the Na/Cl ratio thresholds define the acceptable interval for the sodium-to-chloride equivalent ratio. Samples exceeding these limits are flagged as failing the corresponding quality check.
+
 The original seven quality thresholds are preserved:
 
-- `param_ionsdiff_low_k` = `20.0`
-- `param_ionsdiff_high_k` = `10.0`
-- `param_conddiff_low_1` = `30.0`
-- `param_conddiff_low_2` = `20.0`
-- `param_conddiff_high` = `10.0`
-- `param_ratio_nacl_low` = `0.5`
-- `param_ratio_nacl_high` = `1.5`
+| Parameter | Description | Default |
+|-----------|-------------|--------:|
+| `param_ionsdiff_low_k` | Maximum allowed absolute ionic balance difference (`IonsDiff.%`) for samples with measured conductivity ≤ 20 µS/cm. | 20.0 |
+| `param_ionsdiff_high_k` | Maximum allowed absolute ionic balance difference (`IonsDiff.%`) for samples with measured conductivity > 20 µS/cm. | 10.0 |
+| `param_conddiff_low_1` | Maximum allowed absolute difference between calculated and measured conductivity (`Cond. Diff.%Cc-Xm`) for samples with measured conductivity ≤ 10 µS/cm. | 30.0 |
+| `param_conddiff_low_2` | Maximum allowed absolute difference between calculated and measured conductivity (`Cond. Diff.%Cc-Xm`) for samples with measured conductivity > 10 and ≤ 20 µS/cm. | 20.0 |
+| `param_conddiff_high` | Maximum allowed absolute difference between calculated and measured conductivity (`Cond. Diff.%Cc-Xm`) for samples with measured conductivity > 20 µS/cm. | 10.0 |
+| `param_ratio_nacl_low` | Lower acceptable limit of the Na/Cl equivalent ratio. | 0.5 |
+| `param_ratio_nacl_high` | Upper acceptable limit of the Na/Cl equivalent ratio. | 1.5 |
 
 All thresholds must be non-negative, and the lower Na/Cl ratio limit cannot exceed the upper limit.
 
