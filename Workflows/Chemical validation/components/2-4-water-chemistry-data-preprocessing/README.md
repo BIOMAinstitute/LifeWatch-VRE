@@ -7,7 +7,7 @@ Before running the component, the analytical results must be entered in the offi
 Once the validated ZIP is provided as input, this preprocessing component executes three consecutive operations:
 
 1. It transforms the laboratory templates into standardised chemical data tables.
-2. It applies the configured laboratory limits of quantification to results below the analytical reporting limits.
+2. The detection limit (DL) defines the lowest concentration at which a measurement is considered sufficiently reliable. Results below this threshold are regarded as not quantitatively reliable and, following the ICP documentation, are replaced by one-half of the detection limit (DL/2).
 3. It converts and harmonises the chemical variables into the units required by the subsequent quality-control steps.
 
 The final output, water_chemical_data_preprocessed.zip, contains the standardised and preprocessed chemical datasets that will be used in the next stage of the workflow for sample-quality assessment, ion balance, conductivity comparison and other chemical quality checks.
