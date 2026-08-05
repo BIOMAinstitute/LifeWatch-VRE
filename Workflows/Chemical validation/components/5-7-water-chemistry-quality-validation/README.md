@@ -70,3 +70,6 @@ scripts/
 ├── validation_report.py
 └── data2final_report.py
 ```
+
+## The detailed original documentation for each processing stage is preserved unchanged under `docs/`.
+
