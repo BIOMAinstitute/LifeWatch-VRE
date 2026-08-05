@@ -74,21 +74,6 @@ from that component.
 
 None.
 
----
-
-## Local execution (Windows PowerShell)
-
-```powershell
-cd "C:\path\to\6-chemistry-quality-validated-report"
-
-docker build -t chemistry-quality-validated-report:0.0.1 .
-
-docker run --rm `
-  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
-  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  chemistry-quality-validated-report:0.0.1
-```
-
 ## resources/example/data/execution-parameters.json
 
 ```json
@@ -218,3 +203,18 @@ passed validation it is never repeated.
   generating the report. Duplicate rows (same SampleID + month) are resolved
   by keeping the row with the fewest NaN values.
 - Rows with empty, NaN or `"NA"` SampleID are excluded from all outputs.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\6-chemistry-quality-validated-report"
+
+docker build -t chemistry-quality-validated-report:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  chemistry-quality-validated-report:0.0.1
+```

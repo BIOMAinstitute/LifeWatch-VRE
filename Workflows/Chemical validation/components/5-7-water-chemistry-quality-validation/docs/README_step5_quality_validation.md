@@ -121,22 +121,6 @@ measurement error matters much more in a 10 µS/cm sample than in a 100 µS/cm
 sample. The tiered thresholds reflect this: dilute samples are allowed a
 larger relative deviation before being flagged.
 
----
-
-## Local execution (Windows PowerShell)
-
-```powershell
-cd "C:\path\to\5-water-chemistry-samples-quality-validation"
-
-docker build -t water-chemistry-samples-quality-validation:0.0.1 .
-
-docker run --rm `
-  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
-  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  water-chemistry-samples-quality-validation:0.0.1 `
-  --param_ionsdiff_low_k=20.0 --param_ionsdiff_high_k=10.0
-```
-
 ## resources/example/data/execution-parameters.json
 
 ```json
@@ -566,3 +550,19 @@ The `samplesInfo.xlsx` is optional but strongly recommended. Without it:
 The quality thresholds are fully configurable via parameters, making the
 component adaptable to other monitoring programmes with different
 analytical precision standards.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\5-water-chemistry-samples-quality-validation"
+
+docker build -t water-chemistry-samples-quality-validation:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  water-chemistry-samples-quality-validation:0.0.1 `
+  --param_ionsdiff_low_k=20.0 --param_ionsdiff_high_k=10.0
+```

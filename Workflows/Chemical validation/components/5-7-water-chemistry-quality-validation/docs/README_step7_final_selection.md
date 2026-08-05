@@ -108,21 +108,6 @@ from `samplesInfo.xlsx`, it is simply not added to the output.
 
 None. The selection logic is fixed and deterministic.
 
----
-
-## Local execution (Windows PowerShell)
-
-```powershell
-cd "C:\path\to\7-select-data-for-final-report"
-
-docker build -t select-data-for-final-report:0.0.1 .
-
-docker run --rm `
-  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
-  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  select-data-for-final-report:0.0.1
-```
-
 ## resources/example/data/execution-parameters.json
 
 ```json
@@ -339,3 +324,18 @@ The resulting output contains a single row for that site and month, representing
 - Different sampling typologies and instruments from the same site and month
   remain separate during monthly aggregation.
 - The output file has a single sheet named `Datos`.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\7-select-data-for-final-report"
+
+docker build -t select-data-for-final-report:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  select-data-for-final-report:0.0.1
+```
