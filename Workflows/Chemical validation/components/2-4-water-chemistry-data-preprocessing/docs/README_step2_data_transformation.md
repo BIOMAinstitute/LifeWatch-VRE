@@ -21,7 +21,7 @@ InputDataFormatValidation  →  WaterChemicalDataTransformation  →  LoqApplica
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| input-data | Zip | `/mnt/inputs/allData_templates_format_validated.zip` | ZIP of validated Excel files from component 1. Each file must have a sheet named `data`. |
+| input-data | Zip | `/mnt/inputs/data_validated.zip` | ZIP of validated Excel files from component 1. Each file must have a sheet named `data`. |
 
 ## Outputs
 
@@ -218,18 +218,6 @@ SiteCode is read from the **`SiteCode` column inside each Excel file** — never
 from the filename. A single file may contain rows belonging to multiple
 SiteCodes. The component groups all rows by SiteCode and produces one output
 CSV per SiteCode per subprogram.
-
----
-
-## How replicate (REP) files are handled
-
-If a filename contains `_REP` (case-insensitive), the string `_REP` is
-appended to every `SampleID` in that file. This distinguishes replicate
-measurements from originals in the output CSVs, while keeping them in the
-same dataset for subsequent steps.
-
-Example: a sample `05PS INT` in file `2025_01_FOREST_AMMONIUM_REP.xlsx`
-becomes `05PS INT_REP` in the output CSV.
 
 ---
 
