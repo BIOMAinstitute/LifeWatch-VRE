@@ -70,13 +70,3 @@ scripts/
 ├── validation_report.py
 └── data2final_report.py
 ```
-
-## Docker test
-
-```bash
-bash pipelineUnitTest.sh
-```
-
-The unit test builds the image, executes the full pipeline with the included example data, checks every declared output, verifies ZIP and PDF integrity and confirms the expected dimensions of the example Excel outputs.
-
-The detailed documentation inherited from the original components is retained in `docs/`.
