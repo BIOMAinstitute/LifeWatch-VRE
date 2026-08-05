@@ -35,19 +35,6 @@ None.
 
 ---
 
-## Local execution (Windows PowerShell)
-
-```powershell
-cd "C:\path\to\2-water-chemical-data-transformation"
-
-docker build -t water-chemical-data-transformation:0.0.1 .
-
-docker run --rm `
-  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
-  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  water-chemical-data-transformation:0.0.1
-```
-
 ## resources/example/data/execution-parameters.json
 
 ```json
@@ -247,3 +234,18 @@ They are bundled into `water_chemical_data_transformed.zip`.
 - Deduplication for pH/conductivity is done on
   `(SiteCode, SampleID, EndDate, month)`.
 - If a SiteCode value is NaN or missing, that row is excluded from all outputs.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\2-water-chemical-data-transformation"
+
+docker build -t water-chemical-data-transformation:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  water-chemical-data-transformation:0.0.1
+```
