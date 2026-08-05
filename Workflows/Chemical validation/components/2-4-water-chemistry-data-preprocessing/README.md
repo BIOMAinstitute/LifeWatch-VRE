@@ -1,8 +1,8 @@
 # Water Chemistry Preprocessing
 
-This component is the first data-processing step of the chemical validation workflow. It is designed to prepare laboratory results obtained from the routine chemical analysis of environmental samples collected in the field, particularly within long-term monitoring programmes such as ICP Forests and ICP Integrated Monitoring.
+This component is the first data-processing step of the chemical validation workflow. Chemical validation is the process that ensures laboratory data meet the required quality standards to be reliably reported and used in subsequent analyses. So, this componener is designed to first preprocess laboratory results obtained from the routine chemical analysis of environmental samples collected in the field, particularly within long-term monitoring programmes such as ICP Forests and ICP Integrated Monitoring.
 
-Before running the component, the analytical results must be entered in the official templates without changing their structure, including worksheet names, column names, units and expected data formats. The completed templates must first be checked with the TabularDataValidator component, using the supplied tables_config.json configuration. This initial validation ensures that required columns are present, mandatory fields are completed, dates and numerical values use the correct format, and the files can be safely processed by the workflow.
+Before running the component, the analytical results must be entered in the official templates without changing their structure, including worksheet names, column names, units and expected data formats (see the table structure below). The completed templates must first be checked with the TabularDataValidator component, using the supplied tables_config.json configuration (provided within this component). This initial validation ensures that required columns are present, mandatory fields are completed, dates and numerical values use the correct format, and the files can be safely processed by the workflow.
 
 Once the validated ZIP is provided as input, this preprocessing component executes three consecutive operations:
 
@@ -32,7 +32,7 @@ water_chemical_data_preprocessed.zip
 This component provides the main preprocessing operations required to convert raw laboratory results into harmonised chemical datasets ready for quality assessment. Its principal utilities include:
 
 * calculation of volume-weighted pH and conductivity values when several analytical records or collection volumes must be combined;
-* calculation of alkalinity from the titration measurements, including HCl concentration, acid volume and analysed sample volume -> GRAN METHOD;
+* calculation of alkalinity from the titration measurements, including HCl concentration, acid volume and analysed sample volume: GRAN METHOD;
 * integration of results from the different laboratory templates, including ammonium, anions, cations, dissolved organic carbon and total nitrogen;
 * application of laboratory limits of quantification and recording of all substituted values;
 * conversion of the original analytical concentrations into the standard units; mg/l, ug/l and ueq/l
@@ -40,19 +40,15 @@ This component provides the main preprocessing operations required to convert ra
 
 These operations reduce the need for manual calculations, ensure consistent treatment across sites and sampling periods, and provide a reproducible starting point for the chemical quality-control procedure.
 
-It is not necessary to provide all analytical templates in every execution. The component processes only the available data: for example, it can calculate alkalinity from an alkalinity template, calculate weighted pH and conductivity from the corresponding template, or perform unit conversions only for the analytical datasets supplied. Therefore, users should include only the completed templates relevant to the analyses or transformations they need.
+It is not necessary to provide all analytical templates in every execution. The component processes only the available data: for example, it can calculate alkalinity from an alkalinity template, calculate weighted pH and conductivity from the corresponding template, or perform unit conversions only for the analytical datasets supplied. Therefore, **users should include only the completed templates relevant to the analyses or transformations they need.**
 
 ---
 
 ## How replicate (REP) files are handled
 
-If a filename contains `_REP` (case-insensitive), the string `_REP` is
-appended to every `SampleID` in that file. This distinguishes replicate
-measurements from originals in the output CSVs, while keeping them in the
-same dataset for subsequent steps.
+If a validation is not successfully passed, the corresponding laboratory analysis must be repeated. Files containing repeated analyses should include the suffix `_REP` (case-insensitive) in their filename. During preprocessing, the string `_REP` is appended to every `SampleID` in that file, allowing repeated analyses to be uniquely identified while preserving the link to the original sample.
 
-Example: a sample `05PS INT` in file `2025_01_FOREST_AMMONIUM_REP.xlsx`
-becomes `05PS INT_REP` in the output CSV.
+Within this component, original and repeated analyses are treated as independent samples, and all procedures and calculations are performed separately for each of them. For example, a sample `05PS INT` in the file `2025_01_FOREST_AMMONIUM_REP.xlsx` becomes `05PS INT_REP` in the output CSV. In the subsequent and final component of the workflow, the original and repeated analyses are matched using their identifiers, and the most appropriate result is selected according to the validation criteria. If both analyses fail the validation, the original result is retained and reported.
 
 ---
 
@@ -295,18 +291,4 @@ docker run --rm \
   --param_NO3 0.05
 ```
 
-## Unit test
-
-```bash
-bash pipelineUnitTest.sh
-```
-
-The test:
-
-1. builds the Docker image;
-2. runs the full three-stage chain using the original example workbooks;
-3. checks that the final ZIP, LOQ log and pipeline log exist and are non-empty;
-4. verifies ZIP integrity;
-5. verifies that the expected 84 CSV files were generated.
-
-The detailed original documentation for each processing stage is preserved unchanged under `docs/`.
+## The detailed original documentation for each processing stage is preserved unchanged under `docs/`.
