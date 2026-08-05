@@ -1,11 +1,6 @@
 # 4 — Unit Transformation
 
-Converts water chemistry measurements to a standardised set of three units
-per analyte: **mg/l**, **µg/l** and **µeq/l**. The transformation is
-**unit-agnostic**: the input unit is automatically detected from the column
-name (e.g. `NH4N(µg/l)`) and the three output columns are generated regardless
-of which unit was originally used. If only one unit representation exists in
-the input, all three will exist in the output.
+Converts water chemistry measurements to a standardised set of three units per analyte: `mg/l`, `µg/l`, and `µeq/l`. The input measurement must be provided in one of these three units, which is automatically detected from the column name (e.g. `NH4N(µg/l)`). The remaining two unit representations are then calculated automatically, so that all three units are available in the output regardless of the original input unit.
 
 Also handles four paired cross-conversions between molecular and elemental
 forms, generating both representations simultaneously:
@@ -40,21 +35,6 @@ LoqApplication  →  UnitTransformation  →  WaterChemistryValidation
 
 None. The transformation is fully deterministic from the column names and
 the built-in chemical constants (atomic weights, molecular weights, valences).
-
----
-
-## Local execution (Windows PowerShell)
-
-```powershell
-cd "C:\path\to\4-water-chemistry-unit-transformation"
-
-docker build -t water-chemistry-unit-transformation:0.0.1 .
-
-docker run --rm `
-  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
-  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
-  water-chemistry-unit-transformation:0.0.1
-```
 
 ## resources/example/data/execution-parameters.json
 
@@ -260,7 +240,7 @@ and are not in the analyte dictionary. They pass through unchanged.
 
 ## Reusing this component with other datasets
 
-This component can be applied to **any ZIP of tab-separated CSV files** as
+This component can be applied to **any ZIP of template files** as
 long as these conditions are met:
 
 ### ✅ Requirements
@@ -269,11 +249,7 @@ long as these conditions are met:
    e.g. `CA(mg/l)`, `NO3(µg/l)`, `SO4(µeq/l)`. The analyte name is matched
    case-insensitively against the supported list.
 
-2. **Tab separator (`\t`):** files must use tab as the column delimiter.
-
-3. **Header row:** the first row must contain column names.
-
-4. **Numeric values:** analyte columns must contain numbers or be empty.
+2. **Numeric values:** analyte columns must contain numbers or be empty.
 
 ### ✅ Supported input units
 
@@ -313,3 +289,18 @@ not recalculated. Only genuinely missing unit columns are added.
   analyte in the dictionary.
 - All output CSVs use tab (`\t`) as the column separator and include a
   header row, preserving the same format as the input.
+
+---
+
+## Local execution (Windows PowerShell)
+
+```powershell
+cd "C:\path\to\4-water-chemistry-unit-transformation"
+
+docker build -t water-chemistry-unit-transformation:0.0.1 .
+
+docker run --rm `
+  -v "${PWD}/resources/example/data/inputs:/mnt/inputs:ro" `
+  -v "${PWD}/resources/example/data/outputs:/mnt/outputs" `
+  water-chemistry-unit-transformation:0.0.1
+```
