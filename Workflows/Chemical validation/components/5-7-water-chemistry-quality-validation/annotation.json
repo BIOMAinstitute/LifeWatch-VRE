@@ -73,20 +73,6 @@
   ],
   "outputs": [
     {
-      "type": "Zip",
-      "name": "output-alldata",
-      "label": "Calculated allData ZIP",
-      "path": "/mnt/outputs/water_chemical_alldata_calculated.zip",
-      "description": "One merged CSV per SiteCode containing the calculated chemical variables before the quality-validation indicator columns are appended."
-    },
-    {
-      "type": "Zip",
-      "name": "output-validated",
-      "label": "Validated allData ZIP",
-      "path": "/mnt/outputs/water_chemical_alldata_validated.zip",
-      "description": "One CSV per SiteCode containing calculated chemical variables, chemical quality indicators and FINAL_VALIDATION."
-    },
-    {
       "type": "Bin",
       "name": "output-pdf",
       "label": "Validation report PDF",

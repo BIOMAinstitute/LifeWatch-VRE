@@ -245,7 +245,7 @@ the volume-weighted average across collectors to produce one row per sample.
 ---
 
 ### ALKALINITY template  ⚠️ Special case
-**File naming:** `YYYY_ALKALINITY_MM(_REP).xlsx`
+**File naming:** `YYYY_MM_ALKALINITY(_REP).xlsx`
 **Example:** `2025_ALKALINITY_05.xlsx`
 
 This template is also different: **each sample has multiple rows**, one per

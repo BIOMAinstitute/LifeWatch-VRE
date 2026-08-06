@@ -22,8 +22,8 @@ OUTPUT_ROOT = Path("/mnt/outputs")
 WORK_ROOT = Path("/tmp/water_chemistry_quality_report")
 SCRIPT_ROOT = Path(__file__).resolve().parent / "scripts"
 
-OUTPUT_ALLDATA_ZIP = OUTPUT_ROOT / "water_chemical_alldata_calculated.zip"
-OUTPUT_VALIDATED_ZIP = OUTPUT_ROOT / "water_chemical_alldata_validated.zip"
+INTERNAL_ALLDATA_ZIP = WORK_ROOT / "water_chemical_alldata_calculated.zip"
+INTERNAL_VALIDATED_ZIP = WORK_ROOT / "water_chemical_alldata_validated.zip"
 OUTPUT_PDF = OUTPUT_ROOT / "validation_report.pdf"
 OUTPUT_REPEAT = OUTPUT_ROOT / "Samples2Repeat.xlsx"
 OUTPUT_ALL = OUTPUT_ROOT / "All_Validated_Data.xlsx"
@@ -31,13 +31,19 @@ OUTPUT_FINAL = OUTPUT_ROOT / "Final_Data.xlsx"
 PIPELINE_LOG = OUTPUT_ROOT / "pipeline_execution.log"
 
 PUBLIC_OUTPUTS = (
-    OUTPUT_ALLDATA_ZIP,
-    OUTPUT_VALIDATED_ZIP,
     OUTPUT_PDF,
     OUTPUT_REPEAT,
     OUTPUT_ALL,
     OUTPUT_FINAL,
     PIPELINE_LOG,
+)
+
+# Remove legacy ZIP outputs from /mnt/outputs if the same mounted directory was
+# used by an earlier component version. The ZIP files remain internal temporary
+# artifacts under WORK_ROOT and are not published as component outputs.
+LEGACY_ZIP_OUTPUTS = (
+    OUTPUT_ROOT / "water_chemical_alldata_calculated.zip",
+    OUTPUT_ROOT / "water_chemical_alldata_validated.zip",
 )
 
 QUALITY_PARAMETERS: list[tuple[str, float]] = [
@@ -208,7 +214,7 @@ def validate_parameters(args: argparse.Namespace) -> None:
 
 def clear_previous_outputs() -> None:
     OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    for path in PUBLIC_OUTPUTS:
+    for path in (*PUBLIC_OUTPUTS, *LEGACY_ZIP_OUTPUTS):
         if path.exists():
             path.unlink()
 
@@ -252,21 +258,21 @@ def main() -> int:
                 "INPUT_SAMPLES_PATH": str(samples_file),
                 "OUTPUT_ALLDATA_DIR": str(step5_root / "level2_alldata"),
                 "OUTPUT_VALIDATED_DIR": str(step5_root / "level2_validated"),
-                "OUTPUT_ALLDATA_ZIP": str(OUTPUT_ALLDATA_ZIP),
-                "OUTPUT_VALIDATED_ZIP": str(OUTPUT_VALIDATED_ZIP),
+                "OUTPUT_ALLDATA_ZIP": str(INTERNAL_ALLDATA_ZIP),
+                "OUTPUT_VALIDATED_ZIP": str(INTERNAL_VALIDATED_ZIP),
                 "EXTRACT_DIR": str(step5_root / "extracted_input"),
             },
             arguments=quality_arguments,
             log_handle=log,
         )
-        require_file(OUTPUT_ALLDATA_ZIP, "Merged allData ZIP")
-        require_file(OUTPUT_VALIDATED_ZIP, "Validated data ZIP")
+        require_file(INTERNAL_ALLDATA_ZIP, "Internal merged allData ZIP")
+        require_file(INTERNAL_VALIDATED_ZIP, "Internal validated data ZIP")
 
         run_step(
             title="STEP 6 — CHEMISTRY QUALITY VALIDATED REPORT",
             script=SCRIPT_ROOT / "validation_report.py",
             environment={
-                "INPUT_ZIP_PATH": str(OUTPUT_VALIDATED_ZIP),
+                "INPUT_ZIP_PATH": str(INTERNAL_VALIDATED_ZIP),
                 "INPUT_SAMPLES_PATH": str(samples_file),
                 "OUTPUT_PDF_PATH": str(OUTPUT_PDF),
                 "OUTPUT_REPEAT_PATH": str(OUTPUT_REPEAT),

@@ -1,0 +1,107 @@
+{
+  "defaults": {
+    "supported_extensions": [
+      ".xlsx",
+      ".xlsm",
+      ".xls",
+      ".csv",
+      ".tsv",
+      ".txt"
+    ],
+    "reader": {
+      "excel": {
+        "sheet_name": "Hoja1"
+      },
+      "csv": {
+        "sep": ";",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      },
+      "tsv": {
+        "sep": "\\t",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      },
+      "txt": {
+        "sep": ";",
+        "decimal": ".",
+        "encoding": "utf-8-sig",
+        "quotechar": "\""
+      }
+    },
+    "na_values": [
+      "",
+      "n.a",
+      "n.a.",
+      "NA",
+      "N/A",
+      "na",
+      "NaN",
+      "null",
+      "NULL"
+    ],
+    "strip_column_names": true,
+    "strip_string_values": true,
+    "drop_completely_empty_rows": true,
+    "drop_unnamed_empty_columns": true,
+    "warn_unexpected_columns": true,
+    "warn_empty_optional_columns": true,
+    "fail_if_no_files": false,
+    "max_examples_per_rule": 8
+  },
+  "tables": [
+    {
+      "type": "example",
+      "patterns": [
+        "*example*"
+      ],
+      "columns": {
+        "fecha": {
+          "type": "datetime",
+          "format": "%d/%m/%Y",
+          "required": true,
+          "nullable": false
+        },
+        "localizacion": {
+          "type": "object",
+          "required": true,
+          "nullable": false
+        },
+        "altura": {
+          "type": "float",
+		  "required": true,
+          "min": 0
+        },
+        "verdad": {
+          "type": "object",
+          "allowed_values": [
+            "Y",
+            "N",
+			"Quizas"
+          ],
+          "case_sensitive": false
+        },
+        "medida": {
+          "type": "object",
+          "allowed_values": [
+            10,
+            20,
+			30
+          ],
+          "case_sensitive": false
+        },
+        "pH": {
+          "type": "float",
+          "min": 0,
+          "expected_range": [
+            0,
+            14
+          ],
+		  "case_sensitive": false
+        }
+      }
+    }
+  ]
+}

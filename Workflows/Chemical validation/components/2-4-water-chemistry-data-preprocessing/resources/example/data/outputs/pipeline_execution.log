@@ -1,11 +1,10 @@
-WATER CHEMISTRY PREPROCESSING — 2026-07-24 07:01:02
+WATER CHEMISTRY PREPROCESSING — 2026-08-06 09:34:52
 Input ZIP: /mnt/inputs/validated_data.zip
 
 ==============================================================================
 STEP 2 — WATER CHEMICAL DATA TRANSFORMATION
 ==============================================================================
 Input ZIP extracted to /tmp/water_chemistry_preprocessing/step2_transformation/extracted_input
-Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_ALKALINITY.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER_ALKALINITY.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_ALKALINITY.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_ALKALINITY.csv
@@ -19,6 +18,7 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/30_WATE
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/33_WATER_ALKALINITY.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/37_WATER_ALKALINITY.csv
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/54_WATER_ALKALINITY.csv
+Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/5_WATER_ALKALINITY.csv
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice

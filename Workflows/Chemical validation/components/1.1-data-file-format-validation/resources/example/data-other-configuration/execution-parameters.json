@@ -1,7 +1,7 @@
 {
   "parameters": [
     {"name": "stopOnErrors", "defaultValue": "TRUE", "value": "TRUE"},
-    {"name": "inputMode", "defaultValue": "AUTO", "value": "AUTO"},
+    {"name": "inputMode", "defaultValue": "AUTO", "value": "SINGLE_FILE"},
     {"name": "unmatchedFiles", "defaultValue": "ERROR", "value": "ERROR"},
     {"name": "outputPrefix", "defaultValue": "validated_", "value": "validated_"}
   ]

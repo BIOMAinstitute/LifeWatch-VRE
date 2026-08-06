@@ -1,11 +1,6 @@
 # 6 — Water Chemistry Validation Report
 
-Generates a validation report from the validated CSV files produced by
-component 5. The report summarises which samples passed or failed validation,
-compares original samples against their replicates, and identifies patterns
-by typology, site and month. No new scientific analysis is performed here —
-this component reads the quality flags computed in component 5 and presents
-them visually and in tabular form.
+Generates a validation report from the validated CSV files produced by the previous workflow component. The report summarises which samples passed or failed the chemical quality validation, compares original samples with their replicate analyses, and identifies patterns by sampling typology, site and month. No additional scientific calculations are performed in this component; it simply reads the quality indicators and validation flags computed in the previous step and presents them in graphical and tabular form.
 
 ---
 
@@ -21,14 +16,12 @@ WaterChemistryValidation  →  WaterChemistryValidationReport  →  Data2FinalRe
 
 | Name | Type | Path | Description |
 |------|------|------|-------------|
-| input-data | Zip | `/mnt/inputs/water_chemical_alldata_validated.zip` | ZIP of validated tab-separated CSV files from component 5. One CSV per SiteCode. |
+| input-data | Zip | `/mnt/inputs/water_chemical_alldata_validated.zip` | ZIP of validated tab-separated CSV files produced by the previous step of the chemical validation workflow. One CSV per SiteCode. One CSV per SiteCode. |
 | input-samples | Text | `/mnt/inputs/samplesInfo.xlsx` | SampleID → SamplingTypology mapping. Used to fill typology for REP samples and to define the sample sort order in report tables. |
 
 ### Required columns in the validated CSVs
 
-The component reads the following columns from each validated CSV. All are
-produced by component 5 — no manual preparation is needed if the data comes
-from that component.
+The component reads the following columns from each validated CSV file. These columns are expected to be already present in the input dataset, as they are generated during the previous step of the chemical validation workflow. No additional preprocessing or calculations are required before generating the report.
 
 **Identity columns** (always required):
 

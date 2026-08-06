@@ -36,6 +36,7 @@
 import os
 import re
 import sys
+import csv
 import zipfile
 import argparse
 from dataclasses import dataclass
@@ -233,6 +234,86 @@ def clean_id(value):
     return re.sub(r"[ _\-,.]", "", str(value).upper()) if pd.notna(value) else value
 
 
+def read_tab_separated_file(path):
+    """Read a component TSV and recover files exported as one quoted field.
+
+    Some spreadsheet/export tools wrap each complete tab-separated row in a
+    pair of double quotes. A normal TSV reader then sees a single column whose
+    header contains embedded tab characters. This function detects that case,
+    reparses the file with quote handling disabled and removes only the wrapper
+    quotes. Invalid files fail with an explicit filename and missing-column
+    message instead of silently removing an entire site from the pipeline.
+    """
+    path = Path(path)
+    required_identity = ["SampleID", "SiteCode", "SiteName", "year", "month"]
+
+    try:
+        frame = pd.read_csv(path, sep="\t")
+    except Exception as exc:
+        raise ValueError(f"Could not read {path.name}: {exc}") from exc
+
+    if not set(required_identity).issubset(frame.columns):
+        quoted_single_field = (
+            len(frame.columns) == 1
+            and "\t" in str(frame.columns[0])
+        )
+        if quoted_single_field:
+            try:
+                frame = pd.read_csv(path, sep="\t", quoting=csv.QUOTE_NONE)
+                frame.columns = [
+                    str(column).strip().strip('"') for column in frame.columns
+                ]
+                for column in frame.select_dtypes(include="object").columns:
+                    frame[column] = frame[column].map(
+                        lambda value: value.strip().strip('"')
+                        if isinstance(value, str)
+                        else value
+                    )
+                print(
+                    f"  Recovered quoted TSV structure in {path.name}"
+                )
+            except Exception as exc:
+                raise ValueError(
+                    f"Could not recover quoted TSV structure in {path.name}: {exc}"
+                ) from exc
+
+    missing = [column for column in required_identity if column not in frame.columns]
+    if missing:
+        raise ValueError(
+            f"{path.name} is missing required columns: {', '.join(missing)}"
+        )
+
+    return frame
+
+
+def filename_marks_repetition(filename):
+    """Return True when the input filename explicitly identifies REP data."""
+    return bool(re.search(r"(?:^|_)REP(?:_|\.|$)", str(filename).upper()))
+
+
+def normalise_sample_ids_for_file(frame, filename):
+    """Normalise SampleID and append REP when the filename marks a repeat.
+
+    The preprocessing stage may identify repeated analyses through a `_REP`
+    filename while leaving the SampleID values unchanged. Internally this
+    component needs a REP suffix to keep the original and repeated analytical
+    rows separate and to apply the NOREP/REP selection rules correctly.
+    """
+    result = frame.copy()
+    result["SampleID"] = result["SampleID"].apply(clean_id)
+    if filename_marks_repetition(filename):
+        sample_ids = result["SampleID"].astype("string")
+        needs_suffix = sample_ids.notna() & ~sample_ids.str.endswith("REP", na=False)
+        result.loc[needs_suffix, "SampleID"] = (
+            sample_ids.loc[needs_suffix] + "REP"
+        )
+        print(
+            f"  REP input detected in {filename}: "
+            f"marked {int(needs_suffix.sum())} rows as repeated analyses"
+        )
+    return result
+
+
 def ensure_columns(df, columns, to_numeric=False, fill_value=np.nan):
     """
     Ensures all listed columns exist in the DataFrame.
@@ -261,65 +342,87 @@ def safe_sum(df, cols):
 # ============================================================
 
 def merge_csv_files(input_dir, code):
-    """
-    Reads all CSV files that belong to a given SiteCode and merges
-    them into a single wide DataFrame (one row per sample).
+    """Merge all analytical families for one SiteCode.
 
-    File matching: filename must start with exactly <code>_ to avoid
-    partial matches (e.g. code '5' matching '50_...').
-    Each file is matched to a subprogram via PATTERNS keys in its name.
-    Analytical columns are merged on the identity columns. Dates and optional
-    hydrological pass-through fields are collected separately and coalesced so
-    they are preserved without producing duplicated _x/_y columns.
+    Files belonging to the same analytical family are concatenated vertically
+    first. This is essential for normal/REP pairs such as
+    `5_WATER_ALKALINITY.csv` and `5_WATER_ALKALINITY_REP.csv`: they contain the
+    same columns and represent different analytical rows, not different fields.
+    Only after each family has been assembled are the analytical families joined
+    horizontally on the sample identity columns.
     """
     all_data = pd.DataFrame()
     metadata_frames = []
-    files = [
+    files = sorted(
         f for f in os.listdir(input_dir)
         if f.split('_', 1)[0] == code and f.endswith(".csv")
-    ]
+    )
 
     id_cols = ['SampleID', 'SiteCode', 'SiteName', 'year', 'month']
 
-    for archivo in files:
-        for key, columns in PATTERNS.items():
+    for key, columns in PATTERNS.items():
+        family_frames = []
+
+        for archivo in files:
             if key not in archivo:
                 continue
 
-            df = pd.read_csv(os.path.join(input_dir, archivo), sep="\t")
+            file_path = os.path.join(input_dir, archivo)
+            df = read_tab_separated_file(file_path)
+            df = normalise_sample_ids_for_file(df, archivo)
 
             # Drop rows that have no analytical or metadata data beyond identity.
             data_cols = [c for c in df.columns if c not in id_cols]
-            df = df[df[data_cols].notna().sum(axis=1) > 0]
+            if data_cols:
+                df = df[df[data_cols].notna().sum(axis=1) > 0]
+            else:
+                df = df.iloc[0:0]
 
-            # Collect dates and optional hydrological fields independently from
-            # all analytical files. This allows future templates to provide them
-            # without changing the scientific validation calculations.
-            metadata_cols = [c for c in id_cols + PRESERVED_COLUMNS if c in df.columns]
+            # Collect dates and optional pass-through fields independently from
+            # all analytical files. The REP marker has already been applied to
+            # SampleID, so normal and repeated metadata remain separate.
+            metadata_cols = [
+                c for c in id_cols + PRESERVED_COLUMNS if c in df.columns
+            ]
             if len(metadata_cols) > len(id_cols):
                 metadata_frames.append(df[metadata_cols].copy())
 
-            # Keep only the columns defined for this analytical group.
             keep_cols = [c for c in columns if c in df.columns]
-            df = df[keep_cols]
-            df = df.drop_duplicates(subset=id_cols)
-            df['SampleID'] = df['SampleID'].apply(clean_id)
+            if not set(id_cols).issubset(keep_cols):
+                missing = [c for c in id_cols if c not in keep_cols]
+                raise ValueError(
+                    f"{archivo} cannot be used for {key}; missing identity "
+                    f"columns after selection: {', '.join(missing)}"
+                )
 
-            if all_data.empty:
-                all_data = df
-            else:
-                all_data = pd.merge(all_data, df, on=id_cols, how="outer")
-            break
+            family_frames.append(df[keep_cols].copy())
+
+        if not family_frames:
+            continue
+
+        # Normal and REP files from the same analytical family must be stacked,
+        # not merged side-by-side. When an exact duplicate exists, keep the most
+        # complete row deterministically.
+        family_data = pd.concat(family_frames, ignore_index=True, sort=False)
+        family_data['_num_nans'] = family_data.isna().sum(axis=1)
+        family_data = (
+            family_data
+            .sort_values(id_cols + ['_num_nans'], kind='stable')
+            .drop_duplicates(subset=id_cols, keep='first')
+            .drop(columns='_num_nans')
+        )
+
+        if all_data.empty:
+            all_data = family_data
+        else:
+            all_data = pd.merge(all_data, family_data, on=id_cols, how="outer")
 
     if all_data.empty:
         return all_data
 
     # Coalesce dates and optional pass-through fields across source files.
-    # No new hydrological value is calculated here: the first non-empty source
-    # value for each sample is preserved.
     if metadata_frames:
-        metadata = pd.concat(metadata_frames, ignore_index=True)
-        metadata['SampleID'] = metadata['SampleID'].apply(clean_id)
+        metadata = pd.concat(metadata_frames, ignore_index=True, sort=False)
         for col in PRESERVED_COLUMNS:
             if col not in metadata.columns:
                 metadata[col] = np.nan
@@ -340,7 +443,7 @@ def merge_csv_files(input_dir, code):
         all_data = all_data.merge(metadata, on=id_cols, how='left')
 
     all_data = all_data.reindex(columns=FINAL_COLUMNS)
-    all_data = all_data.sort_values(by=["year", "month"]).reset_index(drop=True)
+    all_data = all_data.sort_values(by=["year", "month", "SampleID"]).reset_index(drop=True)
     return all_data
 
 
@@ -759,6 +862,8 @@ else:
 files         = [f for f in os.listdir(extract_dir) if f.endswith(".csv")]
 unique_codes  = sorted(set(f.split('_')[0] for f in files))
 
+processing_errors = []
+
 for code in unique_codes:
     try:
         print(f"\nProcessing SiteCode: {code}")
@@ -798,7 +903,15 @@ for code in unique_codes:
         print(f"  Validated saved: {path_validated}")
 
     except Exception as e:
-        print(f"  [ERROR] SiteCode {code}: {e}")
+        message = f"SiteCode {code}: {type(e).__name__}: {e}"
+        processing_errors.append(message)
+        print(f"  [ERROR] {message}")
+
+if processing_errors:
+    raise RuntimeError(
+        "Chemical validation did not process every SiteCode successfully. "
+        + " | ".join(processing_errors)
+    )
 
 # ============================================================
 # PACKAGE OUTPUTS INTO ZIP ARCHIVES

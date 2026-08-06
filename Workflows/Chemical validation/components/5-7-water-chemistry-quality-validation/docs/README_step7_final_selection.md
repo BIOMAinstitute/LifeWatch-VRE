@@ -131,20 +131,6 @@ The **base SampleID** is the SampleID with the `REP` suffix removed
 | 3 | NOREP failed AND REP exists AND REP `VAL = NO` | Keep NOREP | Both failed — the sample was deliberately repeated and must be reported, but use the original. |
 | 4 | NOREP failed AND no REP exists | Discard | Unvalidated data with no chance of recovery — not included in the final dataset. |
 
-### Worked example
-
-| SampleID | year | month | VAL | Selected? | Rule |
-|----------|------|-------|-----|-----------|------|
-| 05PSINT | 2025 | 1 | SI | ✅ Yes (as NOREP) | 1 |
-| 05PSINT | 2025 | 2 | NO | — | — |
-| 05PSINT_REP | 2025 | 2 | SI | ✅ Yes (as REP) | 2 |
-| 05PSINT | 2025 | 3 | NO | ✅ Yes (as NOREP) | 3 |
-| 05PSINT_REP | 2025 | 3 | NO | — | — |
-| 05PSINT | 2025 | 4 | NO | ❌ Discarded | 4 |
-
-In the output, month 2 is represented by the REP row, month 3 by the NOREP
-row (both failed), and month 4 is absent.
-
 ### SampleID normalisation
 
 Before the grouping, all SampleIDs are normalised:
@@ -161,11 +147,9 @@ correctly identified as REP samples of the same base.
 
 After the NOREP/REP selection step, the script checks whether more than one selected sample exists for the same `SiteCode`, `SiteName`, `year` and `month` combination.
 
-When multiple selected samples are available for the same site and month, they are merged into a single monthly composite sample using **volume-weighted averaging**. This situation may occur when a monthly sample is represented by more than one collection bottle or analytical record.
+When multiple selected samples of the same sampling typology (i.e. the same subprogramme) are available for a given site and month, they are merged into a single monthly composite sample using volume-weighted averaging. This ensures that only one representative monthly value is reported for each sample type, even when the monthly sample is represented by multiple collection bottles or analytical records.
 
 The resulting output contains one representative row per `SiteCode`, `SiteName`, `year` and `month`.
-
----
 
 ### Weighting principle
 
@@ -255,32 +239,6 @@ pH_{final} = -\log_{10}([H^+]_{final})
 $$
 
 This approach ensures that the resulting pH is chemically consistent with the mixed sample.
-
----
-
-### Final SampleID
-
-After the monthly composite step, the final `SampleID` is regenerated using information from `samplesInfo.xlsx`.
-
-The format is:
-
-```text
-SiteCode_SamplingTypology_Instrument
-```
-
-Spaces are removed from `SamplingTypology`. The `Instrument` part is only added when it is not empty.
-
-Example with instrument:
-
-```text
-ES01_BulkDeposition_ICP
-```
-
-Example without instrument:
-
-```text
-ES01_BulkDeposition
-```
 
 ---
 

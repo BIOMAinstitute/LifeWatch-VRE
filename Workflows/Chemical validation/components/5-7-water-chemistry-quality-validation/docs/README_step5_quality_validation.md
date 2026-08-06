@@ -6,9 +6,8 @@ to a set of physicochemical checks that verify internal consistency of the
 measurements. The result is a `FINAL_VALIDATION` flag (SI/NO) per sample,
 indicating whether the data are fit for reporting.
 
-The component merges all subprogram CSV files for each SiteCode into a single
-wide table, propagates metadata to replicate samples, joins the sampling
-typology from `samplesInfo.xlsx`, and runs 14 sequential calculation modules
+This first script merges all subprogram CSV files for each SiteCode into a single
+wide table, joins the sampling typology from `samplesInfo.xlsx` (metadata input), and runs 14 sequential calculation modules
 to derive all chemical quality indicators.
 
 ---

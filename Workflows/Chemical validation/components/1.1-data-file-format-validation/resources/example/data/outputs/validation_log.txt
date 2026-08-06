@@ -1,28 +1,489 @@
-TABLE VALIDATION — 2026-07-20 09:07:52
+TABLE VALIDATION — 2026-08-06 09:31:47
 ==============================================================================
 Input mode: AUTO
-Files checked: 2
-Files without critical errors: 2
+Files checked: 45
+Files without critical errors: 45
 Critical errors: 0
-Warnings: 2
+Warnings: 206
 ==============================================================================
 
 INPUT PREPARATION
-• Prepared standalone file: example.csv -> example.csv (csv)
-• Prepared standalone file: example.xlsx -> example.xlsx (excel)
+• Extracted archive: input_data.zip
 ------------------------------------------------------------------------------
 
-Table type: example
-File: input_data/example.csv
+Table type: Ammonium
+File: input_data/input_data/2025_01_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
-Reader: {'kind': 'csv', 'detected_kind': 'csv', 'sep': ';', 'decimal': '.', 'encoding': 'utf-8-sig', 'quotechar': '"'}
-Dimensions: 9 row(s) x 6 column(s)
-⚠️  Column 'pH' has 1 value(s) outside expected range [0, 14]: row 10: '15'
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 9 column(s)
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
-Table type: example
-File: input_data/example.xlsx
+Table type: Anions
+File: input_data/input_data/2025_01_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
-Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'Hoja1'}
-Dimensions: 9 row(s) x 6 column(s)
-⚠️  Column 'pH' has 1 value(s) outside expected range [0, 14]: row 10: 15
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 12 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Cations
+File: input_data/input_data/2025_01_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------------------------
+Table type: DocTN
+File: input_data/input_data/2025_01_FOREST_DOC_TN.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 10 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: phWeighted
+File: input_data/input_data/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 180 row(s) x 20 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'EndDate' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Ammonium
+File: input_data/input_data/2025_02_FOREST_AMMONIUM.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 9 column(s)
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Anions
+File: input_data/input_data/2025_02_FOREST_ANIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 12 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Cations
+File: input_data/input_data/2025_02_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------------------------
+Table type: DocTN
+File: input_data/input_data/2025_02_FOREST_DOC_TN.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 10 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: phWeighted
+File: input_data/input_data/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 180 row(s) x 20 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'EndDate' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Ammonium
+File: input_data/input_data/2025_03_FOREST_AMMONIUM.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 9 column(s)
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Anions
+File: input_data/input_data/2025_03_FOREST_ANIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 12 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Cations
+File: input_data/input_data/2025_03_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: DocTN
+File: input_data/input_data/2025_03_FOREST_DOC_TN.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 10 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: phWeighted
+File: input_data/input_data/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 180 row(s) x 20 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'EndDate' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Ammonium
+File: input_data/input_data/2025_04_FOREST_AMMONIUM.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 9 column(s)
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Anions
+File: input_data/input_data/2025_04_FOREST_ANIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 12 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Cations
+File: input_data/input_data/2025_04_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------------------------
+Table type: DocTN
+File: input_data/input_data/2025_04_FOREST_DOC_TN.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 10 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: phWeighted
+File: input_data/input_data/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 180 row(s) x 20 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'EndDate' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+------------------------------------------------------------------------------
+Table type: Ammonium
+File: input_data/input_data/2025_05_FOREST_AMMONIUM.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 9 column(s)
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Anions
+File: input_data/input_data/2025_05_FOREST_ANIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 12 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Cations
+File: input_data/input_data/2025_05_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------------------------
+Table type: DocTN
+File: input_data/input_data/2025_05_FOREST_DOC_TN.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 10 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: phWeighted
+File: input_data/input_data/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 180 row(s) x 20 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'EndDate' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Ammonium
+File: input_data/input_data/2025_06_FOREST_AMMONIUM.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 9 column(s)
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Anions
+File: input_data/input_data/2025_06_FOREST_ANIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 12 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'PO4(mg/l)' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Cations
+File: input_data/input_data/2025_06_FOREST_CATIONS.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 25 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'AS(mg/l)' is completely empty
+⚠️  Optional column 'CD(mg/l)' is completely empty
+⚠️  Optional column 'CR(mg/l)' is completely empty
+⚠️  Optional column 'CU(mg/l)' is completely empty
+⚠️  Optional column 'CO(mg/l)' is completely empty
+⚠️  Optional column 'NI(mg/l)' is completely empty
+⚠️  Optional column 'PB(mg/l)' is completely empty
+⚠️  Optional column 'ZN(mg/l)' is completely empty
+⚠️  Optional column 'P(mg/l)' is completely empty
+⚠️  Optional column 'S(mg/l)' is completely empty
+------------------------------------------------------------------------------
+Table type: DocTN
+File: input_data/input_data/2025_06_FOREST_DOC_TN.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 50 row(s) x 10 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: phWeighted
+File: input_data/input_data/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 340 row(s) x 20 column(s)
+⚠️  Unexpected column(s): ['month', 'year']
+⚠️  Optional column 'StartDate' is completely empty
+⚠️  Optional column 'EndDate' is completely empty
+⚠️  Optional column 'Tare(g)' is completely empty
+⚠️  Optional column 'Tare+Sample(g)' is completely empty
+⚠️  Optional column 'sampler_radius' is completely empty
+⚠️  Optional column 'Saturated(Y/N)' is completely empty
+⚠️  Optional column 'Temperature(ºC)' is completely empty
+⚠️  Optional column 'DO(%)' is completely empty
+⚠️  Optional column 'DO(ppm)' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_06.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 301 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_07.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 258 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_10.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 237 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_102.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 988 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_11.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 187 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_115.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 668 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_22.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 520 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_25.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 246 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_26.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 342 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_30.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 819 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_33.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 485 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_37.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 292 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_ALKALINITY_54.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 375 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_XX_ALKALINITY_05.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 1041 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
+------------------------------------------------------------------------------
+Table type: Alkalinity
+File: input_data/input_data/2025_XX_ALKALINITY_05_REP.xlsx
+Configuration assignment: filename pattern
+Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
+Dimensions: 26 row(s) x 10 column(s)
+⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
