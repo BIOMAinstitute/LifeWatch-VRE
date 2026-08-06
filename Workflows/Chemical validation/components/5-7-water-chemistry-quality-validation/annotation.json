@@ -68,7 +68,7 @@
       "name": "input-samples",
       "label": "Samples information file",
       "path": "/mnt/inputs/samplesInfo.xlsx",
-      "description": "Excel metadata file used by all three internal stages. It must include SampleID and should include SamplingTypology. ICP_Program, Instrument, ID_PostgreSQL and a dedicated subprogram column are used when available; SamplingTypology is not treated as subprogram."
+      "description": "Excel metadata file used by all three internal stages. It must include SampleID and should include SamplingTypology. ICP_Program, Instrument, ID_PostgreSQL and a dedicated subprogram column are used when available."
     }
   ],
   "outputs": [
