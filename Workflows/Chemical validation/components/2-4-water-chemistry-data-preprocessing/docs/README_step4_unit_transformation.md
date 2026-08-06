@@ -233,7 +233,7 @@ column is expanded into three. Below are the new columns added per CSV type.
 ### ALKALINITY and pH/Conductivity CSVs
 
 These CSVs (`AlkalinityICPForests(µeq/l)`, `WeightedConductivity(µS/cm)`,
-`WeightedpH`, `H(µeq/l)` etc.) do not follow the `{ELEMENT}(mg/l)` pattern
+`WeightedpH`, etc.) do not follow the `{ELEMENT}(mg/l)` pattern
 and are not in the analyte dictionary. They pass through unchanged.
 
 ---
@@ -284,7 +284,7 @@ not recalculated. Only genuinely missing unit columns are added.
 - Both `μ` (Greek mu, U+03BC) and `µ` (micro sign, U+00B5) are treated
   identically throughout — the component normalises to the micro sign before
   any comparison.
-- The ALKALINITY excel template passes through this component without any unit expansion
+- The ALKALINITY excel template passes through this step without any unit expansion
   because its main column `AlkalinityICPForests(µeq/l)` does not match any
   analyte in the dictionary.
 - All output CSVs use tab (`\t`) as the column separator and include a
