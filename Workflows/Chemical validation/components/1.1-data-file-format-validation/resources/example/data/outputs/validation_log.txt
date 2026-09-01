@@ -1,4 +1,4 @@
-TABLE VALIDATION — 2026-08-06 09:31:47
+TABLE VALIDATION — 2026-09-01 10:48:39
 ==============================================================================
 Input mode: AUTO
 Files checked: 45
@@ -12,7 +12,7 @@ INPUT PREPARATION
 ------------------------------------------------------------------------------
 
 Table type: Ammonium
-File: input_data/input_data/2025_01_FOREST_AMMONIUM.xlsx
+File: input_data/2025_01_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 9 column(s)
@@ -20,7 +20,7 @@ Dimensions: 50 row(s) x 9 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Anions
-File: input_data/input_data/2025_01_FOREST_ANIONS.xlsx
+File: input_data/2025_01_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 12 column(s)
@@ -30,7 +30,7 @@ Dimensions: 50 row(s) x 12 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Cations
-File: input_data/input_data/2025_01_FOREST_CATIONS.xlsx
+File: input_data/2025_01_FOREST_CATIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 25 column(s)
@@ -48,7 +48,7 @@ Dimensions: 50 row(s) x 25 column(s)
 ⚠️  Optional column 'S(mg/l)' is completely empty
 ------------------------------------------------------------------------------
 Table type: DocTN
-File: input_data/input_data/2025_01_FOREST_DOC_TN.xlsx
+File: input_data/2025_01_FOREST_DOC_TN.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 10 column(s)
@@ -57,10 +57,10 @@ Dimensions: 50 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: phWeighted
-File: input_data/input_data/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+File: input_data/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
-Dimensions: 180 row(s) x 20 column(s)
+Dimensions: 180 row(s) x 21 column(s)
 ⚠️  Unexpected column(s): ['month', 'year']
 ⚠️  Optional column 'StartDate' is completely empty
 ⚠️  Optional column 'EndDate' is completely empty
@@ -74,7 +74,7 @@ Dimensions: 180 row(s) x 20 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Ammonium
-File: input_data/input_data/2025_02_FOREST_AMMONIUM.xlsx
+File: input_data/2025_02_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 9 column(s)
@@ -82,7 +82,7 @@ Dimensions: 50 row(s) x 9 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Anions
-File: input_data/input_data/2025_02_FOREST_ANIONS.xlsx
+File: input_data/2025_02_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 12 column(s)
@@ -92,7 +92,7 @@ Dimensions: 50 row(s) x 12 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Cations
-File: input_data/input_data/2025_02_FOREST_CATIONS.xlsx
+File: input_data/2025_02_FOREST_CATIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 25 column(s)
@@ -110,7 +110,7 @@ Dimensions: 50 row(s) x 25 column(s)
 ⚠️  Optional column 'S(mg/l)' is completely empty
 ------------------------------------------------------------------------------
 Table type: DocTN
-File: input_data/input_data/2025_02_FOREST_DOC_TN.xlsx
+File: input_data/2025_02_FOREST_DOC_TN.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 10 column(s)
@@ -119,10 +119,10 @@ Dimensions: 50 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: phWeighted
-File: input_data/input_data/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+File: input_data/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
-Dimensions: 180 row(s) x 20 column(s)
+Dimensions: 180 row(s) x 21 column(s)
 ⚠️  Unexpected column(s): ['month', 'year']
 ⚠️  Optional column 'StartDate' is completely empty
 ⚠️  Optional column 'EndDate' is completely empty
@@ -136,7 +136,7 @@ Dimensions: 180 row(s) x 20 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Ammonium
-File: input_data/input_data/2025_03_FOREST_AMMONIUM.xlsx
+File: input_data/2025_03_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 9 column(s)
@@ -144,7 +144,7 @@ Dimensions: 50 row(s) x 9 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Anions
-File: input_data/input_data/2025_03_FOREST_ANIONS.xlsx
+File: input_data/2025_03_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 12 column(s)
@@ -154,7 +154,7 @@ Dimensions: 50 row(s) x 12 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Cations
-File: input_data/input_data/2025_03_FOREST_CATIONS.xlsx
+File: input_data/2025_03_FOREST_CATIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 25 column(s)
@@ -173,7 +173,7 @@ Dimensions: 50 row(s) x 25 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: DocTN
-File: input_data/input_data/2025_03_FOREST_DOC_TN.xlsx
+File: input_data/2025_03_FOREST_DOC_TN.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 10 column(s)
@@ -182,10 +182,10 @@ Dimensions: 50 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: phWeighted
-File: input_data/input_data/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+File: input_data/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
-Dimensions: 180 row(s) x 20 column(s)
+Dimensions: 180 row(s) x 21 column(s)
 ⚠️  Unexpected column(s): ['month', 'year']
 ⚠️  Optional column 'StartDate' is completely empty
 ⚠️  Optional column 'EndDate' is completely empty
@@ -199,7 +199,7 @@ Dimensions: 180 row(s) x 20 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Ammonium
-File: input_data/input_data/2025_04_FOREST_AMMONIUM.xlsx
+File: input_data/2025_04_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 9 column(s)
@@ -207,7 +207,7 @@ Dimensions: 50 row(s) x 9 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Anions
-File: input_data/input_data/2025_04_FOREST_ANIONS.xlsx
+File: input_data/2025_04_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 12 column(s)
@@ -217,7 +217,7 @@ Dimensions: 50 row(s) x 12 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Cations
-File: input_data/input_data/2025_04_FOREST_CATIONS.xlsx
+File: input_data/2025_04_FOREST_CATIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 25 column(s)
@@ -235,7 +235,7 @@ Dimensions: 50 row(s) x 25 column(s)
 ⚠️  Optional column 'S(mg/l)' is completely empty
 ------------------------------------------------------------------------------
 Table type: DocTN
-File: input_data/input_data/2025_04_FOREST_DOC_TN.xlsx
+File: input_data/2025_04_FOREST_DOC_TN.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 10 column(s)
@@ -244,10 +244,10 @@ Dimensions: 50 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: phWeighted
-File: input_data/input_data/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+File: input_data/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
-Dimensions: 180 row(s) x 20 column(s)
+Dimensions: 180 row(s) x 21 column(s)
 ⚠️  Unexpected column(s): ['month', 'year']
 ⚠️  Optional column 'StartDate' is completely empty
 ⚠️  Optional column 'EndDate' is completely empty
@@ -260,7 +260,7 @@ Dimensions: 180 row(s) x 20 column(s)
 ⚠️  Optional column 'DO(ppm)' is completely empty
 ------------------------------------------------------------------------------
 Table type: Ammonium
-File: input_data/input_data/2025_05_FOREST_AMMONIUM.xlsx
+File: input_data/2025_05_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 9 column(s)
@@ -268,7 +268,7 @@ Dimensions: 50 row(s) x 9 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Anions
-File: input_data/input_data/2025_05_FOREST_ANIONS.xlsx
+File: input_data/2025_05_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 12 column(s)
@@ -278,7 +278,7 @@ Dimensions: 50 row(s) x 12 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Cations
-File: input_data/input_data/2025_05_FOREST_CATIONS.xlsx
+File: input_data/2025_05_FOREST_CATIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 25 column(s)
@@ -296,7 +296,7 @@ Dimensions: 50 row(s) x 25 column(s)
 ⚠️  Optional column 'S(mg/l)' is completely empty
 ------------------------------------------------------------------------------
 Table type: DocTN
-File: input_data/input_data/2025_05_FOREST_DOC_TN.xlsx
+File: input_data/2025_05_FOREST_DOC_TN.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 10 column(s)
@@ -305,10 +305,10 @@ Dimensions: 50 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: phWeighted
-File: input_data/input_data/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+File: input_data/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
-Dimensions: 180 row(s) x 20 column(s)
+Dimensions: 180 row(s) x 21 column(s)
 ⚠️  Unexpected column(s): ['month', 'year']
 ⚠️  Optional column 'StartDate' is completely empty
 ⚠️  Optional column 'EndDate' is completely empty
@@ -322,7 +322,7 @@ Dimensions: 180 row(s) x 20 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Ammonium
-File: input_data/input_data/2025_06_FOREST_AMMONIUM.xlsx
+File: input_data/2025_06_FOREST_AMMONIUM.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 9 column(s)
@@ -330,7 +330,7 @@ Dimensions: 50 row(s) x 9 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Anions
-File: input_data/input_data/2025_06_FOREST_ANIONS.xlsx
+File: input_data/2025_06_FOREST_ANIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 12 column(s)
@@ -340,7 +340,7 @@ Dimensions: 50 row(s) x 12 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Cations
-File: input_data/input_data/2025_06_FOREST_CATIONS.xlsx
+File: input_data/2025_06_FOREST_CATIONS.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 25 column(s)
@@ -358,7 +358,7 @@ Dimensions: 50 row(s) x 25 column(s)
 ⚠️  Optional column 'S(mg/l)' is completely empty
 ------------------------------------------------------------------------------
 Table type: DocTN
-File: input_data/input_data/2025_06_FOREST_DOC_TN.xlsx
+File: input_data/2025_06_FOREST_DOC_TN.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 50 row(s) x 10 column(s)
@@ -367,10 +367,10 @@ Dimensions: 50 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: phWeighted
-File: input_data/input_data/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx
+File: input_data/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
-Dimensions: 340 row(s) x 20 column(s)
+Dimensions: 340 row(s) x 21 column(s)
 ⚠️  Unexpected column(s): ['month', 'year']
 ⚠️  Optional column 'StartDate' is completely empty
 ⚠️  Optional column 'EndDate' is completely empty
@@ -383,105 +383,105 @@ Dimensions: 340 row(s) x 20 column(s)
 ⚠️  Optional column 'DO(ppm)' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_06.xlsx
+File: input_data/2025_ALKALINITY_06.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 301 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_07.xlsx
+File: input_data/2025_ALKALINITY_07.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 258 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_10.xlsx
+File: input_data/2025_ALKALINITY_10.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 237 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_102.xlsx
+File: input_data/2025_ALKALINITY_102.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 988 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_11.xlsx
+File: input_data/2025_ALKALINITY_11.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 187 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_115.xlsx
+File: input_data/2025_ALKALINITY_115.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 668 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_22.xlsx
+File: input_data/2025_ALKALINITY_22.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 520 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_25.xlsx
+File: input_data/2025_ALKALINITY_25.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 246 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_26.xlsx
+File: input_data/2025_ALKALINITY_26.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 342 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_30.xlsx
+File: input_data/2025_ALKALINITY_30.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 819 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_33.xlsx
+File: input_data/2025_ALKALINITY_33.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 485 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_37.xlsx
+File: input_data/2025_ALKALINITY_37.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 292 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_ALKALINITY_54.xlsx
+File: input_data/2025_ALKALINITY_54.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 375 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_XX_ALKALINITY_05.xlsx
+File: input_data/2025_XX_ALKALINITY_05.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 1041 row(s) x 10 column(s)
 ⚠️  Optional column 'Comments' is completely empty
 ------------------------------------------------------------------------------
 Table type: Alkalinity
-File: input_data/input_data/2025_XX_ALKALINITY_05_REP.xlsx
+File: input_data/2025_XX_ALKALINITY_05_REP.xlsx
 Configuration assignment: filename pattern
 Reader: {'kind': 'excel', 'detected_kind': 'excel', 'sheet_name': 'data'}
 Dimensions: 26 row(s) x 10 column(s)

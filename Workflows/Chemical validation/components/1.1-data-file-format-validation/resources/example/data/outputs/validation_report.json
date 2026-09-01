@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06T09:31:47",
+  "generated_at": "2026-09-01T10:48:39",
   "input_mode": "AUTO",
   "summary": {
     "files_checked": 45,
@@ -13,7 +13,7 @@
   "configuration_warnings": [],
   "files": [
     {
-      "file": "input_data/input_data/2025_01_FOREST_AMMONIUM.xlsx",
+      "file": "input_data/2025_01_FOREST_AMMONIUM.xlsx",
       "table_type": "Ammonium",
       "assignment_method": "filename pattern",
       "reader": {
@@ -31,7 +31,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_01_FOREST_ANIONS.xlsx",
+      "file": "input_data/2025_01_FOREST_ANIONS.xlsx",
       "table_type": "Anions",
       "assignment_method": "filename pattern",
       "reader": {
@@ -51,7 +51,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_01_FOREST_CATIONS.xlsx",
+      "file": "input_data/2025_01_FOREST_CATIONS.xlsx",
       "table_type": "Cations",
       "assignment_method": "filename pattern",
       "reader": {
@@ -79,7 +79,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_01_FOREST_DOC_TN.xlsx",
+      "file": "input_data/2025_01_FOREST_DOC_TN.xlsx",
       "table_type": "DocTN",
       "assignment_method": "filename pattern",
       "reader": {
@@ -98,7 +98,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "file": "input_data/2025_01_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
       "table_type": "phWeighted",
       "assignment_method": "filename pattern",
       "reader": {
@@ -107,7 +107,7 @@
         "sheet_name": "data"
       },
       "rows": 180,
-      "columns": 20,
+      "columns": 21,
       "errors": [],
       "warnings": [
         "Unexpected column(s): ['month', 'year']",
@@ -125,7 +125,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_02_FOREST_AMMONIUM.xlsx",
+      "file": "input_data/2025_02_FOREST_AMMONIUM.xlsx",
       "table_type": "Ammonium",
       "assignment_method": "filename pattern",
       "reader": {
@@ -143,7 +143,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_02_FOREST_ANIONS.xlsx",
+      "file": "input_data/2025_02_FOREST_ANIONS.xlsx",
       "table_type": "Anions",
       "assignment_method": "filename pattern",
       "reader": {
@@ -163,7 +163,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_02_FOREST_CATIONS.xlsx",
+      "file": "input_data/2025_02_FOREST_CATIONS.xlsx",
       "table_type": "Cations",
       "assignment_method": "filename pattern",
       "reader": {
@@ -191,7 +191,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_02_FOREST_DOC_TN.xlsx",
+      "file": "input_data/2025_02_FOREST_DOC_TN.xlsx",
       "table_type": "DocTN",
       "assignment_method": "filename pattern",
       "reader": {
@@ -210,7 +210,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "file": "input_data/2025_02_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
       "table_type": "phWeighted",
       "assignment_method": "filename pattern",
       "reader": {
@@ -219,7 +219,7 @@
         "sheet_name": "data"
       },
       "rows": 180,
-      "columns": 20,
+      "columns": 21,
       "errors": [],
       "warnings": [
         "Unexpected column(s): ['month', 'year']",
@@ -237,7 +237,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_03_FOREST_AMMONIUM.xlsx",
+      "file": "input_data/2025_03_FOREST_AMMONIUM.xlsx",
       "table_type": "Ammonium",
       "assignment_method": "filename pattern",
       "reader": {
@@ -255,7 +255,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_03_FOREST_ANIONS.xlsx",
+      "file": "input_data/2025_03_FOREST_ANIONS.xlsx",
       "table_type": "Anions",
       "assignment_method": "filename pattern",
       "reader": {
@@ -275,7 +275,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_03_FOREST_CATIONS.xlsx",
+      "file": "input_data/2025_03_FOREST_CATIONS.xlsx",
       "table_type": "Cations",
       "assignment_method": "filename pattern",
       "reader": {
@@ -304,7 +304,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_03_FOREST_DOC_TN.xlsx",
+      "file": "input_data/2025_03_FOREST_DOC_TN.xlsx",
       "table_type": "DocTN",
       "assignment_method": "filename pattern",
       "reader": {
@@ -323,7 +323,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "file": "input_data/2025_03_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
       "table_type": "phWeighted",
       "assignment_method": "filename pattern",
       "reader": {
@@ -332,7 +332,7 @@
         "sheet_name": "data"
       },
       "rows": 180,
-      "columns": 20,
+      "columns": 21,
       "errors": [],
       "warnings": [
         "Unexpected column(s): ['month', 'year']",
@@ -350,7 +350,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_04_FOREST_AMMONIUM.xlsx",
+      "file": "input_data/2025_04_FOREST_AMMONIUM.xlsx",
       "table_type": "Ammonium",
       "assignment_method": "filename pattern",
       "reader": {
@@ -368,7 +368,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_04_FOREST_ANIONS.xlsx",
+      "file": "input_data/2025_04_FOREST_ANIONS.xlsx",
       "table_type": "Anions",
       "assignment_method": "filename pattern",
       "reader": {
@@ -388,7 +388,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_04_FOREST_CATIONS.xlsx",
+      "file": "input_data/2025_04_FOREST_CATIONS.xlsx",
       "table_type": "Cations",
       "assignment_method": "filename pattern",
       "reader": {
@@ -416,7 +416,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_04_FOREST_DOC_TN.xlsx",
+      "file": "input_data/2025_04_FOREST_DOC_TN.xlsx",
       "table_type": "DocTN",
       "assignment_method": "filename pattern",
       "reader": {
@@ -435,7 +435,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "file": "input_data/2025_04_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
       "table_type": "phWeighted",
       "assignment_method": "filename pattern",
       "reader": {
@@ -444,7 +444,7 @@
         "sheet_name": "data"
       },
       "rows": 180,
-      "columns": 20,
+      "columns": 21,
       "errors": [],
       "warnings": [
         "Unexpected column(s): ['month', 'year']",
@@ -461,7 +461,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_05_FOREST_AMMONIUM.xlsx",
+      "file": "input_data/2025_05_FOREST_AMMONIUM.xlsx",
       "table_type": "Ammonium",
       "assignment_method": "filename pattern",
       "reader": {
@@ -479,7 +479,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_05_FOREST_ANIONS.xlsx",
+      "file": "input_data/2025_05_FOREST_ANIONS.xlsx",
       "table_type": "Anions",
       "assignment_method": "filename pattern",
       "reader": {
@@ -499,7 +499,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_05_FOREST_CATIONS.xlsx",
+      "file": "input_data/2025_05_FOREST_CATIONS.xlsx",
       "table_type": "Cations",
       "assignment_method": "filename pattern",
       "reader": {
@@ -527,7 +527,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_05_FOREST_DOC_TN.xlsx",
+      "file": "input_data/2025_05_FOREST_DOC_TN.xlsx",
       "table_type": "DocTN",
       "assignment_method": "filename pattern",
       "reader": {
@@ -546,7 +546,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "file": "input_data/2025_05_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
       "table_type": "phWeighted",
       "assignment_method": "filename pattern",
       "reader": {
@@ -555,7 +555,7 @@
         "sheet_name": "data"
       },
       "rows": 180,
-      "columns": 20,
+      "columns": 21,
       "errors": [],
       "warnings": [
         "Unexpected column(s): ['month', 'year']",
@@ -573,7 +573,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_06_FOREST_AMMONIUM.xlsx",
+      "file": "input_data/2025_06_FOREST_AMMONIUM.xlsx",
       "table_type": "Ammonium",
       "assignment_method": "filename pattern",
       "reader": {
@@ -591,7 +591,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_06_FOREST_ANIONS.xlsx",
+      "file": "input_data/2025_06_FOREST_ANIONS.xlsx",
       "table_type": "Anions",
       "assignment_method": "filename pattern",
       "reader": {
@@ -611,7 +611,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_06_FOREST_CATIONS.xlsx",
+      "file": "input_data/2025_06_FOREST_CATIONS.xlsx",
       "table_type": "Cations",
       "assignment_method": "filename pattern",
       "reader": {
@@ -639,7 +639,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_06_FOREST_DOC_TN.xlsx",
+      "file": "input_data/2025_06_FOREST_DOC_TN.xlsx",
       "table_type": "DocTN",
       "assignment_method": "filename pattern",
       "reader": {
@@ -658,7 +658,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
+      "file": "input_data/2025_06_FOREST_pH_COND_WEIGHTED_RAW.xlsx",
       "table_type": "phWeighted",
       "assignment_method": "filename pattern",
       "reader": {
@@ -667,7 +667,7 @@
         "sheet_name": "data"
       },
       "rows": 340,
-      "columns": 20,
+      "columns": 21,
       "errors": [],
       "warnings": [
         "Unexpected column(s): ['month', 'year']",
@@ -684,7 +684,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_06.xlsx",
+      "file": "input_data/2025_ALKALINITY_06.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -701,7 +701,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_07.xlsx",
+      "file": "input_data/2025_ALKALINITY_07.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -718,7 +718,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_10.xlsx",
+      "file": "input_data/2025_ALKALINITY_10.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -735,7 +735,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_102.xlsx",
+      "file": "input_data/2025_ALKALINITY_102.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -752,7 +752,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_11.xlsx",
+      "file": "input_data/2025_ALKALINITY_11.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -769,7 +769,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_115.xlsx",
+      "file": "input_data/2025_ALKALINITY_115.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -786,7 +786,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_22.xlsx",
+      "file": "input_data/2025_ALKALINITY_22.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -803,7 +803,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_25.xlsx",
+      "file": "input_data/2025_ALKALINITY_25.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -820,7 +820,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_26.xlsx",
+      "file": "input_data/2025_ALKALINITY_26.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -837,7 +837,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_30.xlsx",
+      "file": "input_data/2025_ALKALINITY_30.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -854,7 +854,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_33.xlsx",
+      "file": "input_data/2025_ALKALINITY_33.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -871,7 +871,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_37.xlsx",
+      "file": "input_data/2025_ALKALINITY_37.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -888,7 +888,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_ALKALINITY_54.xlsx",
+      "file": "input_data/2025_ALKALINITY_54.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -905,7 +905,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_XX_ALKALINITY_05.xlsx",
+      "file": "input_data/2025_XX_ALKALINITY_05.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {
@@ -922,7 +922,7 @@
       "valid": true
     },
     {
-      "file": "input_data/input_data/2025_XX_ALKALINITY_05_REP.xlsx",
+      "file": "input_data/2025_XX_ALKALINITY_05_REP.xlsx",
       "table_type": "Alkalinity",
       "assignment_method": "filename pattern",
       "reader": {

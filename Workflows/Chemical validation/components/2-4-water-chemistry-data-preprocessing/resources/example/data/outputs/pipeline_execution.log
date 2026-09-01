@@ -1,4 +1,4 @@
-WATER CHEMISTRY PREPROCESSING — 2026-08-06 11:22:12
+WATER CHEMISTRY PREPROCESSING — 2026-09-01 10:41:24
 Input ZIP: /mnt/inputs/validated_data.zip
 
 ==============================================================================
@@ -453,7 +453,7 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/6_WATER
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
-/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+/app/scripts/data_transformation.py:301: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
   datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER_pH_COND_WEIGHTED_RAW.csv
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
@@ -528,7 +528,7 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/7_WATER
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
-/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+/app/scripts/data_transformation.py:301: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
   datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATER_pH_COND_WEIGHTED_RAW.csv
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
@@ -603,7 +603,7 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/10_WATE
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
-/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+/app/scripts/data_transformation.py:301: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
   datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/11_WATER_pH_COND_WEIGHTED_RAW.csv
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
@@ -775,7 +775,7 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATE
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
-/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+/app/scripts/data_transformation.py:301: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
   datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
@@ -825,7 +825,7 @@ Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/22_WATE
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice
   datosMensuales.loc[datosMensuales['SampleID'] == sample, col] = np.nanmean(valores)
-/app/scripts/data_transformation.py:281: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+/app/scripts/data_transformation.py:301: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
   datosAnalisis = pd.concat([datosAnalisis, datosMensuales], ignore_index=True)
 Exported: /tmp/water_chemistry_preprocessing/step2_transformation/level1/25_WATER_pH_COND_WEIGHTED_RAW.csv
 /app/scripts/data_transformation.py:229: RuntimeWarning: Mean of empty slice

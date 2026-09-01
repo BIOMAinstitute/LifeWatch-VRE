@@ -117,6 +117,10 @@
           ],
           "case_sensitive": false
         },
+		"Precip(l/m2)": {
+          "type": "float",
+          "min": 0
+        },
         "Conductivity(µS/cm)": {
           "type": "float",
           "min": 0

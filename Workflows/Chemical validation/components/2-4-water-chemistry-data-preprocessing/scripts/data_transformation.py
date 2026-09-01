@@ -236,9 +236,29 @@ if archivos:
 
                     # Precipitation: volume / (n_samples * collector_area)
                     radius = subset.loc[subset['SampleID'] == sample, 'sampler_radius'].mean()
+                    # Existing precipitation value, if provided in the template
                     if 'Precip(l/m2)' not in datosMensuales.columns:
                         datosMensuales['Precip(l/m2)'] = np.nan
-                    if pd.notna(radius):
+
+                    if 'Precip(l/m2)' in subset.columns:
+                        precip_values = subset.loc[
+                            subset['SampleID'] == sample,
+                            'Precip(l/m2)'
+                        ].dropna()
+
+                        precip = precip_values.iloc[0] if not precip_values.empty else np.nan
+                    else:
+                        precip = np.nan
+
+                    # If precipitation is already provided, keep it
+                    if pd.notna(precip):
+                        datosMensuales.loc[
+                            datosMensuales['SampleID'] == sample,
+                            'Precip(l/m2)'
+                        ] = precip
+
+                    
+                    if pd.notna(radius) and pd.isna(precip):
                         num_valid = subset.loc[
                             (subset['SampleID'] == sample) &
                             (subset['VolumeCollector(ml)'].notna())
