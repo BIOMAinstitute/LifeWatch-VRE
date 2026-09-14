@@ -1,0 +1,13 @@
+# .gitlab-ci.yml — controlled centrally.
+#
+# This file delegates the full pipeline to the central template at:
+#   workflows/workflow-pipeline/templates/component-ci-pipeline.yml (ref: main)
+#
+# To change the pipeline for this project (and every other project
+# that includes the same template), edit the central template. The
+# next pipeline run on this project will pick up the new version.
+
+include:
+  - project: 'workflows/workflow-pipeline'
+    ref: 'main'
+    file: '/templates/component-ci-pipeline.yml'

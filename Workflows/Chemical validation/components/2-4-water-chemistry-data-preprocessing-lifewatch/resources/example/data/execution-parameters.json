@@ -1,0 +1,124 @@
+{
+  "parameters": [
+    {
+      "name": "param_WeightedConductivity",
+      "defaultValue": "3.0",
+      "value": "3.0"
+    },
+    {
+      "name": "param_NH4N",
+      "defaultValue": "0.04",
+      "value": "0.04"
+    },
+    {
+      "name": "param_NO3",
+      "defaultValue": "0.05",
+      "value": "0.05"
+    },
+    {
+      "name": "param_SO4",
+      "defaultValue": "0.1",
+      "value": "0.1"
+    },
+    {
+      "name": "param_CL",
+      "defaultValue": "0.05",
+      "value": "0.05"
+    },
+    {
+      "name": "param_AS",
+      "defaultValue": "0.000025",
+      "value": "0.000025"
+    },
+    {
+      "name": "param_CD",
+      "defaultValue": "0.000008",
+      "value": "0.000008"
+    },
+    {
+      "name": "param_CR",
+      "defaultValue": "0.000037",
+      "value": "0.000037"
+    },
+    {
+      "name": "param_CU",
+      "defaultValue": "0.000062",
+      "value": "0.000062"
+    },
+    {
+      "name": "param_CO",
+      "defaultValue": "0.00001",
+      "value": "0.00001"
+    },
+    {
+      "name": "param_NI",
+      "defaultValue": "0.000073",
+      "value": "0.000073"
+    },
+    {
+      "name": "param_PB",
+      "defaultValue": "0.000011",
+      "value": "0.000011"
+    },
+    {
+      "name": "param_ZN",
+      "defaultValue": "0.000049",
+      "value": "0.000049"
+    },
+    {
+      "name": "param_P",
+      "defaultValue": "0.016603",
+      "value": "0.016603"
+    },
+    {
+      "name": "param_S",
+      "defaultValue": "0.5",
+      "value": "0.5"
+    },
+    {
+      "name": "param_CA",
+      "defaultValue": "0.15",
+      "value": "0.15"
+    },
+    {
+      "name": "param_K",
+      "defaultValue": "0.15",
+      "value": "0.15"
+    },
+    {
+      "name": "param_MG",
+      "defaultValue": "0.03",
+      "value": "0.03"
+    },
+    {
+      "name": "param_NA",
+      "defaultValue": "0.04",
+      "value": "0.04"
+    },
+    {
+      "name": "param_AL",
+      "defaultValue": "0.01",
+      "value": "0.01"
+    },
+    {
+      "name": "param_FE",
+      "defaultValue": "0.005",
+      "value": "0.005"
+    },
+    {
+      "name": "param_MN",
+      "defaultValue": "0.005",
+      "value": "0.005"
+    },
+    {
+      "name": "param_DOC",
+      "defaultValue": "0.5",
+      "value": "0.5"
+    },
+    {
+      "name": "param_TN",
+      "defaultValue": "0.1",
+      "value": "0.1"
+    }
+  ]
+}

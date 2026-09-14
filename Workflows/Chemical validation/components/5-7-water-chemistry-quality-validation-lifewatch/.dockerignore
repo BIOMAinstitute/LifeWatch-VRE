@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.git/
+.gitignore
+resources/example/data/outputs/*
+!resources/example/data/outputs/.gitignore
+*.zip
