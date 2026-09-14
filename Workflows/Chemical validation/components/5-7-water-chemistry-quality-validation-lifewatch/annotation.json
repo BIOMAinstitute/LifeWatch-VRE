@@ -1,0 +1,181 @@
+{
+  "name": "WaterChemistryQualityValidation",
+  "label": "Water Chemistry Quality Validation and Reporting",
+  "description": "This component represents the second stage of the chemical validation workflow. Runs three sequential stages in one component: physicochemical quality validation of preprocessed water chemistry data, generation of the validation PDF and Excel review files, and selection/aggregation of the final dataset for ICP reporting.",
+  "type": "DataAnalysing",
+  "dockerImage": "lw-water-chemistry-quality-report",
+  "parameters": [
+    {
+      "name": "param_ionsdiff_low_k",
+      "label": "Ion balance limit — low conductivity (µS/cm <= 20)",
+      "description": "Maximum allowed absolute ion-balance difference for samples with WeightedConductivity <= 20 µS/cm.",
+      "defaultValue": "20.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_ionsdiff_high_k",
+      "label": "Ion balance limit — high conductivity (µS/cm > 20)",
+      "description": "Maximum allowed absolute ion-balance difference for samples with WeightedConductivity > 20 µS/cm.",
+      "defaultValue": "10.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_low_1",
+      "label": "Conductivity difference limit — very low conductivity (µS/cm <= 10)",
+      "description": "Maximum allowed conductivity difference for samples with WeightedConductivity <= 10 µS/cm.",
+      "defaultValue": "30.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_low_2",
+      "label": "Conductivity difference limit — low conductivity (µS/cm 10–20)",
+      "description": "Maximum allowed conductivity difference for samples with WeightedConductivity between 10 and 20 µS/cm.",
+      "defaultValue": "20.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_conddiff_high",
+      "label": "Conductivity difference limit — high conductivity (µS/cm > 20)",
+      "description": "Maximum allowed conductivity difference for samples with WeightedConductivity > 20 µS/cm.",
+      "defaultValue": "10.0",
+      "type": "Float"
+    },
+    {
+      "name": "param_ratio_nacl_low",
+      "label": "Na/Cl ratio lower bound",
+      "description": "Minimum acceptable Na/Cl ratio on a µeq/l basis.",
+      "defaultValue": "0.5",
+      "type": "Float"
+    },
+    {
+      "name": "param_ratio_nacl_high",
+      "label": "Na/Cl ratio upper bound",
+      "description": "Maximum acceptable Na/Cl ratio on a µeq/l basis.",
+      "defaultValue": "1.5",
+      "type": "Float"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "Zip",
+      "name": "input-data",
+      "label": "Preprocessed water chemistry data ZIP",
+      "path": "/mnt/inputs/water_chemical_data_preprocessed.zip",
+      "description": "ZIP produced by the combined preprocessing component (steps 2–4), containing tab-separated site/subprogram CSV files with harmonised mg/l, µg/l and µeq/l representations."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "input-samples",
+      "label": "Samples information file",
+      "path": "/mnt/inputs/samplesInfo.xlsx",
+      "description": "Excel metadata file used by all three internal stages. It must include SampleID and should include SamplingTypology. ICP_Program, Instrument, ID_PostgreSQL and a dedicated subprogram column are used when available."
+    }
+  ],
+  "outputs": [
+    {
+      "type": "Bin",
+      "name": "output-pdf",
+      "label": "Validation report PDF",
+      "path": "/mnt/outputs/validation_report.pdf",
+      "description": "Multi-page PDF summary and detailed validation report."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-repeat",
+      "label": "Samples to repeat",
+      "path": "/mnt/outputs/Samples2Repeat.xlsx",
+      "description": "Samples whose final validation result is NO."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-all",
+      "label": "All validated data",
+      "path": "/mnt/outputs/All_Validated_Data.xlsx",
+      "description": "All sample-level validation results, preserving dates, major ions, PO4P, trace metals, P, S, NING and NDON for final selection."
+    },
+    {
+      "type": "TabularDataSet",
+      "name": "output-final",
+      "label": "Final report data",
+      "path": "/mnt/outputs/Final_Data.xlsx",
+      "description": "Selected monthly records enriched with programme metadata, totals, soil-water volume, deposition estimates and database-compatible fields."
+    },
+    {
+      "type": "Text",
+      "name": "pipeline-log",
+      "label": "Pipeline execution log",
+      "path": "/mnt/outputs/pipeline_execution.log",
+      "description": "Execution messages grouped by the three internal stages."
+    }
+  ],
+  "resources": {
+    "cores": 2,
+    "memory": 2048,
+    "gpuNeeded": false,
+    "gpuMemory": 0,
+    "estimatedTime": 30
+  },
+  "tags": [
+    "water chemistry",
+    "quality validation",
+    "report",
+    "ICP-Forests",
+    "final data",
+    "lifewatch"
+  ],
+  "license": "GPL-3.0-only",
+  "version": "0.3.0",
+  "dependencies": [
+    {
+      "name": "python",
+      "license": "PSF",
+      "version": "3.11",
+      "author": "Python Software Foundation",
+      "citation": null
+    },
+    {
+      "name": "pandas",
+      "license": "BSD-3-Clause",
+      "version": "2.2.2",
+      "author": "The Pandas Development Team",
+      "citation": null
+    },
+    {
+      "name": "numpy",
+      "license": "BSD-3-Clause",
+      "version": "1.26.4",
+      "author": "NumPy Developers",
+      "citation": null
+    },
+    {
+      "name": "openpyxl",
+      "license": "MIT",
+      "version": "3.1.2",
+      "author": "OpenPyXL contributors",
+      "citation": null
+    },
+    {
+      "name": "matplotlib",
+      "license": "PSF-based",
+      "version": "3.9.0",
+      "author": "Matplotlib Development Team",
+      "citation": null
+    },
+    {
+      "name": "fpdf2",
+      "license": "LGPL-3.0",
+      "version": "2.7.9",
+      "author": "fpdf2 contributors",
+      "citation": null
+    }
+  ],
+  "publicationDate": "2026-07-24",
+  "author": "LifeWatch ERIC",
+  "bugs": {
+    "email": "help@exampleorg.com",
+    "url": "https://www.tickets.exampleorg.com"
+  },
+  "citation": null,
+  "testPath": "pipelineUnitTest.sh",
+  "metaDataCatalogueUrl": "https://metadatacatalogue.lifewatch.eu/srv/eng/catalog.search#/metadata/<>"
+}

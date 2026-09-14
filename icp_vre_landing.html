@@ -431,6 +431,88 @@
     background: rgba(193,125,60,0.12);
   }
 
+  /* ── CLEAN LINEAR DATA FLOW ── */
+  .flow-linear {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(116px, 1fr));
+    gap: 30px;
+    align-items: stretch;
+    min-width: 1030px;
+  }
+
+  .flow-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 138px;
+    padding: 16px 12px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.07);
+    transition: transform 0.15s, background 0.15s;
+  }
+
+  .flow-stage:hover {
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-2px);
+  }
+
+  .flow-stage:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    color: rgba(255,255,255,0.40);
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .flow-stage.validation {
+    border-color: rgba(193,125,60,0.48);
+    background: rgba(193,125,60,0.10);
+  }
+
+  .flow-stage.database {
+    border-color: rgba(13,74,107,0.75);
+    background: rgba(13,74,107,0.28);
+  }
+
+  .flow-stage.integration {
+    border-color: rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.09);
+  }
+
+  .flow-stage.analysis {
+    border-color: rgba(193,125,60,0.62);
+    background: rgba(193,125,60,0.14);
+  }
+
+  .flow-stage-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .flow-stage-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.35;
+  }
+
+  .flow-stage-tag {
+    margin-top: 7px;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.60);
+  }
+
   /* ── TWO COLUMN ── */
   .two-col {
     display: grid;
@@ -582,7 +664,7 @@
     .team-grid { grid-template-columns: 1fr 1fr; }
 
     .flow-diagram { padding: 28px 20px; }
-    .flow-row { min-width: 1180px; }
+    .flow-linear { min-width: 1030px; }
   }
 </style>
 </head>
@@ -591,15 +673,15 @@
 <!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-eyebrow">ICP Forests &amp; ICP Integrated Monitoring · LifeWatch ERIC</div>
-  <h1 class="hero-title">Automated Data Validation for <em>European Forest Chemistry</em></h1>
+  <h1 class="hero-title">Automated Data Validation &amp; Analysis for <em>European Forest Monitoring</em></h1>
   <p class="hero-sub">
     Standardised, reproducible workflows for ICP monitoring data — from raw laboratory templates
     to validated, reporting-ready datasets.
   </p>
   <div class="hero-badges">
-    <div class="badge"><span>🌲</span> 14 Level-II plots · Spain</div>
-    <div class="badge"><span>🌿</span> IM plot ES02 · Integrated Monitoring</div>
-    <div class="badge"><span>💧</span> 5 water subprogrammes</div>
+    <div class="badge"><span>🌲</span> ICP Forest</div>
+    <div class="badge"><span>🌿</span> ICP Integrated Monitoring</div>
+    <div class="badge"><span>💧</span> Water Chemistry Data</div>
     <div class="badge"><span>📅</span> Monthly reporting</div>
     <div class="badge"><span>🔬</span> BIOMA · University of Navarra</div>
   </div>
@@ -653,10 +735,12 @@
       <div class="wf-sub">Workflow 1</div>
       <div class="wf-title">Data Validation</div>
       <p class="wf-desc">
-        Format checks, LOQ substitution, unit conversion and full
-        physicochemical quality control (ionic balance, conductivity,
-        Na/Cl ratio, OrgN). Produces a <strong>FINAL_VALIDATION</strong> flag per sample
-        and a PDF report identifying samples to repeat.
+        Starts from a standardised template covering five different water sampling types
+        (including precipitation and soil water) and guides the data through format checks,
+        LOQ substitution, unit conversion and full physicochemical quality control
+        (ionic balance, conductivity, Na/Cl ratio, OrgN). Produces a
+        <strong>FINAL VALIDATION</strong> flag per sample and a PDF report identifying
+        samples to repeat, supporting consistent, high-quality data ready for reporting.
       </p>
       <a class="wf-launch" href="#">Launch ›</a>
     </div>
@@ -668,8 +752,7 @@
       <div class="wf-sub">Workflow 2</div>
       <div class="wf-title">Outlier Detection &amp; Database Update</div>
       <p class="wf-desc">
-        Statistical outlier screening (z-score, IQR, temporal trends) on validated
-        Level-3 data. Flags anomalous measurements for expert review and pushes
+        Statistical outlier screening (z-score, IQR, temporal trends) on validated data. Flags anomalous measurements for expert review and pushes
         clean records to the internal PostgreSQL / MinIO database.
       </p>
       <a class="wf-launch blue-btn" href="#">Launch ›</a>
@@ -712,114 +795,49 @@
     <p class="section-desc">The pipeline follows the complete data journey: validation, anomaly screening, database ingestion, satellite index generation and final environmental analysis.</p>
 
     <div class="flow-diagram">
-      <div class="flow-label-top">FULL PIPELINE · SEQUENTIAL STEPS</div>
-      <div class="flow-row">
+      <div class="flow-label-top">FULL PIPELINE · COMPLETE DATA JOURNEY</div>
+      <div class="flow-linear">
 
-        <!-- Input -->
-        <div class="flow-node">
-          <div class="flow-node-icon">📋</div>
-          <div class="flow-node-name">Excel Templates</div>
-          <div class="flow-node-tag">Level 0</div>
+        <div class="flow-stage">
+          <div class="flow-stage-icon">📋</div>
+          <div class="flow-stage-name">Raw Excel Templates</div>
+          <div class="flow-stage-tag">Input</div>
         </div>
 
-        <div class="flow-arrow">→</div>
-
-        <!-- WF1 group -->
-        <div class="flow-group validation">
-          <div class="flow-group-title">WF 1 · Data Validation</div>
-          <div class="flow-group-row">
-            <div class="flow-node" style="min-width:88px;">
-              <div class="flow-node-icon">✅</div>
-              <div class="flow-node-name">Format Checks</div>
-              <div class="flow-node-tag v1">Step 1</div>
-            </div>
-            <div class="flow-arrow" style="min-width:18px;">→</div>
-            <div class="flow-node" style="min-width:88px;">
-              <div class="flow-node-icon">⚗️</div>
-              <div class="flow-node-name">Transform + LOQ</div>
-              <div class="flow-node-tag v1">Steps 2–3</div>
-            </div>
-            <div class="flow-arrow" style="min-width:18px;">→</div>
-            <div class="flow-node" style="min-width:88px;">
-              <div class="flow-node-icon">⚖️</div>
-              <div class="flow-node-name">Unit Conversion</div>
-              <div class="flow-node-tag v1">Step 4</div>
-            </div>
-            <div class="flow-arrow" style="min-width:18px;">→</div>
-            <div class="flow-node accent" style="min-width:88px;">
-              <div class="flow-node-icon">🔬</div>
-              <div class="flow-node-name">Chemical QC</div>
-              <div class="flow-node-tag v1">Step 5</div>
-            </div>
-            <div class="flow-arrow" style="min-width:18px;">→</div>
-            <div class="flow-node" style="min-width:88px;">
-              <div class="flow-node-icon">📄</div>
-              <div class="flow-node-name">Report + Selection</div>
-              <div class="flow-node-tag v1">Steps 6–7</div>
-            </div>
-          </div>
+        <div class="flow-stage validation">
+          <div class="flow-stage-icon">✅</div>
+          <div class="flow-stage-name">Data Validation &amp; Chemical QC</div>
+          <div class="flow-stage-tag">WF 1</div>
         </div>
 
-        <div class="flow-arrow">→</div>
-
-        <!-- Level 3 -->
-        <div class="flow-node">
-          <div class="flow-node-icon">🗂️</div>
-          <div class="flow-node-name">Validated Data</div>
-          <div class="flow-node-tag v1">Level 3</div>
+        <div class="flow-stage">
+          <div class="flow-stage-icon">🗂️</div>
+          <div class="flow-stage-name">Validated Data</div>
+          <div class="flow-stage-tag">Quality-controlled output</div>
         </div>
 
-        <div class="flow-arrow">→</div>
-
-        <!-- WF2 -->
-        <div class="flow-node water">
-          <div class="flow-node-icon">🔍</div>
-          <div class="flow-node-name">Outlier Detection</div>
-          <div class="flow-node-tag v2">WF 2</div>
+        <div class="flow-stage database">
+          <div class="flow-stage-icon">🔍</div>
+          <div class="flow-stage-name">Outlier Detection &amp; Database Update</div>
+          <div class="flow-stage-tag">WF 2</div>
         </div>
 
-        <div class="flow-arrow">→</div>
-
-        <!-- DB -->
-        <div class="flow-node water">
-          <div class="flow-node-icon">🗄️</div>
-          <div class="flow-node-name">Database Update</div>
-          <div class="flow-node-tag v2">MinIO / PG</div>
+        <div class="flow-stage integration">
+          <div class="flow-stage-icon">🗺️</div>
+          <div class="flow-stage-name">Area of Interest &amp; Environmental Layers</div>
+          <div class="flow-stage-tag">Spatial context</div>
         </div>
 
-        <div class="flow-arrow">→</div>
-
-        <!-- WF3 -->
-        <div class="flow-group satellite">
-          <div class="flow-group-title">WF 3 · Multi-source Data Integration</div>
-          <div class="flow-group-row">
-            <div class="flow-node satellite-node" style="min-width:96px;">
-              <div class="flow-node-icon">🗺️</div>
-              <div class="flow-node-name">Area of Interest</div>
-              <div class="flow-node-tag v1">AOI</div>
-            </div>
-            <div class="flow-arrow" style="min-width:18px;">→</div>
-            <div class="flow-node satellite-node" style="min-width:96px;">
-              <div class="flow-node-icon">🛰️</div>
-              <div class="flow-node-name">Image Download</div>
-              <div class="flow-node-tag v1">Scenes</div>
-            </div>
-            <div class="flow-arrow" style="min-width:18px;">→</div>
-            <div class="flow-node index-node" style="min-width:96px;">
-              <div class="flow-node-icon">🌿</div>
-              <div class="flow-node-name">Spectral Indices</div>
-              <div class="flow-node-tag v1">Indices</div>
-            </div>
-          </div>
+        <div class="flow-stage integration">
+          <div class="flow-stage-icon">🛰️</div>
+          <div class="flow-stage-name">Multi-source Data Integration</div>
+          <div class="flow-stage-tag">WF 3</div>
         </div>
 
-        <div class="flow-arrow">→</div>
-
-        <!-- WF4 -->
-        <div class="flow-node" style="border-color:rgba(193,125,60,0.6);background:rgba(193,125,60,0.12);">
-          <div class="flow-node-icon">📊</div>
-          <div class="flow-node-name">Analysis</div>
-          <div class="flow-node-tag v3">WF 4</div>
+        <div class="flow-stage analysis">
+          <div class="flow-stage-icon">📊</div>
+          <div class="flow-stage-name">Environmental Analysis</div>
+          <div class="flow-stage-tag">WF 4 · Final output</div>
         </div>
 
       </div>
@@ -858,7 +876,7 @@
         make outputs easier to audit, reproduce and compare across plots and years.
       </p>
       <ul class="bullet-list">
-        <li>Complete data journey — from raw templates and AOIs to final analytical outputs</li>
+        <li>Complete data journey — from raw templates and Areas of Interest to final analytical outputs</li>
         <li>Traceable decisions — quality flags, outlier labels, database records and index layers</li>
         <li>Integrated evidence — combining chemistry, monitoring metadata and satellite indicators</li>
         <li>Modular design — each workflow reusable independently or as part of the full pipeline</li>
@@ -892,7 +910,7 @@
     <div class="impact-card">
       <div class="impact-card-icon">🗄️</div>
       <h4>Centralised Database</h4>
-      <p>Validated Level-3 data are ingested into a structured database enabling
+      <p>Validated data are ingested into a structured database enabling
          long-term storage, cross-year trend analysis and real-time dashboards.</p>
     </div>
     <div class="impact-card">
